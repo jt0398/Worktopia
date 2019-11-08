@@ -27,9 +27,9 @@ Co-working is the next big thing!!! WorkTopia aims at disrupting the real estate
 
 ## What does WorkTopia do for you?
 WorkTopia offers a platform for letting out workspaces on completely your terms.
-	 - Part of the floor? - Sure, why not?
-	 - Couple of days a week? - Ofcourse...
-	 - Unfurnished, long term? - We hear you!
+- Part of the floor? - Sure, why not?
+- Couple of days a week? - Ofcourse...
+- Unfurnished, long term? - We hear you!
 and the options are endless!!!
 
 And don't jump to conclusions, the same flexibility is available for potential leasees as well!
