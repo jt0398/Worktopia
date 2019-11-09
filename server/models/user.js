@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
 
   User.associate = function(models) {
     models.User.belongsTo(models.UserRole);
-    //models.User.hasMany(models.ProductCatalog);
+    models.User.hasMany(models.Workspace);
   };
 
   return User;

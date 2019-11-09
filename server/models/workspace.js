@@ -23,6 +23,7 @@ module.exports = function(sequelize, DataTypes) {
 
   Workspace.associate = function(models) {
     models.Workspace.belongsTo(models.User);
+    models.Workspace.belongsTo(models.WorkspaceType);
   };
 
   return Workspace;
