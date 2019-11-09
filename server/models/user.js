@@ -36,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
     models.User.belongsTo(models.UserRole, {
       foreignKey: { allowNull: false }
     });
-    models.User.hasMany(models.Workspace, {
+    models.User.hasMany(models.WorkspaceLocation, {
       foreignKey: { allowNull: false }
     });
     models.User.hasMany(models.Booking, {

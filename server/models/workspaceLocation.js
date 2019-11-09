@@ -21,6 +21,9 @@ module.exports = function(sequelize, DataTypes) {
     models.WorkspaceLocation.hasMany(models.Workspace, {
       foreignKey: { allowNull: false }
     });
+    models.WorkspaceLocation.belongsTo(models.User, {
+      foreignKey: { allowNull: false }
+    });
   };
 
   return WorkspaceLocation;
