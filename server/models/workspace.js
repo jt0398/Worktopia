@@ -22,8 +22,18 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Workspace.associate = function(models) {
-    models.Workspace.belongsTo(models.User);
-    models.Workspace.belongsTo(models.WorkspaceType);
+    models.Workspace.belongsTo(models.User, {
+      foreignKey: { allowNull: false }
+    });
+    models.Workspace.belongsTo(models.WorkspaceType, {
+      foreignKey: { allowNull: false }
+    });
+    models.Workspace.hasMany(models.Booking, {
+      foreignKey: { allowNull: false }
+    });
+    models.Workspace.belongsTo(models.WorkspaceLocation, {
+      foreignKey: { allowNull: false }
+    });
   };
 
   return Workspace;

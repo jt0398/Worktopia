@@ -7,7 +7,9 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   UserRole.associate = function(models) {
-    models.UserRole.hasMany(models.User);
+    models.UserRole.hasMany(models.User, {
+      foreignKey: { allowNull: false }
+    });
   };
 
   return UserRole;

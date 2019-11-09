@@ -33,8 +33,15 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   User.associate = function(models) {
-    models.User.belongsTo(models.UserRole);
-    models.User.hasMany(models.Workspace);
+    models.User.belongsTo(models.UserRole, {
+      foreignKey: { allowNull: false }
+    });
+    models.User.hasMany(models.Workspace, {
+      foreignKey: { allowNull: false }
+    });
+    models.User.hasMany(models.Booking, {
+      foreignKey: { allowNull: false }
+    });
   };
 
   return User;

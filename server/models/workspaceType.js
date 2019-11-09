@@ -7,7 +7,9 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   WorkspaceType.associate = function(models) {
-    models.WorkspaceType.hasMany(models.Workspace);
+    models.WorkspaceType.hasMany(models.Workspace, {
+      foreignKey: { allowNull: false }
+    });
   };
 
   return WorkspaceType;
