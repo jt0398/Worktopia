@@ -22,9 +22,6 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Workspace.associate = function(models) {
-    models.Workspace.belongsTo(models.User, {
-      foreignKey: { allowNull: false }
-    });
     models.Workspace.belongsTo(models.WorkspaceType, {
       foreignKey: { allowNull: false }
     });
