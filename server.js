@@ -1,6 +1,10 @@
 const express = require("express");
+const path = require('path');
+const bodyParser = require('body-parser');
+require("dotenv").config();
+var db = require("./models");
 
-const mongoose = require("mongoose");
+
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -15,10 +19,20 @@ if (process.env.NODE_ENV === "production") {
 // Add routes, both API and view
 app.use(routes);
 
-// Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist");
+// Connect to the Sequelize DB
+console.clear();
+var syncOptions = {};
+syncOptions.force = process.env.SYNC_MODEL === "true" ? true : false;
 
-// Start the API server
-app.listen(PORT, function() {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+// Starting the server, syncing our models ------------------------------------/
+db.sequelizeConnection.sync(syncOptions).then(function () {
+  app.listen(PORT, function () {
+    console.log(
+      "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+      PORT,
+      PORT
+    );
+  });
 });
+
+module.exports = app;
