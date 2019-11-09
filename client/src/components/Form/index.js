@@ -25,3 +25,11 @@ export function FormBtn(props) {
     </button>
   );
 }
+
+export function Label(props) {
+  return (
+  
+    <div>{props.children}</div>
+  
+  );
+}
