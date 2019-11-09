@@ -20,17 +20,17 @@ class Books extends Component {
   }
 
   loadBooks = () => {
-    API.getBooks()
+    /*  API.getBooks()
       .then(res =>
         this.setState({ books: res.data, title: "", author: "", synopsis: "" })
       )
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)); */
   };
 
   deleteBook = id => {
-    API.deleteBook(id)
+    /* API.deleteBook(id)
       .then(res => this.loadBooks())
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)); */
   };
 
   handleInputChange = event => {
