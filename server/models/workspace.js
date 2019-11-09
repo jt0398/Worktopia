@@ -34,6 +34,15 @@ module.exports = function(sequelize, DataTypes) {
     models.Workspace.belongsTo(models.WorkspaceLocation, {
       foreignKey: { allowNull: false }
     });
+    models.Workspace.hasMany(models.WorkspacePic, {
+      foreignKey: { allowNull: false }
+    });
+    models.Workspace.belongsToMany(models.Feature, {
+      through: "WorkspaceFeature"
+    });
+    models.Workspace.hasMany(models.WorkspaceReview, {
+      foreignKey: { allowNull: false }
+    });
   };
 
   return Workspace;

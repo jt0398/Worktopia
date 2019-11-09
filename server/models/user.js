@@ -42,6 +42,9 @@ module.exports = function(sequelize, DataTypes) {
     models.User.hasMany(models.Booking, {
       foreignKey: { allowNull: false }
     });
+    models.User.hasMany(models.WorkspaceReview, {
+      foreignKey: { allowNull: false }
+    });
   };
 
   return User;
