@@ -16,5 +16,10 @@ export default {
   // Saves a book to the database
   saveBook: function(bookData) {
     return axios.post("/api/books", bookData);
+  },
+  //Check If its a valid log in
+  checkLogin: function(userLoginData) {
+    console.log(userLoginData);
+    return axios.post("/api/login", userLoginData);
   }
 };
