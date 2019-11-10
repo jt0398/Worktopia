@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Label } from "../Form/index";
 
 export function CardBody({
   imgCol,
-  src,
   bodyCol,
-  title,
+  src,
+  name,
   description,
   dimensions,
   price
@@ -18,7 +19,7 @@ export function CardBody({
         </div>
         <div class={`col-md-${bodyCol}`}>
           <div class="card-body">
-            <h5 class="card-title">{title}</h5>
+            <h5 class="card-title">{name}</h5>
             <p class="card-text">
               <Label>Description: {description}</Label>
               <Label>Dimensions: {dimensions}</Label>
