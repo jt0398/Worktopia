@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input } from "../components/Form";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import FeatureList from "../components/FeatureList";
+import WorkspaceCard from "../components/WorkspaceCard";
 
 class SearchResults extends Component {
   state = {
@@ -11,7 +12,8 @@ class SearchResults extends Component {
     checkInDate: "",
     checkOutDate: "",
     rooms: 0,
-    workspaces: []
+    workspaces: [],
+    features: []
   };
 
   componentDidMount() {
@@ -28,28 +30,23 @@ class SearchResults extends Component {
 
   handleFormSearch = event => {
     event.preventDefault();
-    /*  if (this.state.title && this.state.author) {
-      API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.synopsis
-      })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
-    } */
   };
 
   render() {
     return (
       <Container>
         <Row>
-          <Col size="md-3"></Col>
-          <Col size="md-9 sm-12">
-            <List>
-              <ListItem>
-                <Link to="">Description</Link>
-              </ListItem>
-            </List>
+          <Col>{/* Search component */}</Col>
+        </Row>
+        <Row>
+          <Col md="3">
+            {/* Map component */}
+            <FeatureList {...this.state.features} />
+          </Col>
+          <Col md="9" sm="12">
+            {this.state.workspaces.map(workspace => {
+              return <WorkspaceCard {...workspace} />;
+            })}
           </Col>
         </Row>
       </Container>
