@@ -19,8 +19,8 @@ class Login extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.username && this.state.password) {
-        console.log("Clicked")
-      API.checkLogin(this.state)  
+      console.log("Clicked");
+      API.checkLogin(this.state)
         .then(res => {
           console.log(res.data);
         })
@@ -46,6 +46,7 @@ class Login extends Component {
                 value={this.state.password}
                 onChange={this.handleInputChange}
                 name="password"
+                type="password"
                 placeholder="Enter your password"
               />
               <FormBtn

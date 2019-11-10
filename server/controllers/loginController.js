@@ -12,14 +12,21 @@ module.exports = {
       include: [{ model: db.UserRole }]
     })
       .then(userData => {
-        console.log(userData.dataValues);
-        let payload = { id: userData.dataValues.id };
-        const token = jwt.sign(payload, SECRET);
-        res.status(200).send({
-          auth: true,
-          token: token,
-          message: "user found & logged in"
-        });
+        if (userData) {
+          console.log(userData.dataValues);
+          let payload = { id: userData.dataValues.id };
+          const token = jwt.sign(payload, SECRET);
+          res.status(200).send({
+            auth: true,
+            token: token,
+            message: "user found & logged in"
+          });
+        } else {
+          res.status(200).send({
+            auth: false,
+            message: "Incorrect login"
+          });
+        }
       })
       .catch(err => {
         console.error(err);
