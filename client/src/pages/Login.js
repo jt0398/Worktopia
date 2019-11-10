@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import { Col, Row, Container } from "../components/Grid";
-import { Input, FormBtn } from "../components/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 class Login extends Component {
   state = {
@@ -36,25 +39,29 @@ class Login extends Component {
         <Row>
           <Col size="md-6">
             <form>
-              <Input
+              <Form.Control
                 value={this.state.username}
                 onChange={this.handleInputChange}
                 name="username"
                 placeholder="Enter your username"
               />
-              <Input
+              <br></br>
+
+              <Form.Control
                 value={this.state.password}
                 onChange={this.handleInputChange}
                 name="password"
                 type="password"
                 placeholder="Enter your password"
               />
-              <FormBtn
+              <br></br>
+
+              <Button
                 disabled={!(this.state.username && this.state.password)}
                 onClick={this.handleFormSubmit}
               >
                 Log In
-              </FormBtn>
+              </Button>
             </form>
           </Col>
         </Row>

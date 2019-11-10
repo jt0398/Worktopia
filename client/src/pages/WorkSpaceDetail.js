@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import { Col, Row, Container } from "../components/Grid";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
