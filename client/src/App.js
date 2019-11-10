@@ -10,6 +10,7 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route component={NoMatch} />
         </Switch>
       </div>
     </Router>
