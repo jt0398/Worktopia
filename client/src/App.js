@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./pages/Login";
 import Nav from "./components/Nav";
-import LocationDropDown from "./components/LocationDropDown";
+import MainPage from "./pages/MainPage";
+
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route exact path="/main" component={LocationDropDown} />
+          <Route exact path="/main" component={MainPage} />
+         
         </Switch>
       </div>
     </Router>
