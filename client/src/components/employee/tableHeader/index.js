@@ -11,6 +11,7 @@ function createHeader(props) {
           <th scope="col">Start Date</th>
           <th scope="col">End Date</th>
           <th scope="col">Price</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <Route exact path="/employee/booking" component={createContent} />
