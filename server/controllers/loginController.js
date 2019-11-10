@@ -1,4 +1,7 @@
 const db = require("../models");
+var passport = require("../config/passport");
+const SECRET = "jwt-secret";
+const jwt = require("jsonwebtoken");
 
 // Defining methods for the booksController
 module.exports = {
@@ -10,7 +13,13 @@ module.exports = {
     })
       .then(userData => {
         console.log(userData.dataValues);
-        res.json(userData.dataValues);
+        let payload = { id: userData.dataValues.id };
+        const token = jwt.sign(payload, SECRET);
+        res.status(200).send({
+          auth: true,
+          token: token,
+          message: "user found & logged in"
+        });
       })
       .catch(err => {
         console.error(err);
