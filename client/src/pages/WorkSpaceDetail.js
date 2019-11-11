@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import FileUpload from "../components/FileUpload";
+import FeatureList from "../components/FeatureList";
 
 const LOCATION_LIST = ["Mississauga", "Toronto"];
 
@@ -99,7 +100,6 @@ class WorkSpaceDetail extends Component {
                     {this.state.workSpaceOccupancy ||
                       "How many people can occupy the workspace?"}
                   </Dropdown.Toggle>
-
                   <Dropdown.Menu>
                     {NUMBER_OF_PEOPLE.map(number => (
                       <Dropdown.Item
@@ -161,8 +161,8 @@ class WorkSpaceDetail extends Component {
           <Col size="md-6">
             <Jumbotron>
               <FileUpload></FileUpload>
+              <FeatureList></FeatureList>
             </Jumbotron>
-            <Jumbotron>Feature list</Jumbotron>
             <Jumbotron>Calendar function</Jumbotron>
           </Col>
         </Row>
