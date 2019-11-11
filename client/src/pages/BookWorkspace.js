@@ -3,8 +3,10 @@ import API from "../utils/API";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import WorkspaceCard from "../components/WorkspaceCard";
 import Search from "../components/Search";
+import PriceCard from "../components/PriceCard";
 
 class BookWorkspace extends Component {
   state = {
@@ -48,7 +50,7 @@ class BookWorkspace extends Component {
           </Col>
         </Row>
         <Row>
-          <Col md="9" sm="12">
+          <Col md="8" sm="12">
             {this.state.workspaces.map(workspace => {
               return (
                 <WorkspaceCard
@@ -60,7 +62,13 @@ class BookWorkspace extends Component {
               );
             })}
           </Col>
-          <Col md="3">{/* Map component */}</Col>
+          <Col md="3">
+            <Button type="submit" href="#">
+              Confirm Booking
+            </Button>
+            <PriceCard {...this.state.workspaces[0].rental_price} />
+            {/* Map component */}
+          </Col>
         </Row>
       </Container>
     );
