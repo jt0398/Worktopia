@@ -1,13 +1,26 @@
-import React from "react";
+import React, { Component }from "react";
+import { Navbar, Nav } from "react-bootstrap";
+import Modal from "../Modal";
 
-function Nav() {
-  return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a className="navbar-brand" href="/">
-        Worktopia
-      </a>
-    </nav>
-  );
+
+export class Header extends Component {
+  render() {
+    return (
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="/">Worktopia</Navbar.Brand>
+        <Nav defaultActiveKey="/main" as="ul" class="nav justify-content-end">
+          <Nav.Item as="li">
+            <Nav.Link href="/main">Home</Nav.Link>
+          </Nav.Item>
+          <Nav.Item as="li">
+            <Modal />
+            {/* <Nav.Link href="/">Login</Nav.Link> */}
+          </Nav.Item>
+        </Nav>
+      </Navbar>
+    );
+  }
 }
 
-export default Nav;
+
+export default Header;
