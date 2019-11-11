@@ -6,6 +6,7 @@ import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 import OwnerLocations from  "./pages/OwnerLocations";
 import AddLocation from "./pages/addLocation";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
