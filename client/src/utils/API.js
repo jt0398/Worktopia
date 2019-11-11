@@ -19,7 +19,9 @@ export default {
   },
   //Check If its a valid log in
   checkLogin: function(userLoginData) {
-    console.log(userLoginData);
     return axios.post("/api/login", userLoginData);
+  },
+  fileUpload: function(data) {
+    return axios.post("/api/upload", data);
   }
 };

@@ -1,5 +1,9 @@
 require("dotenv").config();
 const express = require("express");
+const fileUpload = require("express-fileupload");
+
+const cors = require("cors");
+
 var db = require("./server/models");
 
 const routes = require("./server/routes");
@@ -11,6 +15,14 @@ const PORT = process.env.PORT || 3001;
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    safeFileNames: true,
+    preserveExtension: true,
+    tempFileDir: `${__dirname}/public/files/temp`
+  })
+);
 // Serve up static assets (usually on heroku)ß
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

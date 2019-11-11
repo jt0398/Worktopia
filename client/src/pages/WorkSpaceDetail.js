@@ -6,6 +6,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
+import Jumbotron from "react-bootstrap/Jumbotron";
+import FileUpload from "../components/FileUpload";
 
 const LOCATION_LIST = ["Mississauga", "Toronto"];
 
@@ -155,6 +157,13 @@ class WorkSpaceDetail extends Component {
                 Submit
               </Button>
             </Form>
+          </Col>
+          <Col size="md-6">
+            <Jumbotron>
+              <FileUpload></FileUpload>
+            </Jumbotron>
+            <Jumbotron>Feature list</Jumbotron>
+            <Jumbotron>Calendar function</Jumbotron>
           </Col>
         </Row>
       </Container>
