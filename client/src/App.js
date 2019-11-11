@@ -7,6 +7,8 @@ import NoMatch from "./pages/NoMatch";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Nav from "./components/Nav";
+import MainPage from "./pages/MainPage";
+
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route exact path="/main" component={MainPage} />
+         
           <Route exact path="/workspacedetail" component={WorkSpaceDetail} />
           <Route exact path="/searchresults" component={SearchResults} />
           <Route component={NoMatch} />
