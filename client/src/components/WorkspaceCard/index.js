@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Label } from "../Form/index";
 import Card from "react-bootstrap/Card";
 
-export function WorkspaceCard({
+export default function WorkspaceCard({
   imgCol,
   bodyCol,
   src,

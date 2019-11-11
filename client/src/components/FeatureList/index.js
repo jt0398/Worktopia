@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import Form from "react-bootstrap/Form";
 
-export function FeatureItem({ features }) {
+export default function FeatureItem({ features }) {
   return (
     <>
       {features.map(feature => {
