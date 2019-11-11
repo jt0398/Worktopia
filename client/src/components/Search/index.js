@@ -44,7 +44,7 @@ class Search extends Component {
   render() {
     return (
       <div className="my-5">
-        <h5 className="mb-3">Search</h5>
+        {/* <h5 className="mb-3">Search</h5> */}
         <Form>
           <Form.Row>
             <Form.Group as={Col} controlId="location">
