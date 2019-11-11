@@ -1,4 +1,3 @@
-//import React from "react";
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -21,15 +20,14 @@ function LoginModal() {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Login />
-        {/* <Modal.Body><Login /></Modal.Body> */}
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          {/* <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={handleClose}>
             Save Changes
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
