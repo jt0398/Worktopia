@@ -1,5 +1,7 @@
 import React, { Component }from "react";
 import { Navbar, Nav } from "react-bootstrap";
+import Modal from "../Modal";
+
 
 export class Header extends Component {
   render() {
@@ -11,7 +13,8 @@ export class Header extends Component {
             <Nav.Link href="/main">Home</Nav.Link>
           </Nav.Item>
           <Nav.Item as="li">
-            <Nav.Link href="/">Login</Nav.Link>
+            <Modal />
+            {/* <Nav.Link href="/">Login</Nav.Link> */}
           </Nav.Item>
         </Nav>
       </Navbar>

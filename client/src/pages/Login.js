@@ -35,7 +35,7 @@ class Login extends Component {
     return (
       <Container fluid>
         <br></br>
-        <br></br>
+        {/* <br></br> */}
         <Row>
           <Col size="md-6">
             <form>
