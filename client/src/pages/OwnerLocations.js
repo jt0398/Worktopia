@@ -7,19 +7,19 @@ const workspaceInfo = [
     {
         name: "Workspace 1",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida bibendum",
-        dimensions: "2000",
+        dimension: "2000",
         src: "https://www.onemoorgateplace.com/wp-content/uploads/2015/09/DSC0504-min-800x550.jpg"
     },
     {
         name: "Workspace 2",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida bibendum",
-        dimensions: "2000",
+        dimension: "2000",
         src: "https://www.onemoorgateplace.com/wp-content/uploads/2015/09/DSC0504-min-800x550.jpg"
     },
     {
         name: "Workspace 3",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida bibendum",
-        dimensions: "2000",
+        dimension: "2000",
         src: "https://www.onemoorgateplace.com/wp-content/uploads/2015/09/DSC0504-min-800x550.jpg"
     }
 ];
@@ -42,8 +42,8 @@ class OwnerLocations extends Component {
                 </Container>
                 <Container fluid>
                     {this.state.workspaceInfo.map(element =>
-                        <WorkspaceCard title={element.name} description={element.description}
-                            dimensions={element.dimensions} src={element.src} />
+                        <WorkspaceCard name={element.name} description={element.description}
+                            dimension={element.dimension} src={element.src} />
                     )}
 
                 </Container>
