@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import OwnerLocations from  "./pages/OwnerLocations";
+import AddLocation from "./pages/addLocation";
 import Login from "./pages/Login";
 import Nav from "./components/Nav";
 import MainPage from "./pages/MainPage";
@@ -20,6 +22,8 @@ function App() {
           <Route exact path="/workspacedetail" component={WorkSpaceDetail} />
           <Route exact path="/searchresults" component={SearchResults} />
           <Route exact path="/workspacebooking" component={BookWorkspace} />
+          <Route exact path="/owner" component={OwnerLocations} />
+          <Route exact path="/owner/addlocation" component={AddLocation} />
           <Route component={NoMatch} />
         </Switch>
       </div>
