@@ -14,6 +14,22 @@ module.exports = function(sequelize, DataTypes) {
     },
     postal_code: {
       type: DataTypes.STRING(20)
+    },
+    full_address: {
+      type: Sequelize.STRING,
+      get() {
+        return (
+          this.getDataValue("addr1") +
+          " " +
+          this.getDataValue("addr2") +
+          " " +
+          this.getDataValue("city") +
+          " " +
+          this.getDataValue("province") +
+          " " +
+          this.getDataValue("postal_code")
+        );
+      }
     }
   });
 
