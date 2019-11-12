@@ -3,7 +3,6 @@ var passport = require("../config/passport");
 const SECRET = "jwt-secret";
 const jwt = require("jsonwebtoken");
 
-// Defining methods for the booksController
 module.exports = {
   validate: function(req, res) {
     console.log(req.body);

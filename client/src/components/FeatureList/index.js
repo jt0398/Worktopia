@@ -7,13 +7,13 @@ class FeatureList extends Component {
     super(props);
 
     this.features = [
-      { name: "Free Parking" },
-      { name: "Free Wifi" },
-      { name: "Playing Area" },
-      { name: "Lake View" },
-      { name: "Garden View" },
-      { name: "Projector" },
-      { name: "Computers" }
+      { name: "Free Parking" , label: "freeParking"},
+      { name: "Free Wifi", label: "freeWifi" },
+      { name: "Playing Area", label: "playingArea" },
+      { name: "Lake View" , label:"lakeView"},
+      { name: "Garden View" , label: "gardenView"},
+      { name: "Projector" , label: "projector"},
+      { name: "Computers" , label:"computers"}
     ]; //This is not a state because it will not be changed after first load
   }
 
@@ -34,8 +34,9 @@ class FeatureList extends Component {
             <div key={feature.name} className="my-3">
               <Form.Check
                 type="checkbox"
-                id={feature.name}
+                id={feature.label}
                 label={feature.name}
+                onChange={this.props.handleFeatureSelection}
               />
             </div>
           );

@@ -12,6 +12,10 @@ class Login extends Component {
     password: ""
   };
 
+  validateFormCompletion = () => {
+    return !(this.state.username && this.state.password);
+  };
+  
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -57,12 +61,11 @@ class Login extends Component {
               <br></br>
 
               <Button className="btn btn-info"
-                disabled={!(this.state.username && this.state.password)}
+                disabled={this.validateFormCompletion()}
                 onClick={this.handleFormSubmit}
               >
                 Log In
               </Button>
-             
             </form>
           </Col>
         </Row>

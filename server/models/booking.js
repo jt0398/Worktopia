@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     rental_price: {
-      type: DataTypes.FLOAT(11, 10),
+      type: DataTypes.FLOAT(11, 4),
       allowNull: false
     }
   });
