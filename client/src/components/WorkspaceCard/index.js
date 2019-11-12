@@ -1,30 +1,49 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { Label } from "../Form/index";
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
-
-export function WorkspaceCard({ title, description, dimensions, src }) {
+function WorkspaceCard({
+  rowStyle,
+  imgStyle,
+  bodyStyle,
+  src,
+  name,
+  description,
+  dimension,
+  rental_price
+}) {
   return (
-
-    <Row>
-      <Col size="md-4">
-        <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={src} />
+    <Card className="my-3">
+      <div className={rowStyle}>
+        <div className={imgStyle}>
+          <Card.Img src={src} />
+        </div>
+        <div className={bodyStyle}>
           <Card.Body>
-            <Card.Title>{title}</Card.Title>
+            <Card.Title>{name}</Card.Title>
             <Card.Text>
-              <strong>Description:</strong> {description}
-              <br></br>
-              <strong>Dimensions:</strong> {dimensions}
+              Description: {description}
+              <br />
+              Dimensions: {dimension} <br />
+              {!imgStyle && `Price: ${rental_price}`}
             </Card.Text>
           </Card.Body>
-
-        </Card>
-      </Col>
-    </Row>
-
+        </div>
+        {imgStyle && (
+          <div className="col-md-2">
+            <span className="align-middle">
+              Price: {rental_price} <br />{" "}
+              <Button type="submit" href="#">
+                Book
+              </Button>
+            </span>
+          </div>
+        )}
+      </div>
+    </Card>
   );
 }
 
-
+export default WorkspaceCard;
