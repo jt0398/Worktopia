@@ -27,8 +27,8 @@ class WorkSpaceDetail extends Component {
     defaultmessage: "Choose a file...",
     uploading: false,
     imageFileName: "",
-    features: {
-    }
+    activateWorkSpace: false,
+    features: {}
   };
 
   handleInputChange = event => {
@@ -110,6 +110,14 @@ class WorkSpaceDetail extends Component {
       }
     });
   };
+
+  handleSwitchChange = event => {
+    console.log(event.target);
+    this.setState({
+      [event.target.id]: !this.state[event.target.id]
+    });
+  };
+
   render() {
     return (
       <Container fluid>
@@ -146,6 +154,7 @@ class WorkSpaceDetail extends Component {
                     {LOCATION_LIST.map(location => (
                       <Dropdown.Item
                         eventKey={location}
+                        key={location}
                         onSelect={this.handleDropDownSelection}
                         name="workSpaceLocation"
                       >
@@ -165,6 +174,7 @@ class WorkSpaceDetail extends Component {
                     {NUMBER_OF_PEOPLE.map(number => (
                       <Dropdown.Item
                         eventKey={number}
+                        key={number}
                         onSelect={this.handleDropDownSelection}
                         name="workSpaceOccupancy"
                       >
@@ -194,8 +204,9 @@ class WorkSpaceDetail extends Component {
                 <br></br>
                 <Form.Check
                   type="switch"
-                  id="custom-switch"
+                  id="activateWorkSpace"
                   label="Activate Workspace"
+                  onChange={this.handleSwitchChange}
                 />
               </Form.Group>
 
