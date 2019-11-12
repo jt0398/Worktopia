@@ -45,16 +45,9 @@ class WorkSpaceDetail extends Component {
     });
   };
 
-  handleLocationSelection = (eventKey, event) => {
-    // const { name, value } = {event.target.name, eventKey};
+  handleDropDownSelection = (eventKey, event) => {
     this.setState({
-      workSpaceLocation: eventKey
-    });
-  };
-
-  handleOccupancySelection = (eventKey, event) => {
-    this.setState({
-      workSpaceOccupancy: eventKey
+      [event.target.name]: eventKey
     });
   };
 
@@ -117,7 +110,6 @@ class WorkSpaceDetail extends Component {
   };
 
   handleFeatureSelection = event => {
-    console.log(event.target.id);
     this.setState({
       features: {
         ...this.state.features,
@@ -161,7 +153,7 @@ class WorkSpaceDetail extends Component {
                     {LOCATION_LIST.map(location => (
                       <Dropdown.Item
                         eventKey={location}
-                        onSelect={this.handleLocationSelection}
+                        onSelect={this.handleDropDownSelection}
                         name="workSpaceLocation"
                       >
                         {location}
@@ -180,7 +172,7 @@ class WorkSpaceDetail extends Component {
                     {NUMBER_OF_PEOPLE.map(number => (
                       <Dropdown.Item
                         eventKey={number}
-                        onSelect={this.handleOccupancySelection}
+                        onSelect={this.handleDropDownSelection}
                         name="workSpaceOccupancy"
                       >
                         {number}
