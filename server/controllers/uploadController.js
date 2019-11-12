@@ -2,7 +2,6 @@ const db = require("../models");
 var md5 = require("md5");
 const basePath = `${__dirname}/public/files/`;
 
-// Defining methods for the booksController
 module.exports = {
   upload: function(req, res, next) {
     console.log("Going to upload");
