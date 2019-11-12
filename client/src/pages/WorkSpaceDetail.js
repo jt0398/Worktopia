@@ -26,7 +26,16 @@ class WorkSpaceDetail extends Component {
     message: "Choose a file...",
     defaultmessage: "Choose a file...",
     uploading: false,
-    imageFileName: ""
+    imageFileName: "",
+    features: {
+      freeParking: false,
+      freeWifi: false,
+      playingArea: false,
+      lakeView: false,
+      gardenView: false,
+      projector: false,
+      computers: false
+    }
   };
 
   handleInputChange = event => {
@@ -105,6 +114,16 @@ class WorkSpaceDetail extends Component {
           message: "Failed to upload"
         });
       });
+  };
+
+  handleFeatureSelection = event => {
+    console.log(event.target.id);
+    this.setState({
+      features: {
+        ...this.state.features,
+        [event.target.id]: !this.state.features[event.target.id]
+      }
+    });
   };
   render() {
     return (
@@ -211,9 +230,11 @@ class WorkSpaceDetail extends Component {
               <FileUpload
                 handleUpload={this.handleUpload.bind(this)}
                 handleFileChange={this.handleFileChange.bind(this)}
-                message = {this.state.message}
+                message={this.state.message}
               ></FileUpload>
-              <FeatureList></FeatureList>
+              <FeatureList
+                handleFeatureSelection={this.handleFeatureSelection.bind(this)}
+              ></FeatureList>
             </Jumbotron>
             <Jumbotron>Calendar function</Jumbotron>
           </Col>
