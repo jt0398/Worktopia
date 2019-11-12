@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Search from "../components/Search";
+import Carousel from "../components/Carousel";
 
 class MainPage extends Component {
   render() {
@@ -12,6 +13,7 @@ class MainPage extends Component {
         <Row>
           <Col size="md-12">
             <Search />
+            <Carousel />
           </Col>
         </Row>
       </Container>
