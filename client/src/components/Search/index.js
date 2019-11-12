@@ -48,7 +48,11 @@ class Search extends Component {
         <Form>
           <Form.Row>
             <Form.Group as={Col} controlId="location">
-              <Form.Label>Locations</Form.Label>
+              <Form.Label>
+                <strong>
+                  <i class="fas fa-thumbtack"></i> Locations
+                </strong>
+              </Form.Label>
               <Form.Control as="select">
                 <option>Choose...</option>
                 {this.locations.map(location => {
@@ -59,7 +63,11 @@ class Search extends Component {
           </Form.Row>
           <Form.Row>
             <Form.Group as={Col} controlId="checkinDate">
-              <Form.Label>Check-In Date</Form.Label>
+              <Form.Label>
+                <strong>
+                  <i class="fas fa-calendar-alt"></i> Check-In Date
+                </strong>
+              </Form.Label>
               <Form.Control
                 type="date"
                 min="2019-11-11"
@@ -68,7 +76,11 @@ class Search extends Component {
               />
             </Form.Group>
             <Form.Group as={Col} controlId="checkoutDate">
-              <Form.Label>Check-Out Date</Form.Label>
+              <Form.Label>
+                <strong>
+                  <i class="far fa-calendar-alt"></i> Check-Out Date
+                </strong>
+              </Form.Label>
               <Form.Control
                 type="date"
                 min="2019-11-11"
@@ -77,7 +89,11 @@ class Search extends Component {
               />
             </Form.Group>
             <Form.Group as={Col} controlId="room">
-              <Form.Label>Rooms</Form.Label>
+              <Form.Label>
+                <strong>
+                  <i class="fas fa-search-plus"></i> Rooms
+                </strong>
+              </Form.Label>
               <Form.Control as="select">
                 <option>Choose...</option>
                 {this.rooms.map(room => {
@@ -86,7 +102,11 @@ class Search extends Component {
               </Form.Control>
             </Form.Group>
             <Form.Group as={Col} controlId="people">
-              <Form.Label>People</Form.Label>
+              <Form.Label>
+                <strong>
+                  <i class="fas fa-user-friends"></i> People
+                </strong>
+              </Form.Label>
               <Form.Control as="select">
                 <option>Choose...</option>
                 {this.people.map(person => {
@@ -95,7 +115,7 @@ class Search extends Component {
               </Form.Control>
             </Form.Group>
           </Form.Row>
-          <Button type="submit" href="#">
+          <Button type="submit" href="#" className="btn btn-info">
             Search
           </Button>
         </Form>

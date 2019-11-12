@@ -6,11 +6,15 @@ import Modal from "../Modal";
 export class Header extends Component {
   render() {
     return (
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Worktopia</Navbar.Brand>
+      <Navbar bg="dark" expand="lg">
+        <Navbar.Brand className="text-warning" href="/main">
+          Worktopia
+        </Navbar.Brand>
         <Nav defaultActiveKey="/main" as="ul" class="nav justify-content-end">
           <Nav.Item as="li">
-            <Nav.Link href="/main">Home</Nav.Link>
+            <Nav.Link className="text-light" href="/main">
+              Home
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item as="li">
             <Modal />
