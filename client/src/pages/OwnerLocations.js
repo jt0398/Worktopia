@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { WorkspaceCard } from "../components/WorkspaceCard/index";
+import  WorkspaceCard  from "../components/WorkspaceCard";
 import AddressCard from "../components/AddressCard/index";
 import Container from "react-bootstrap/Container";
 
