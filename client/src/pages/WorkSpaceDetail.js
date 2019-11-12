@@ -21,7 +21,14 @@ class WorkSpaceDetail extends Component {
     workSpaceLocation: "",
     workSpaceOccupancy: 0,
     workSpaceDimensions: "",
-    workSpaceDailyRate: ""
+    workSpaceDailyRate: "",
+    selectedFile: null,
+    message: "Choose a file...",
+    defaultmessage: "Choose a file...",
+    uploading: false,
+    imageFileName: "",
+    activateWorkSpace: false,
+    features: {}
   };
 
   handleInputChange = event => {
@@ -31,22 +38,84 @@ class WorkSpaceDetail extends Component {
     });
   };
 
-  handleLocationSelection = (eventKey, event) => {
-    // const { name, value } = {event.target.name, eventKey};
+  handleDropDownSelection = (eventKey, event) => {
     this.setState({
-      workSpaceLocation: eventKey
+      [event.target.name]: eventKey
     });
   };
 
-  handleOccupancySelection = (eventKey, event) => {
-    this.setState({
-      workSpaceOccupancy: eventKey
-    });
+  validateFormCompletion = () => {
+    return !(
+      this.state.workSpaceName &&
+      this.state.workspaceDescription &&
+      this.state.workSpaceLocation &&
+      this.state.workSpaceOccupancy &&
+      this.state.workSpaceDimensions &&
+      this.state.workSpaceDailyRate
+    );
   };
 
   handleFormSubmit = event => {
     event.preventDefault();
     console.log(this.state);
+  };
+
+  handleFileChange = event => {
+    console.log("Detected file selection");
+    this.setState({
+      selectedFile: event.target.files[0],
+      message: event.target.files[0]
+        ? event.target.files[0].name
+        : this.state.defaultmessage
+    });
+  };
+  handleUpload = event => {
+    console.log("Going to upload selected file");
+
+    event.preventDefault();
+    if (this.state.uploading) {
+      return;
+    }
+    if (!this.state.selectedFile) {
+      this.setState({ message: "Select a file first" });
+      return;
+    }
+    this.setState({ uploading: true });
+
+    const data = new FormData();
+    data.append("file", this.state.selectedFile, this.state.selectedFile.name);
+    API.fileUpload(data)
+      .then(res => {
+        this.setState({
+          selectedFile: null,
+          message: "Uploaded successfully",
+          uploading: false,
+          imageFileName: res.data.saveAs
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({
+          uploading: false,
+          message: "Failed to upload"
+        });
+      });
+  };
+
+  handleFeatureSelection = event => {
+    this.setState({
+      features: {
+        ...this.state.features,
+        [event.target.id]: !this.state.features[event.target.id]
+      }
+    });
+  };
+
+  handleSwitchChange = event => {
+    console.log(event.target);
+    this.setState({
+      [event.target.id]: !this.state[event.target.id]
+    });
   };
 
   render() {
@@ -85,7 +154,8 @@ class WorkSpaceDetail extends Component {
                     {LOCATION_LIST.map(location => (
                       <Dropdown.Item
                         eventKey={location}
-                        onSelect={this.handleLocationSelection}
+                        key={location}
+                        onSelect={this.handleDropDownSelection}
                         name="workSpaceLocation"
                       >
                         {location}
@@ -104,7 +174,8 @@ class WorkSpaceDetail extends Component {
                     {NUMBER_OF_PEOPLE.map(number => (
                       <Dropdown.Item
                         eventKey={number}
-                        onSelect={this.handleOccupancySelection}
+                        key={number}
+                        onSelect={this.handleDropDownSelection}
                         name="workSpaceOccupancy"
                       >
                         {number}
@@ -133,8 +204,9 @@ class WorkSpaceDetail extends Component {
                 <br></br>
                 <Form.Check
                   type="switch"
-                  id="custom-switch"
+                  id="activateWorkSpace"
                   label="Activate Workspace"
+                  onChange={this.handleSwitchChange}
                 />
               </Form.Group>
 
@@ -142,16 +214,7 @@ class WorkSpaceDetail extends Component {
                 variant="primary"
                 type="submit"
                 className="btn btn-success"
-                disabled={
-                  !(
-                    this.state.workSpaceName &&
-                    this.state.workspaceDescription &&
-                    this.state.workSpaceLocation &&
-                    this.state.workSpaceOccupancy &&
-                    this.state.workSpaceDimensions &&
-                    this.state.workSpaceDailyRate
-                  )
-                }
+                disabled={this.validateFormCompletion()}
                 onClick={this.handleFormSubmit}
               >
                 Submit
@@ -160,8 +223,14 @@ class WorkSpaceDetail extends Component {
           </Col>
           <Col size="md-6">
             <Jumbotron>
-              <FileUpload></FileUpload>
-              <FeatureList></FeatureList>
+              <FileUpload
+                handleUpload={this.handleUpload.bind(this)}
+                handleFileChange={this.handleFileChange.bind(this)}
+                message={this.state.message}
+              ></FileUpload>
+              <FeatureList
+                handleFeatureSelection={this.handleFeatureSelection.bind(this)}
+              ></FeatureList>
             </Jumbotron>
             <Jumbotron>Calendar function</Jumbotron>
           </Col>
