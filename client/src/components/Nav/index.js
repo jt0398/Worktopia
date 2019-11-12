@@ -14,7 +14,6 @@ export class Header extends Component {
           </Nav.Item>
           <Nav.Item as="li">
             <Modal />
-            {/* <Nav.Link href="/">Login</Nav.Link> */}
           </Nav.Item>
         </Nav>
       </Navbar>

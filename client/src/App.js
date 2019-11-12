@@ -7,14 +7,12 @@ import WorkSpaceDetail from "./pages/WorkSpaceDetail";
 import SearchResults from "./pages/SearchResults";
 import BookWorkspace from "./pages/BookWorkspace";
 import NoMatch from "./pages/NoMatch";
-//import Jumbotron from "./components/Jumbotron";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <Router>
       <div>
-        {/* <Jumbotron /> */}
         <Nav />
         <Switch>
           <Route exact path="/" component={Login} />
