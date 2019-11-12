@@ -21,7 +21,12 @@ class WorkSpaceDetail extends Component {
     workSpaceLocation: "",
     workSpaceOccupancy: 0,
     workSpaceDimensions: "",
-    workSpaceDailyRate: ""
+    workSpaceDailyRate: "",
+    selectedFile: null,
+    message: "Choose a file...",
+    defaultmessage: "Choose a file...",
+    uploading: false,
+    imageFileName: ""
   };
 
   handleInputChange = event => {
@@ -44,11 +49,63 @@ class WorkSpaceDetail extends Component {
     });
   };
 
+  validateFormCompletion = () => {
+    return !(
+      this.state.workSpaceName &&
+      this.state.workspaceDescription &&
+      this.state.workSpaceLocation &&
+      this.state.workSpaceOccupancy &&
+      this.state.workSpaceDimensions &&
+      this.state.workSpaceDailyRate
+    );
+  };
+
   handleFormSubmit = event => {
     event.preventDefault();
     console.log(this.state);
   };
 
+  handleFileChange = event => {
+    console.log("Detected file selection");
+    this.setState({
+      selectedFile: event.target.files[0],
+      message: event.target.files[0]
+        ? event.target.files[0].name
+        : this.state.defaultmessage
+    });
+  };
+  handleUpload = event => {
+    console.log("Going to upload selected file");
+
+    event.preventDefault();
+    if (this.state.uploading) {
+      return;
+    }
+    if (!this.state.selectedFile) {
+      this.setState({ message: "Select a file first" });
+      return;
+    }
+    this.setState({ uploading: true });
+
+    const data = new FormData();
+    data.append("file", this.state.selectedFile, this.state.selectedFile.name);
+    API.fileUpload(data)
+      .then(res => {
+        this.setState({
+          selectedFile: null,
+          message: "Uploaded successfully",
+          uploading: false,
+          imageFileName: res.data.saveAs
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({
+          uploading: false,
+          message: "Failed to upload"
+        });
+      });
+  };
   render() {
     return (
       <Container fluid>
@@ -142,16 +199,7 @@ class WorkSpaceDetail extends Component {
                 variant="primary"
                 type="submit"
                 className="btn btn-success"
-                disabled={
-                  !(
-                    this.state.workSpaceName &&
-                    this.state.workspaceDescription &&
-                    this.state.workSpaceLocation &&
-                    this.state.workSpaceOccupancy &&
-                    this.state.workSpaceDimensions &&
-                    this.state.workSpaceDailyRate
-                  )
-                }
+                disabled={this.validateFormCompletion()}
                 onClick={this.handleFormSubmit}
               >
                 Submit
@@ -160,7 +208,11 @@ class WorkSpaceDetail extends Component {
           </Col>
           <Col size="md-6">
             <Jumbotron>
-              <FileUpload></FileUpload>
+              <FileUpload
+                handleUpload={this.handleUpload.bind(this)}
+                handleFileChange={this.handleFileChange.bind(this)}
+                message = {this.state.message}
+              ></FileUpload>
               <FeatureList></FeatureList>
             </Jumbotron>
             <Jumbotron>Calendar function</Jumbotron>
