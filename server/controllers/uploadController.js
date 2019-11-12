@@ -1,7 +1,6 @@
 const db = require("../models");
 var md5 = require("md5");
 
-// Defining methods for the booksController
 module.exports = {
   upload: function(req, res, next) {
     console.log("Going to upload");

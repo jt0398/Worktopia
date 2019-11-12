@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(20)
     },
     full_address: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       get() {
         return (
           this.getDataValue("addr1") +

@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(20)
     },
     rental_price: {
-      type: DataTypes.FLOAT(11, 10)
+      type: DataTypes.FLOAT(11, 4)
     },
     isActive: {
       type: DataTypes.BOOLEAN
