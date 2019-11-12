@@ -28,13 +28,6 @@ class WorkSpaceDetail extends Component {
     uploading: false,
     imageFileName: "",
     features: {
-      freeParking: false,
-      freeWifi: false,
-      playingArea: false,
-      lakeView: false,
-      gardenView: false,
-      projector: false,
-      computers: false
     }
   };
 
