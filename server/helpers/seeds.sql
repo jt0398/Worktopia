@@ -605,3 +605,31 @@ INSERT INTO `workspacepics` (
 VALUES(
 'https://ctfassets.imgix.net/6vy33zo2mgy3/4oFMBGbF3OG42iyOQMcSAW/c99ebea2c317927b8f288a30295309f8/20180131_Bryant_Park_Event_Space-1.jpg?auto=format%20compress&amp;fit=crop&amp;q=50&amp;w=600&amp;h=338 600w',
 6, now(), now());
+
+INSERT INTO `bookings`
+(
+`start_date`,`end_date`,`rental_price`,`createdAt`,`updatedAt`,`UserId`,`WorkspaceId`
+)
+VALUES(
+'2019-11-01','2019-11-07',250.00,now(), now(),2,1);
+
+INSERT INTO `bookings`
+(
+`start_date`,`end_date`,`rental_price`,`createdAt`,`updatedAt`,`UserId`,`WorkspaceId`
+)
+VALUES(
+'2019-11-01','2019-11-07',250.00,now(), now(),2,2);
+
+INSERT INTO `bookings`
+(
+`start_date`,`end_date`,`rental_price`,`createdAt`,`updatedAt`,`UserId`,`WorkspaceId`
+)
+VALUES(
+'2019-11-01','2019-11-07',250.00,now(), now(),2,3);
+
+INSERT INTO `bookings`
+(
+`start_date`,`end_date`,`rental_price`,`createdAt`,`updatedAt`,`UserId`,`WorkspaceId`
+)
+VALUES(
+'2019-11-01','2019-11-07',250.00,now(), now(),2,4);

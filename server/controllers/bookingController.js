@@ -1,15 +1,16 @@
 const db = require("../models");
 
 module.exports = {
-  findAllBy: function(req, res) {
+  findAll: function(req, res) {
     db.Booking.findAll({})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findAllByUser: function(req, res) {
     db.Booking.findAll({
+      where: { UserId: req.params.id },
       include: [
-        { model: [db.User], where: { id: req.params.id } },
+        //{ model: db.User, through: { where: { id: req.params.id } } },
         { model: db.Workspace, include: [{ model: db.WorkspacePic }] }
       ]
     })
@@ -28,7 +29,7 @@ module.exports = {
               include: [
                 {
                   model: db.User,
-                  where: { id: req.params.id }
+                  through: { where: { id: req.params.id } }
                 }
               ]
             }

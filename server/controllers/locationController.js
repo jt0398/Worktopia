@@ -12,9 +12,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findAllByOwner: function(req, res) {
-    db.WorkspaceLocation.findAll({
-      include: [{ model: [db.User], where: { id: req.params.id } }]
-    })
+    db.WorkspaceLocation.findAll({ where: { UserId: req.params.id } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }
