@@ -60,7 +60,7 @@ class Login extends Component {
               />
               <br></br>
 
-              <Button
+              <Button className="btn btn-info"
                 disabled={this.validateFormCompletion()}
                 onClick={this.handleFormSubmit}
               >
