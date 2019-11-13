@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import  WorkspaceCard  from "../components/WorkspaceCard";
-import AddressCard from "../components/AddressCard/index";
+import WorkspaceCard from "../components/WorkspaceCard";
+import { AddressNav, AddressNavItem } from "../components/AddressCard/index";
 import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+
 
 const workspaceInfo = [
     {
@@ -24,28 +27,37 @@ const workspaceInfo = [
     }
 ];
 
-const ownerAddress = [{ id: "Link-1", address: "555 Random St, Toronto" }, { id: "Link-2", address: "57, Building, Toronto" }];
+const ownerAddress = [{ id: "Link-1", address: "555 Random St, Toronto" },
+{ id: "Link-2", address: "57, Building, Toronto" },
+{ id: "Link-3", address: "234 Rathburn Drive" }];
 
 class OwnerLocations extends Component {
     state = {
         workspaceInfo,
         ownerAddress
-
     };
 
     render() {
         return (
             <>
                 <Container fluid>
-                    {this.state.ownerAddress.map(element =>
-                        <AddressCard id={element.id} address={element.address} />)}
-                </Container>
-                <Container fluid>
-                    {this.state.workspaceInfo.map(element =>
-                        <WorkspaceCard name={element.name} description={element.description}
-                            dimension={element.dimension} src={element.src} />
-                    )}
+                    <Row>
+                        <Col md={2}>
+                            <AddressNav>
+                                {this.state.ownerAddress.map(element =>
+                                    <AddressNavItem id={element.id} address={element.address} />)}
+                            </AddressNav>
+                        </Col>
+                       
+                        {this.state.workspaceInfo.map(element =>
+                            <Col md={3}>
+                                <WorkspaceCard name={element.name} description={element.description}
+                                    dimension={element.dimension} src={element.src} variant="top"/>
+                            </Col>
+                        )}
+                     
 
+                    </Row>
                 </Container>
 
             </>
