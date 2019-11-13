@@ -9,6 +9,9 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import FileUpload from "../components/FileUpload";
 import FeatureList from "../components/FeatureList";
+import "react-dates/initialize";
+import { DateRangePicker } from "react-dates";
+import "react-dates/lib/css/_datepicker.css";
 
 const LOCATION_LIST = ["Mississauga", "Toronto"];
 
@@ -28,8 +31,16 @@ class WorkSpaceDetail extends Component {
     uploading: false,
     imageFileName: "",
     activateWorkSpace: false,
-    features: {}
+    features: {},
+    startDate: null,
+    endDate: null,
+    focusedInput: null
   };
+
+  handleDateSelection = ({ startDate, endDate }) =>
+    this.setState({ startDate, endDate });
+
+  handleFocusChange = focusedInput => this.setState({ focusedInput });
 
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -51,7 +62,10 @@ class WorkSpaceDetail extends Component {
       this.state.workSpaceLocation &&
       this.state.workSpaceOccupancy &&
       this.state.workSpaceDimensions &&
-      this.state.workSpaceDailyRate
+      this.state.workSpaceDailyRate &&
+      this.state.startDate &&
+      this.state.endDate &&
+      this.state.imageFileName
     );
   };
 
@@ -228,11 +242,23 @@ class WorkSpaceDetail extends Component {
                 handleFileChange={this.handleFileChange.bind(this)}
                 message={this.state.message}
               ></FileUpload>
+              <br></br>
+              <DateRangePicker
+                startDate={this.state.startDate}
+                startDateId="startDate"
+                endDate={this.state.endDate}
+                endDateId="endDate"
+                onDatesChange={this.handleDateSelection}
+                focusedInput={this.state.focusedInput}
+                onFocusChange={this.handleFocusChange}
+              ></DateRangePicker>
+              <br></br>
+              <br></br>
+
               <FeatureList
                 handleFeatureSelection={this.handleFeatureSelection.bind(this)}
               ></FeatureList>
             </Jumbotron>
-            <Jumbotron>Calendar function</Jumbotron>
           </Col>
         </Row>
       </Container>
