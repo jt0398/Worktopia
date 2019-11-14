@@ -9,6 +9,7 @@ function WorkspaceCard({
   imgStyle,
   bodyStyle,
   src,
+  variant,
   name,
   description,
   dimension,
@@ -18,7 +19,7 @@ function WorkspaceCard({
     <Card className="my-3">
       <div className={rowStyle}>
         <div className={imgStyle}>
-          <Card.Img src={src} />
+          <Card.Img variant={variant} src={src} />
         </div>
         <div className={bodyStyle}>
           <Card.Body>
