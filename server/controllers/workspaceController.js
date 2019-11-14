@@ -1,6 +1,7 @@
 const db = require("../models");
 var Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+const Moment = require("moment");
 
 module.exports = {
   findAll: function(req, res) {
@@ -49,15 +50,14 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findBySearch: function(req, res) {
-    const {
-      location,
-      checkindate,
-      checkoutdate,
-      peoplecount,
-      roomcount
-    } = req.params;
+    console.log(Moment(req.body.checkindate));
+    const location = req.body.location;
+    const checkindate = Moment(req.body.checkindate);
+    const checkoutdate = Moment(req.body.checkoutdate);
+    const people = parseInt(req.body.people);
+    const room = parseInt(req.body.room);
 
-    const occupancy = peoplecount / roomcount;
+    const occupancy = Math.floor(people / room);
 
     db.Workspace.findAll({
       where: {
@@ -81,8 +81,8 @@ module.exports = {
         },
         { model: db.WorkspacePic, limit: 1 },
         {
-          model: db.WorkspaceAvailability,
-          where: { date: { [Op.between]: [checkindate, checkoutdate] } }
+          model: db.WorkspaceAvailability
+          //,where: { date: { [Op.between]: [checkindate, checkoutdate] } }
         }
       ]
     })

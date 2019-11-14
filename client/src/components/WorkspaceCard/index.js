@@ -12,7 +12,8 @@ function WorkspaceCard({
   name,
   description,
   dimension,
-  rental_price
+  rental_price,
+  fulladdress
 }) {
   return (
     <Card className="my-3">
@@ -24,10 +25,10 @@ function WorkspaceCard({
           <Card.Body>
             <Card.Title>{name}</Card.Title>
             <Card.Text>
-              Description: {description}
-              <br />
-              Dimensions: {dimension} <br />
-              {!imgStyle && `Price: ${rental_price}`}
+              <p>{fulladdress}</p>
+              <p>Description: {description}</p>
+              <p>Dimensions: {dimension}</p>
+              <p>{!imgStyle && `Price: ${rental_price}`}</p>
             </Card.Text>
           </Card.Body>
         </div>

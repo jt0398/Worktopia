@@ -50,7 +50,6 @@ class Search extends Component {
                 value={this.props.location}
                 name="location"
               />
-              {this.props.location}
             </Form.Group>
           </Form.Row>
           <Form.Row>
@@ -127,7 +126,19 @@ class Search extends Component {
               </Form.Control>
             </Form.Group>
           </Form.Row>
-          <Button type="submit" href="#" className="btn btn-info">
+          <Button
+            disabled={
+              this.props.location &&
+              this.props.checkinDate &&
+              this.props.checkoutDate &&
+              this.props.rooms &&
+              this.props.people
+            }
+            type="submit"
+            href="#"
+            className="btn btn-info"
+            onClick={this.props.onSubmit}
+          >
             Search
           </Button>
         </Form>

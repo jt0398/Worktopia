@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import API from "../utils/API";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,6 +9,7 @@ import Search from "../components/Search";
 import Map from "../components/Map";
 import axios from "axios";
 import Moment from "moment";
+import API from "../utils/workspaceAPI";
 
 class SearchResults extends Component {
   state = {
@@ -27,7 +27,6 @@ class SearchResults extends Component {
   // Handles updating component state when the user types into the input field
   handleSearchInputChange = event => {
     const { name, value } = event.target;
-    console.log(name, value);
 
     this.setState({
       searchParams: {
@@ -38,19 +37,21 @@ class SearchResults extends Component {
   };
 
   componentDidMount() {
-    this.loadWorkspaces();
+    //this.loadWorkspaces();
   }
 
   loadWorkspaces = () => {
-    /*  API.getWorkspaces()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-      )
-      .catch(err => console.log(err)); */
+    API.searchWorkspace(this.state.searchParams)
+      .then(res => {
+        console.log("test", res.data);
+        this.setState({ workspaces: res.data });
+      })
+      .catch(err => console.log(err));
   };
 
   handleFormSearch = event => {
     event.preventDefault();
+    this.loadWorkspaces();
   };
 
   handleFeatureSelect = event => {};
@@ -63,6 +64,7 @@ class SearchResults extends Component {
             <Search
               {...this.state.searchParams}
               onChange={this.handleSearchInputChange}
+              onSubmit={this.handleFormSearch}
             />
           </Col>
         </Row>
@@ -82,6 +84,11 @@ class SearchResults extends Component {
                   imgStyle="col-md-4"
                   bodyStyle="col-md-6"
                   {...workspace}
+                  src={
+                    workspace.WorkspacePics &&
+                    workspace.WorkspacePics[0].image_path
+                  }
+                  fulladdress={workspace.WorkspaceLocation.full_address}
                 />
               );
             })}
