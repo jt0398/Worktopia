@@ -1,4 +1,6 @@
 const db = require("../models");
+var Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 module.exports = {
   findAll: function(req, res) {
@@ -10,8 +12,10 @@ module.exports = {
     db.Booking.findAll({
       where: { UserId: req.params.id },
       include: [
-        //{ model: db.User, through: { where: { id: req.params.id } } },
-        { model: db.Workspace, include: [{ model: db.WorkspacePic }] }
+        {
+          model: db.Workspace,
+          include: [{ model: db.WorkspacePic }, { model: db.WorkspaceLocation }]
+        }
       ]
     })
       .then(dbModel => res.json(dbModel))
@@ -23,16 +27,16 @@ module.exports = {
         {
           model: db.Workspace,
           include: [
-            { model: db.WorkspacePic },
             {
               model: db.WorkspaceLocation,
-              include: [
-                {
-                  model: db.User,
-                  through: { where: { id: req.params.id } }
-                }
-              ]
-            }
+              where: {
+                [Op.and]: [
+                  { id: Sequelize.col("Workspace.WorkspaceLocationId") },
+                  { UserId: req.params.id }
+                ]
+              }
+            },
+            { model: db.WorkspacePic }
           ]
         }
       ]

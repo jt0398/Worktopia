@@ -10,4 +10,11 @@ router.route("/:id").get(workspaceController.findDetailById);
 /* .put(workspaceController.update)
   .delete(workspaceController.remove); */
 
+// Matches with "/api/workspace/search/result"
+router
+  .route(
+    "/search/results/:location/:checkindate/:checkoutdate/:peoplecount/:roomcount"
+  )
+  .get(workspaceController.findBySearch);
+
 module.exports = router;
