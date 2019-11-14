@@ -7,7 +7,6 @@ class Search extends Component {
   constructor(props) {
     super(props);
 
-    this.locations = ["Location 1", "Location 2", "Location 3"];
     this.people = [
       1,
       2,
@@ -33,36 +32,29 @@ class Search extends Component {
     this.rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   }
 
-  componentDidMount() {
-    this.loadLocations();
-  }
-
-  loadLocations = () => {
-    //Call API to get list of locations
-  };
-
   render() {
     return (
       <div className="my-5">
-        {/* <h5 className="mb-3">Search</h5> */}
         <Form>
           <Form.Row>
-            <Form.Group as={Col} controlId="location">
+            <Form.Group as={Col}>
               <Form.Label>
                 <strong>
                   <i class="fas fa-thumbtack"></i> Locations
                 </strong>
               </Form.Label>
-              <Form.Control as="select">
-                <option>Choose...</option>
-                {this.locations.map((location, index) => {
-                  return <option key={index}>{location}</option>;
-                })}
-              </Form.Control>
+              <Form.Control
+                type="text"
+                required
+                onChange={this.props.onChange}
+                value={this.props.location}
+                name="location"
+              />
+              {this.props.location}
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} controlId="checkinDate">
+            <Form.Group as={Col}>
               <Form.Label>
                 <strong>
                   <i class="fas fa-calendar-alt"></i> Check-In Date
@@ -73,9 +65,13 @@ class Search extends Component {
                 min="2019-11-11"
                 max="2020-03-31"
                 placeholder="YYYY/MM/DD"
+                required
+                onChange={this.props.onChange}
+                value={this.props.checkinDate}
+                name="checkinDate"
               />
             </Form.Group>
-            <Form.Group as={Col} controlId="checkoutDate">
+            <Form.Group as={Col}>
               <Form.Label>
                 <strong>
                   <i class="far fa-calendar-alt"></i> Check-Out Date
@@ -86,28 +82,44 @@ class Search extends Component {
                 min="2019-11-11"
                 max="2020-03-31"
                 placeholder="YYYY/MM/DD"
+                required
+                onChange={this.props.onChange}
+                value={this.props.checkoutDate}
+                name="checkoutDate"
               />
             </Form.Group>
-            <Form.Group as={Col} controlId="room">
+            <Form.Group as={Col}>
               <Form.Label>
                 <strong>
                   <i class="fas fa-search-plus"></i> Rooms
                 </strong>
               </Form.Label>
-              <Form.Control as="select">
+              <Form.Control
+                as="select"
+                required
+                onChange={this.props.onChange}
+                value={this.props.room}
+                name="room"
+              >
                 <option>Choose...</option>
                 {this.rooms.map((room, index) => {
                   return <option key={index}>{room}</option>;
                 })}
               </Form.Control>
             </Form.Group>
-            <Form.Group as={Col} controlId="people">
+            <Form.Group as={Col}>
               <Form.Label>
                 <strong>
                   <i class="fas fa-user-friends"></i> People
                 </strong>
               </Form.Label>
-              <Form.Control as="select">
+              <Form.Control
+                as="select"
+                required
+                onChange={this.props.onChange}
+                value={this.props.people}
+                name="people"
+              >
                 <option>Choose...</option>
                 {this.people.map((person, index) => {
                   return <option key={index}>{person}</option>;
