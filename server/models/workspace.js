@@ -43,6 +43,9 @@ module.exports = function(sequelize, DataTypes) {
     models.Workspace.hasMany(models.WorkspaceReview, {
       foreignKey: { allowNull: false }
     });
+    models.Workspace.hasMany(models.WorkspaceAvailability, {
+      foreignKey: { allowNull: false }
+    });
   };
 
   return Workspace;
