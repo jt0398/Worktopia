@@ -55,8 +55,8 @@ class Search extends Component {
               </Form.Label>
               <Form.Control as="select">
                 <option>Choose...</option>
-                {this.locations.map(location => {
-                  return <option>{location}</option>;
+                {this.locations.map((location, index) => {
+                  return <option key={index}>{location}</option>;
                 })}
               </Form.Control>
             </Form.Group>
@@ -96,8 +96,8 @@ class Search extends Component {
               </Form.Label>
               <Form.Control as="select">
                 <option>Choose...</option>
-                {this.rooms.map(room => {
-                  return <option>{room}</option>;
+                {this.rooms.map((room, index) => {
+                  return <option key={index}>{room}</option>;
                 })}
               </Form.Control>
             </Form.Group>
@@ -109,8 +109,8 @@ class Search extends Component {
               </Form.Label>
               <Form.Control as="select">
                 <option>Choose...</option>
-                {this.people.map(person => {
-                  return <option>{person}</option>;
+                {this.people.map((person, index) => {
+                  return <option key={index}>{person}</option>;
                 })}
               </Form.Control>
             </Form.Group>

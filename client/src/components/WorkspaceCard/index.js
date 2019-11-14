@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Label } from "../Form/index";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
@@ -34,7 +33,7 @@ function WorkspaceCard({
         {imgStyle && (
           <div className="col-md-2">
             <span className="align-middle">
-              Price: {rental_price} <br />{" "}
+              Price: {rental_price} <br />
               <Button type="submit" href="#">
                 Book
               </Button>
