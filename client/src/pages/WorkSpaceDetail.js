@@ -13,9 +13,11 @@ import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 
-const LOCATION_LIST = ["Mississauga", "Toronto"];
+// const LOCATION_LIST = ["Mississauga", "Toronto"];
 
-const NUMBER_OF_PEOPLE = [1, 2, 3];
+const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
+
+const FEATURE_LIST = [];
 
 class WorkSpaceDetail extends Component {
   state = {
@@ -34,7 +36,8 @@ class WorkSpaceDetail extends Component {
     features: {},
     startDate: null,
     endDate: null,
-    focusedInput: null
+    focusedInput: null,
+    LOCATION_LIST: []
   };
 
   handleDateSelection = ({ startDate, endDate }) =>
@@ -83,6 +86,7 @@ class WorkSpaceDetail extends Component {
         : this.state.defaultmessage
     });
   };
+
   handleUpload = event => {
     console.log("Going to upload selected file");
 
@@ -132,6 +136,36 @@ class WorkSpaceDetail extends Component {
     });
   };
 
+  componentDidMount = () => {
+    console.log("Component Did mount");
+    API.getWorkSpaceById(this.props.match.params.id)
+      .then(res => {
+        console.log(res.data[0]);
+        let fetchedWorkSpaceDetail = res.data[0];
+        this.setState({
+          workSpaceName: fetchedWorkSpaceDetail.name,
+          workspaceDescription: fetchedWorkSpaceDetail.description,
+          workSpaceLocation:
+            fetchedWorkSpaceDetail.WorkspaceLocation.full_address,
+          workSpaceOccupancy: fetchedWorkSpaceDetail.no_occupants,
+          workSpaceDimensions: fetchedWorkSpaceDetail.dimension,
+          workSpaceDailyRate: fetchedWorkSpaceDetail.rental_price,
+          activateWorkSpace: fetchedWorkSpaceDetail.isActive
+        });
+
+        let ownerId = fetchedWorkSpaceDetail.WorkspaceLocation.UserId;
+        API.getDistinctLocationsForOwner(ownerId)
+          .then(res => {
+            console.log(res.data);
+            res.data.forEach(location => {
+              this.setState({ LOCATION_LIST: [...this.state.LOCATION_LIST, location.full_address] });
+            });
+          })
+          .catch(err => console.error(err));
+      })
+      .catch(err => console.log(err));
+  };
+
   render() {
     return (
       <Container fluid>
@@ -165,7 +199,7 @@ class WorkSpaceDetail extends Component {
                       "Choose from your locations..."}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {LOCATION_LIST.map(location => (
+                    {this.state.LOCATION_LIST.map(location => (
                       <Dropdown.Item
                         eventKey={location}
                         key={location}
