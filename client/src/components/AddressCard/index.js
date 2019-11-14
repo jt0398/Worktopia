@@ -1,14 +1,15 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 
-function AddressCard({id, address}) {
+export function AddressNav({ children }) {
     return (
-
-            <Nav defaultActiveKey="/owner" className="flex-column">
-                <Nav.Link eventKey={id}>{address}</Nav.Link>
-            </Nav>
-           
+        <Nav defaultActiveKey="/owner" className="flex-column">{children}</Nav>
     );
 }
 
-export default AddressCard;
+export function AddressNavItem({ id, address }) {
+    return (
+        <Nav.Link eventKey={id}>{address}</Nav.Link>
+    );
+}
+
