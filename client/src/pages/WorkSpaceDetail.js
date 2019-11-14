@@ -13,11 +13,7 @@ import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 
-// const LOCATION_LIST = ["Mississauga", "Toronto"];
-
 const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
-
-const FEATURE_LIST = [];
 
 class WorkSpaceDetail extends Component {
   state = {
@@ -37,7 +33,8 @@ class WorkSpaceDetail extends Component {
     startDate: null,
     endDate: null,
     focusedInput: null,
-    LOCATION_LIST: []
+    LOCATION_LIST: [],
+    FEATURE_LIST: []
   };
 
   handleDateSelection = ({ startDate, endDate }) =>
@@ -78,7 +75,6 @@ class WorkSpaceDetail extends Component {
   };
 
   handleFileChange = event => {
-    console.log("Detected file selection");
     this.setState({
       selectedFile: event.target.files[0],
       message: event.target.files[0]
@@ -88,8 +84,6 @@ class WorkSpaceDetail extends Component {
   };
 
   handleUpload = event => {
-    console.log("Going to upload selected file");
-
     event.preventDefault();
     if (this.state.uploading) {
       return;
@@ -130,7 +124,6 @@ class WorkSpaceDetail extends Component {
   };
 
   handleSwitchChange = event => {
-    console.log(event.target);
     this.setState({
       [event.target.id]: !this.state[event.target.id]
     });
@@ -138,9 +131,23 @@ class WorkSpaceDetail extends Component {
 
   componentDidMount = () => {
     console.log("Component Did mount");
+    API.getFeatureList().then(res => {
+      res.data.forEach(feature => {
+        this.setState({
+          FEATURE_LIST: [
+            ...this.state.FEATURE_LIST,
+            { name: feature.name, label: feature.id, status: false }
+          ],
+          features: {
+            ...this.state.features,
+            [feature.id]: false
+          }
+        });
+      });
+      console.log(this.state.FEATURE_LIST);
+    });
     API.getWorkSpaceById(this.props.match.params.id)
       .then(res => {
-        console.log(res.data[0]);
         let fetchedWorkSpaceDetail = res.data[0];
         this.setState({
           workSpaceName: fetchedWorkSpaceDetail.name,
@@ -153,17 +160,41 @@ class WorkSpaceDetail extends Component {
           activateWorkSpace: fetchedWorkSpaceDetail.isActive
         });
 
+        fetchedWorkSpaceDetail.Features.forEach(workspaceFeature => {
+          console.log(workspaceFeature);
+          this.setState({
+            FEATURE_LIST: [
+              ...this.state.FEATURE_LIST,
+              {
+                name: workspaceFeature.name,
+                label: workspaceFeature.WorkspaceFeature.FeatureId,
+                status: workspaceFeature.WorkspaceFeature.status
+              }
+            ],
+
+            features: {
+              ...this.state.features,
+              [workspaceFeature.WorkspaceFeature.FeatureId]:
+                workspaceFeature.WorkspaceFeature.status
+            }
+          });
+        });
+
         let ownerId = fetchedWorkSpaceDetail.WorkspaceLocation.UserId;
         API.getDistinctLocationsForOwner(ownerId)
           .then(res => {
-            console.log(res.data);
             res.data.forEach(location => {
-              this.setState({ LOCATION_LIST: [...this.state.LOCATION_LIST, location.full_address] });
+              this.setState({
+                LOCATION_LIST: [
+                  ...this.state.LOCATION_LIST,
+                  location.full_address
+                ]
+              });
             });
           })
           .catch(err => console.error(err));
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   };
 
   render() {
@@ -291,6 +322,7 @@ class WorkSpaceDetail extends Component {
 
               <FeatureList
                 handleFeatureSelection={this.handleFeatureSelection.bind(this)}
+                features={this.state.FEATURE_LIST}
               ></FeatureList>
             </Jumbotron>
           </Col>

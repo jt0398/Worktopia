@@ -29,5 +29,8 @@ export default {
   },
   getDistinctLocationsForOwner(ownerId) {
     return axios.get(`/api/owner/locations/${ownerId}`);
+  },
+  getFeatureList() {
+    return axios.get("/api/features");
   }
 };
