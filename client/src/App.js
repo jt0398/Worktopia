@@ -9,6 +9,8 @@ import WorkSpaceDetail from "./pages/WorkSpaceDetail";
 import SearchResults from "./pages/SearchResults";
 import BookWorkspace from "./pages/BookWorkspace";
 import NoMatch from "./pages/NoMatch";
+import "./pages/css/MainPage.css";
+// "./css/MainPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
