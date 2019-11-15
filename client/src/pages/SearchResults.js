@@ -7,8 +7,7 @@ import FeatureList from "../components/FeatureList";
 import WorkspaceCard from "../components/WorkspaceCard";
 import Search from "../components/Search";
 import Map from "../components/Map";
-import axios from "axios";
-import Moment from "moment";
+import moment from "moment";
 import API from "../utils/workspaceAPI";
 
 class SearchResults extends Component {
@@ -17,8 +16,8 @@ class SearchResults extends Component {
     workspaces: [],
     searchParams: {
       location: "",
-      checkinDate: new Moment().format("YYYY-MM-DD"),
-      checkoutDate: new Moment().format("YYYY-MM-DD"),
+      checkinDate: moment(new Date(), "yyyy-mm-dd"),
+      checkoutDate: moment(new Date(), "yyyy-mm-dd"),
       room: 0,
       people: 0
     }
@@ -35,6 +34,15 @@ class SearchResults extends Component {
       }
     });
   };
+
+  handleCheckInChange = date =>
+    this.setState({
+      searchParams: { ...this.state.searchParams, checkinDate: date }
+    });
+  handleCheckOutChange = date =>
+    this.setState({
+      searchParams: { ...this.state.searchParams, checkoutDate: date }
+    });
 
   componentDidMount() {
     //this.loadWorkspaces();
@@ -65,6 +73,8 @@ class SearchResults extends Component {
               {...this.state.searchParams}
               onChange={this.handleSearchInputChange}
               onSubmit={this.handleFormSearch}
+              onCheckInChange={this.handleCheckInChange}
+              onCheckOutChange={this.handleCheckOutChange}
             />
           </Col>
         </Row>

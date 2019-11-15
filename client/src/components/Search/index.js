@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { SingleDatePicker } from "react-dates";
+import "./style.css";
 
 class Search extends Component {
   constructor(props) {
@@ -32,6 +34,11 @@ class Search extends Component {
     this.rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   }
 
+  state = {
+    focusedCheckIn: null,
+    focusedCheckOut: null
+  };
+
   render() {
     return (
       <div className="my-5">
@@ -59,15 +66,15 @@ class Search extends Component {
                   <i class="fas fa-calendar-alt"></i> Check-In Date
                 </strong>
               </Form.Label>
-              <Form.Control
-                type="date"
-                min="2019-11-11"
-                max="2020-03-31"
-                placeholder="YYYY/MM/DD"
-                required
-                onChange={this.props.onChange}
-                value={this.props.checkinDate}
-                name="checkinDate"
+              <SingleDatePicker
+                date={this.props.checkinDate} // momentPropTypes.momentObj or null
+                onDateChange={this.props.onCheckInChange} // PropTypes.func.isRequired
+                focused={this.state.focusedCheckIn} // PropTypes.bool
+                onFocusChange={({ focused }) =>
+                  this.setState({ focusedCheckIn: focused })
+                } // PropTypes.func.isRequired
+                id="checkinDate" // PropTypes.string.isRequired
+                block
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -76,15 +83,15 @@ class Search extends Component {
                   <i class="far fa-calendar-alt"></i> Check-Out Date
                 </strong>
               </Form.Label>
-              <Form.Control
-                type="date"
-                min="2019-11-11"
-                max="2020-03-31"
-                placeholder="YYYY/MM/DD"
-                required
-                onChange={this.props.onChange}
-                value={this.props.checkoutDate}
-                name="checkoutDate"
+              <SingleDatePicker
+                date={this.props.checkoutDate} // momentPropTypes.momentObj or null
+                onDateChange={this.props.onCheckOutChange} // PropTypes.func.isRequired
+                focused={this.state.focusedCheckOut} // PropTypes.bool
+                onFocusChange={({ focused }) =>
+                  this.setState({ focusedCheckOut: focused })
+                } // PropTypes.func.isRequired
+                id="checkoutDate" // PropTypes.string.isRequired
+                block
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -127,13 +134,6 @@ class Search extends Component {
             </Form.Group>
           </Form.Row>
           <Button
-            disabled={
-              this.props.location &&
-              this.props.checkinDate &&
-              this.props.checkoutDate &&
-              this.props.rooms &&
-              this.props.people
-            }
             type="submit"
             href="#"
             className="btn btn-info"
