@@ -23,5 +23,14 @@ export default {
   },
   fileUpload: function(data) {
     return axios.post("/api/upload", data);
+  },
+  getWorkSpaceById(workSpaceId) {
+    return axios.get(`/api/workspace/${workSpaceId}`);
+  },
+  getDistinctLocationsForOwner(ownerId) {
+    return axios.get(`/api/owner/locations/${ownerId}`);
+  },
+  getFeatureList() {
+    return axios.get("/api/features");
   }
 };

@@ -5,6 +5,8 @@ const uploadRoutes = require("./upload");
 const workspaceRoutes = require("./workspace");
 const locationRoutes = require("./location");
 const bookingRoutes = require("./booking");
+const ownerRoutes = require("./owner");
+const featureRoutes = require("./feature");
 
 router.use("/user", userRoutes);
 router.use("/login", loginRoutes);
@@ -12,5 +14,7 @@ router.use("/upload", uploadRoutes);
 router.use("/workspace", workspaceRoutes);
 router.use("/location", locationRoutes);
 router.use("/booking", bookingRoutes);
+router.use("/owner", ownerRoutes);
+router.use("/features", featureRoutes);
 
 module.exports = router;
