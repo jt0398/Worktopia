@@ -13,9 +13,7 @@ import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 
-const LOCATION_LIST = ["Mississauga", "Toronto"];
-
-const NUMBER_OF_PEOPLE = [1, 2, 3];
+const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
 
 class WorkSpaceDetail extends Component {
   state = {
@@ -31,10 +29,11 @@ class WorkSpaceDetail extends Component {
     uploading: false,
     imageFileName: "",
     activateWorkSpace: false,
-    features: {},
     startDate: null,
     endDate: null,
-    focusedInput: null
+    focusedInput: null,
+    LOCATION_LIST: [],
+    FEATURE_LIST: []
   };
 
   handleDateSelection = ({ startDate, endDate }) =>
@@ -75,7 +74,6 @@ class WorkSpaceDetail extends Component {
   };
 
   handleFileChange = event => {
-    console.log("Detected file selection");
     this.setState({
       selectedFile: event.target.files[0],
       message: event.target.files[0]
@@ -83,9 +81,8 @@ class WorkSpaceDetail extends Component {
         : this.state.defaultmessage
     });
   };
-  handleUpload = event => {
-    console.log("Going to upload selected file");
 
+  handleUpload = event => {
     event.preventDefault();
     if (this.state.uploading) {
       return;
@@ -117,19 +114,82 @@ class WorkSpaceDetail extends Component {
   };
 
   handleFeatureSelection = event => {
-    this.setState({
-      features: {
-        ...this.state.features,
-        [event.target.id]: !this.state.features[event.target.id]
+    let featureIdToBeUpated = event.target.id;
+    let tempArray = this.state.FEATURE_LIST;
+    for (var i in tempArray) {
+      if (tempArray[i].label.toString() === featureIdToBeUpated) {
+        tempArray[i].status = !tempArray[i].status;
+        break; //Stop this loop, we found it!
       }
+    }
+    console.log(tempArray);
+    this.setState({
+      FEATURE_LIST: tempArray
     });
   };
 
   handleSwitchChange = event => {
-    console.log(event.target);
     this.setState({
       [event.target.id]: !this.state[event.target.id]
     });
+  };
+
+  componentDidMount = () => {
+    console.log("Component Did mount");
+    var tempFeatureList = [];
+    API.getFeatureList().then(res => {
+      res.data.forEach(feature => {
+        tempFeatureList.push({
+          name: feature.name,
+          label: feature.id,
+          status: false
+        });
+      });
+    });
+    API.getWorkSpaceById(this.props.match.params.id)
+      .then(res => {
+        let fetchedWorkSpaceDetail = res.data[0];
+        this.setState({
+          workSpaceName: fetchedWorkSpaceDetail.name,
+          workspaceDescription: fetchedWorkSpaceDetail.description,
+          workSpaceLocation:
+            fetchedWorkSpaceDetail.WorkspaceLocation.full_address,
+          workSpaceOccupancy: fetchedWorkSpaceDetail.no_occupants,
+          workSpaceDimensions: fetchedWorkSpaceDetail.dimension,
+          workSpaceDailyRate: fetchedWorkSpaceDetail.rental_price,
+          activateWorkSpace: fetchedWorkSpaceDetail.isActive
+        });
+
+        fetchedWorkSpaceDetail.Features.forEach(workspaceFeature => {
+          let featureIdToBeUpated = workspaceFeature.WorkspaceFeature.FeatureId;
+          let featureStatusToBeUpdated =
+            workspaceFeature.WorkspaceFeature.status;
+          for (var i in tempFeatureList) {
+            if (tempFeatureList[i].label === featureIdToBeUpated) {
+              tempFeatureList[i].status = featureStatusToBeUpdated;
+              break; //Stop this loop, we found it!
+            }
+          }
+          this.setState({
+            FEATURE_LIST: tempFeatureList
+          });
+        });
+
+        let ownerId = fetchedWorkSpaceDetail.WorkspaceLocation.UserId;
+        API.getDistinctLocationsForOwner(ownerId)
+          .then(res => {
+            res.data.forEach(location => {
+              this.setState({
+                LOCATION_LIST: [
+                  ...this.state.LOCATION_LIST,
+                  location.full_address
+                ]
+              });
+            });
+          })
+          .catch(err => console.error(err));
+      })
+      .catch(err => console.error(err));
   };
 
   render() {
@@ -165,7 +225,7 @@ class WorkSpaceDetail extends Component {
                       "Choose from your locations..."}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {LOCATION_LIST.map(location => (
+                    {this.state.LOCATION_LIST.map(location => (
                       <Dropdown.Item
                         eventKey={location}
                         key={location}
@@ -220,6 +280,7 @@ class WorkSpaceDetail extends Component {
                   type="switch"
                   id="activateWorkSpace"
                   label="Activate Workspace"
+                  checked={this.state.activateWorkSpace}
                   onChange={this.handleSwitchChange}
                 />
               </Form.Group>
@@ -257,6 +318,7 @@ class WorkSpaceDetail extends Component {
 
               <FeatureList
                 handleFeatureSelection={this.handleFeatureSelection.bind(this)}
+                features={this.state.FEATURE_LIST}
               ></FeatureList>
             </Jumbotron>
           </Col>

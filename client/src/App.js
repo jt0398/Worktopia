@@ -22,6 +22,7 @@ function App() {
           <Route exact path="/" component={Login} />
           <Route exact path="/main" component={MainPage} />
           <Route exact path="/workspacedetail" component={WorkSpaceDetail} />
+          <Route exact path="/workspacedetail/:id" component={WorkSpaceDetail} />
           <Route exact path="/searchresults" component={SearchResults} />
           <Route exact path="/workspacebooking" component={BookWorkspace} />
           <Route exact path="/owner" component={OwnerLocations} />
