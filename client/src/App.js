@@ -11,6 +11,8 @@ import BookWorkspace from "./pages/BookWorkspace";
 import OwnerBooking from "./pages/ownerBooking";
 import UserBooking from "./pages/userBooking";
 import NoMatch from "./pages/NoMatch";
+import "./pages/css/MainPage.css";
+// "./css/MainPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
