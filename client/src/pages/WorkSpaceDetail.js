@@ -29,7 +29,6 @@ class WorkSpaceDetail extends Component {
     uploading: false,
     imageFileName: "",
     activateWorkSpace: false,
-    features: {},
     startDate: null,
     endDate: null,
     focusedInput: null,
@@ -115,11 +114,17 @@ class WorkSpaceDetail extends Component {
   };
 
   handleFeatureSelection = event => {
-    this.setState({
-      features: {
-        ...this.state.features,
-        [event.target.id]: !this.state.features[event.target.id]
+    let featureIdToBeUpated = event.target.id;
+    let tempArray = this.state.FEATURE_LIST;
+    for (var i in tempArray) {
+      if (tempArray[i].label.toString() === featureIdToBeUpated) {
+        tempArray[i].status = !tempArray[i].status;
+        break; //Stop this loop, we found it!
       }
+    }
+    console.log(tempArray);
+    this.setState({
+      FEATURE_LIST: tempArray
     });
   };
 
@@ -131,20 +136,15 @@ class WorkSpaceDetail extends Component {
 
   componentDidMount = () => {
     console.log("Component Did mount");
+    var tempFeatureList = [];
     API.getFeatureList().then(res => {
       res.data.forEach(feature => {
-        this.setState({
-          FEATURE_LIST: [
-            ...this.state.FEATURE_LIST,
-            { name: feature.name, label: feature.id, status: false }
-          ],
-          features: {
-            ...this.state.features,
-            [feature.id]: false
-          }
+        tempFeatureList.push({
+          name: feature.name,
+          label: feature.id,
+          status: false
         });
       });
-      console.log(this.state.FEATURE_LIST);
     });
     API.getWorkSpaceById(this.props.match.params.id)
       .then(res => {
@@ -161,22 +161,17 @@ class WorkSpaceDetail extends Component {
         });
 
         fetchedWorkSpaceDetail.Features.forEach(workspaceFeature => {
-          console.log(workspaceFeature);
-          this.setState({
-            FEATURE_LIST: [
-              ...this.state.FEATURE_LIST,
-              {
-                name: workspaceFeature.name,
-                label: workspaceFeature.WorkspaceFeature.FeatureId,
-                status: workspaceFeature.WorkspaceFeature.status
-              }
-            ],
-
-            features: {
-              ...this.state.features,
-              [workspaceFeature.WorkspaceFeature.FeatureId]:
-                workspaceFeature.WorkspaceFeature.status
+          let featureIdToBeUpated = workspaceFeature.WorkspaceFeature.FeatureId;
+          let featureStatusToBeUpdated =
+            workspaceFeature.WorkspaceFeature.status;
+          for (var i in tempFeatureList) {
+            if (tempFeatureList[i].label === featureIdToBeUpated) {
+              tempFeatureList[i].status = featureStatusToBeUpdated;
+              break; //Stop this loop, we found it!
             }
+          }
+          this.setState({
+            FEATURE_LIST: tempFeatureList
           });
         });
 
@@ -285,6 +280,7 @@ class WorkSpaceDetail extends Component {
                   type="switch"
                   id="activateWorkSpace"
                   label="Activate Workspace"
+                  checked={this.state.activateWorkSpace}
                   onChange={this.handleSwitchChange}
                 />
               </Form.Group>

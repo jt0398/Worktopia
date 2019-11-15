@@ -15,7 +15,7 @@ class FeatureList extends Component {
                 id={feature.label}
                 label={feature.name}
                 onChange={this.props.handleFeatureSelection}
-                defaultChecked={feature.status}
+                checked={feature.status}
               />
             </div>
           );
