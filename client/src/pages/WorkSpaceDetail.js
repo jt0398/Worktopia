@@ -17,9 +17,11 @@ const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
 
 class WorkSpaceDetail extends Component {
   state = {
+    workSpaceId: 0,
     workSpaceName: "",
     workspaceDescription: "",
     workSpaceLocation: "",
+    workSpaceLocationName: "",
     workSpaceOccupancy: 0,
     workSpaceDimensions: "",
     workSpaceDailyRate: "",
@@ -49,9 +51,15 @@ class WorkSpaceDetail extends Component {
   };
 
   handleDropDownSelection = (eventKey, event) => {
+    const { name, id } = event.target;
     this.setState({
-      [event.target.name]: eventKey
+      [name]: parseInt(id)
     });
+    if (name === "workSpaceLocation") {
+      this.setState({
+        workSpaceLocationName: eventKey
+      });
+    }
   };
 
   validateFormCompletion = () => {
@@ -70,7 +78,17 @@ class WorkSpaceDetail extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
+    let workSpaceDetailObject = this.state;
+    delete workSpaceDetailObject.selectedFile;
+    delete workSpaceDetailObject.message;
+    delete workSpaceDetailObject.defaultmessage;
+    delete workSpaceDetailObject.uploading;
+    delete workSpaceDetailObject.focusedInput;
+    delete workSpaceDetailObject.LOCATION_LIST;
+    console.log(workSpaceDetailObject);
+    API.updateWorkSpaceObject(workSpaceDetailObject)
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err));
   };
 
   handleFileChange = event => {
@@ -150,6 +168,7 @@ class WorkSpaceDetail extends Component {
       .then(res => {
         let fetchedWorkSpaceDetail = res.data[0];
         this.setState({
+          workSpaceId: parseInt(this.props.match.params.id),
           workSpaceName: fetchedWorkSpaceDetail.name,
           workspaceDescription: fetchedWorkSpaceDetail.description,
           workSpaceLocation:
@@ -182,7 +201,7 @@ class WorkSpaceDetail extends Component {
               this.setState({
                 LOCATION_LIST: [
                   ...this.state.LOCATION_LIST,
-                  location.full_address
+                  { fullAdress: location.full_address, locationId: location.id }
                 ]
               });
             });
@@ -221,18 +240,19 @@ class WorkSpaceDetail extends Component {
                 <Form.Label>Workspace Location</Form.Label>
                 <Dropdown>
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    {this.state.workSpaceLocation ||
+                    {this.state.workSpaceLocationName ||
                       "Choose from your locations..."}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     {this.state.LOCATION_LIST.map(location => (
                       <Dropdown.Item
-                        eventKey={location}
-                        key={location}
+                        eventKey={location.fullAdress}
+                        key={location.locationId}
+                        id={location.locationId}
                         onSelect={this.handleDropDownSelection}
                         name="workSpaceLocation"
                       >
-                        {location}
+                        {location.fullAdress}
                       </Dropdown.Item>
                     ))}
                   </Dropdown.Menu>
@@ -249,6 +269,7 @@ class WorkSpaceDetail extends Component {
                       <Dropdown.Item
                         eventKey={number}
                         key={number}
+                        id={number}
                         onSelect={this.handleDropDownSelection}
                         name="workSpaceOccupancy"
                       >

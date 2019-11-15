@@ -88,5 +88,78 @@ module.exports = {
     })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  updateWorkSpaceDetail: function(req, res) {
+    // res.send(req.body);
+    var workSpaceDetailObject = req.body;
+    var updatedWorkSpaceHeader;
+
+    var workSpace = {
+      name: req.body.workSpaceName,
+      description: req.body.workspaceDescription,
+      dimension: req.body.workSpaceDimensions,
+      no_occupants: req.body.workSpaceOccupancy,
+      floor: 1,
+      rental_price: req.body.workSpaceDailyRate,
+      isActive: req.body.activateWorkSpace,
+      WorkspaceLocationId: req.body.workSpaceLocation
+    };
+
+    db.sequelizeConnection
+      .transaction(t => {
+        return db.Workspace.update(
+          workSpace,
+          { where: { id: req.body.workSpaceId } },
+          { transaction: t }
+        ).then(updatedWorkSpace => {
+          updatedWorkSpaceHeader = updatedWorkSpace;
+          var workSpacePromises = [];
+          req.body.FEATURE_LIST.forEach(feature => {
+            var workSpaceFeature = {
+              status: feature.status,
+              WorkspaceId: req.body.workSpaceId,
+              FeatureId: feature.label
+            };
+            workSpacePromises.push(
+              db.WorkspaceFeature.upsert(
+                workSpaceFeature,
+                {
+                  where: {
+                    WorkspaceId: req.body.workSpaceId,
+                    FeatureId: feature.label
+                  }
+                },
+                { transaction: t }
+              )
+            );
+          });
+          var workSpacePic = {
+            image_path: req.body.imageFileName,
+            // image_path: null,
+            WorkspaceId: req.body.workSpaceId
+          };
+          workSpacePromises.push(
+            db.WorkspacePic.upsert(
+              workSpacePic,
+              {
+                where: {
+                  image_path: req.body.imageFileName,
+                  // image_path: null,
+                  WorkspaceId: req.body.workSpaceId
+                }
+              },
+              { transaction: t }
+            )
+          );
+          return Sequelize.Promise.all(workSpacePromises);
+        });
+      })
+      .then(() => {
+        res.json(updatedWorkSpaceHeader);
+      })
+      .catch(function(error) {
+        console.log(error);
+        res.sendStatus(400);
+      });
   }
 };
