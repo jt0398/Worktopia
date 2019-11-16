@@ -23,5 +23,32 @@ export default {
   },
   fileUpload: function(data) {
     return axios.post("/api/upload", data);
+  },
+  getWorkSpaceById(workSpaceId) {
+    return axios.get(`/api/workspace/${workSpaceId}`);
+  },
+  getDistinctLocationsForOwner(ownerId) {
+    return axios.get(`/api/owner/locations/${ownerId}`);
+  },
+  getFeatureList() {
+    return axios.get("/api/features");
+  },
+  updateWorkSpaceObject(workSpaceDetailObject) {
+    return axios.put(
+      `/api/workspace/${workSpaceDetailObject.workSpaceId}`,
+      workSpaceDetailObject
+    );
+  },
+  getBookingByWorkspace(workSpaceId) {
+    return axios.get(`/api/booking/workspace/${workSpaceId}`);
+  },
+  saveLocation: function(locationData) {
+    return axios.post("/api/location/add", locationData);
+  },
+  getLocations: function() {
+    return axios.get("/api/location");
+  },
+  getLocation: function(locationId) {
+    return axios.get("/api/location/" + locationId);
   }
 };

@@ -27,7 +27,11 @@ export class Header extends Component {
               </Nav.Item>
             </Nav>
           </Navbar>
+<<<<<<< HEAD
         
+=======
+        {/* </div> */}
+>>>>>>> origin
       </>
     );
   }

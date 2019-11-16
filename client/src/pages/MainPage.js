@@ -98,7 +98,7 @@ class MainPage extends Component {
             to pot-lucks. Here are seven of Toronto’s best coworking spaces.
           </p>
         </div>
-         <div className="searchBars"></div>'
+        <div className="searchBars"></div>'
         <Footer />
       </Container>
     );

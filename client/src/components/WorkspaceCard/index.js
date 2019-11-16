@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Label } from "../Form/index";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
@@ -13,7 +12,8 @@ function WorkspaceCard({
   name,
   description,
   dimension,
-  rental_price
+  rental_price,
+  fulladdress
 }) {
   return (
     <Card className="my-3">
@@ -25,9 +25,19 @@ function WorkspaceCard({
           <Card.Body>
             <Card.Title>{name}</Card.Title>
             <Card.Text>
-              Description: {description}
+              {fulladdress}
               <br />
-              Dimensions: {dimension} <br />
+              <br />
+              {description && (
+                <>
+                  Description: {description} <br />
+                </>
+              )}
+              {dimension && (
+                <>
+                  Dimensions: {dimension} <br />
+                </>
+              )}
               {!imgStyle && `Price: ${rental_price}`}
             </Card.Text>
           </Card.Body>
@@ -35,7 +45,7 @@ function WorkspaceCard({
         {imgStyle && (
           <div className="col-md-2">
             <span className="align-middle">
-              Price: {rental_price} <br />{" "}
+              Price: {rental_price} <br />
               <Button type="submit" href="#">
                 Book
               </Button>

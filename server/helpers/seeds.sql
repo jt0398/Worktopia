@@ -299,73 +299,80 @@ VALUES ('Corporate Event Spaces'
 , now(), now()
 ,1,4);
 
-INSERT INTO workspacefeature (
+INSERT INTO WorkspaceFeatures (
 `createdAt`,
 `updatedAt`,
 `FeatureId`,
-`WorkspaceId`
+`WorkspaceId`,
+`status`
 )
 VALUES 
-(now(), now(),1,1),
-(now(), now(),2,1),
-(now(), now(),4,1);
+(now(), now(),1,1,true),
+(now(), now(),2,1,false),
+(now(), now(),4,1,true);
 
-INSERT INTO workspacefeature (
+INSERT INTO WorkspaceFeatures (
 `createdAt`,
 `updatedAt`,
 `FeatureId`,
-`WorkspaceId`
-)
-VALUES 
-(now(), now(),1,2),
-(now(), now(),2,2),
-(now(), now(),6,2);
+`WorkspaceId`,
+`status`
 
-INSERT INTO workspacefeature (
-`createdAt`,
-`updatedAt`,
-`FeatureId`,
-`WorkspaceId`
 )
 VALUES 
-(now(), now(),1,3),
-(now(), now(),2,3),
-(now(), now(),6,3);
+(now(), now(),1,2,false),
+(now(), now(),2,2,false),
+(now(), now(),6,2,true);
 
-INSERT INTO workspacefeature (
+INSERT INTO WorkspaceFeatures (
 `createdAt`,
 `updatedAt`,
 `FeatureId`,
-`WorkspaceId`
+`WorkspaceId`,
+`status`
 )
 VALUES 
-(now(), now(),1,4),
-(now(), now(),2,4),
-(now(), now(),3,4),
-(now(), now(),6,4);
+(now(), now(),1,3,true),
+(now(), now(),2,3,true),
+(now(), now(),6,3,true);
 
-INSERT INTO workspacefeature (
+INSERT INTO WorkspaceFeatures (
 `createdAt`,
 `updatedAt`,
 `FeatureId`,
-`WorkspaceId`
+`WorkspaceId`,
+`status`
 )
 VALUES 
-(now(), now(),1,5),
-(now(), now(),2,5),
-(now(), now(),5,5),
-(now(), now(),7,5);
+(now(), now(),1,4,false),
+(now(), now(),2,4,true),
+(now(), now(),3,4,true),
+(now(), now(),6,4,true);
 
-INSERT INTO workspacefeature (
+INSERT INTO WorkspaceFeatures (
 `createdAt`,
 `updatedAt`,
 `FeatureId`,
-`WorkspaceId`
+`WorkspaceId`,
+`status`
 )
 VALUES 
-(now(), now(),1,6),
-(now(), now(),2,6),
-(now(), now(),4,6);
+(now(), now(),1,5,false),
+(now(), now(),2,5,true),
+(now(), now(),5,5,true),
+(now(), now(),7,5,true);
+
+INSERT INTO WorkspaceFeatures (
+`createdAt`,
+`updatedAt`,
+`FeatureId`,
+`WorkspaceId`,
+`status`
+)
+VALUES 
+(now(), now(),1,6,false),
+(now(), now(),2,6,false),
+(now(), now(),4,6,false);
 
 INSERT INTO workspaceavailabilities (
 `date`,

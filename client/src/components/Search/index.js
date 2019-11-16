@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { SingleDatePicker } from "react-dates";
+import "./style.css";
 
 class Search extends Component {
   constructor(props) {
     super(props);
 
-    this.locations = ["Location 1", "Location 2", "Location 3"];
     this.people = [
       1,
       2,
@@ -33,12 +34,9 @@ class Search extends Component {
     this.rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   }
 
-  componentDidMount() {
-    this.loadLocations();
-  }
-
-  loadLocations = () => {
-    //Call API to get list of locations
+  state = {
+    focusedCheckIn: null,
+    focusedCheckOut: null
   };
 
   render() {

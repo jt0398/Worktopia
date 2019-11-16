@@ -1,61 +1,110 @@
 import React, { Component } from "react";
-import API from "../utils/API";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import CardDeck from "react-bootstrap/CardDeck";
 import FeatureList from "../components/FeatureList";
 import WorkspaceCard from "../components/WorkspaceCard";
 import Search from "../components/Search";
+import Map from "../components/Map";
+import moment from "moment";
+import API from "../utils/workspaceAPI";
+import HashMap from "hashmap";
 
 class SearchResults extends Component {
   state = {
-    workspaces: [
-      {
-        name: "Workspace 1",
-        src:
-          "https://www.spacesworks.com/wp-content/uploads/2016/03/membership-coworking-spaces.png",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        dimension: "10ft x 10ft",
-        rental_price: "$100.00"
-      },
-      {
-        name: "Workspace 2",
-        src:
-          "https://www.spacesworks.com/wp-content/uploads/2016/03/membership-coworking-spaces.png",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        dimension: "10ft x 10ft",
-        rental_price: "$100.00"
-      },
-      {
-        name: "Workspace 3",
-        src:
-          "https://www.spacesworks.com/wp-content/uploads/2016/03/membership-coworking-spaces.png",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        dimension: "10ft x 10ft",
-        rental_price: "$100.00"
-      }
-    ]
+    addresses: new HashMap(), //Keeps address unique to avoid rendering in map multiple times
+    workspaces: [],
+    searchParams: {
+      location: "",
+      checkinDate: moment(new Date(), "yyyy-mm-dd"),
+      checkoutDate: moment(new Date(), "yyyy-mm-dd"),
+      room: 0,
+      people: 0
+    },
+    locations: []
   };
+
+  // Handles updating component state when the user types into the input field
+  handleSearchInputChange = event => {
+    const { name, value } = event.target;
+
+    this.setState({
+      searchParams: {
+        ...this.state.searchParams,
+        [name]: value
+      }
+    });
+  };
+
+  //Update Check In state
+  handleCheckInChange = date =>
+    this.setState({
+      searchParams: { ...this.state.searchParams, checkinDate: date }
+    });
+
+  //Update Check Out state
+  handleCheckOutChange = date =>
+    this.setState({
+      searchParams: { ...this.state.searchParams, checkoutDate: date }
+    });
 
   componentDidMount() {
-    this.loadWorkspaces();
+    //this.loadWorkspaces();
+    //TODO: add search input to cache to load it in different pages
   }
 
+  //Load workspace data from API call
   loadWorkspaces = () => {
-    /*  API.getWorkspaces()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
-      )
-      .catch(err => console.log(err)); */
+    API.searchWorkspace(this.state.searchParams)
+      .then(res => {
+        let addrList = new HashMap();
+
+        //Add unique address to the list
+        for (const workspace of res.data) {
+          addrList.set(
+            "L" + workspace.WorkspaceLocation.id,
+            workspace.WorkspaceLocation.full_address
+          );
+        }
+
+        //Update workspace and address state to render results and map
+        this.setState({ workspaces: res.data, addresses: addrList });
+      })
+      .then(() => {
+        //Get geolocation of the addresses
+        this.loadLocations();
+      })
+      .catch(err => console.log(err));
   };
 
+  //Get geolocation from API
+  loadLocations = () => {
+    let locationList = [];
+
+    //Loops thru unique addresses
+    for (let address of this.state.addresses) {
+      //Get geolocation
+      API.getGeoLoc(address.value)
+        .then(res => {
+          //Adds geolocation into an array
+          locationList.push([
+            address.value,
+            res.data.results[0].locations[0].latLng.lat,
+            res.data.results[0].locations[0].latLng.lng
+          ]);
+
+          //Updates geolocation array to render in map
+          this.setState({ locations: locationList });
+        })
+        .catch(err => console.log(err));
+    }
+  };
+
+  //Handle search button submit event
   handleFormSearch = event => {
     event.preventDefault();
+    this.loadWorkspaces();
   };
 
   handleFeatureSelect = event => {};
@@ -65,24 +114,41 @@ class SearchResults extends Component {
       <Container>
         <Row>
           <Col>
-            <Search />
+            {/*Search Box*/}
+            <Search
+              {...this.state.searchParams}
+              onChange={this.handleSearchInputChange}
+              onSubmit={this.handleFormSearch}
+              onCheckInChange={this.handleCheckInChange}
+              onCheckOutChange={this.handleCheckOutChange}
+            />
           </Col>
         </Row>
         <Row>
           <Col md="3">
-            {/* Map component */}
+            {/*Map*/}
+            <Map locations={this.state.locations} boundOnMount={false} />
+            {/*Feature List*/}
             <Form>
-              <FeatureList onClick={this.handleFeatureSelect} />
+              {/*  <FeatureList onClick={this.handleFeatureSelect} /> */}
             </Form>
           </Col>
           <Col md="9" sm="12">
-            {this.state.workspaces.map(workspace => {
+            {/*Search Result*/}
+            {this.state.workspaces.map((workspace, index) => {
               return (
                 <WorkspaceCard
+                  key={index}
                   rowStyle="row no-gutters"
                   imgStyle="col-md-4"
                   bodyStyle="col-md-6"
-                  {...workspace}
+                  name={workspace.name}
+                  src={
+                    workspace.WorkspacePics &&
+                    workspace.WorkspacePics[0].image_path
+                  }
+                  rental_price={workspace.rental_price}
+                  fulladdress={workspace.WorkspaceLocation.full_address}
                 />
               );
             })}
