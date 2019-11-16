@@ -71,7 +71,7 @@ async function createCalendarAvailability(
 ) {
   var bookedDates = [];
   var currentDate = moment(startDate);
-  var stopDate = moment(endDate).add(1, "days");
+  var stopDate = moment(endDate);
   while (currentDate <= stopDate) {
     bookedDates.push({
       date: moment(currentDate).format("MM/DD/YYYY"),
