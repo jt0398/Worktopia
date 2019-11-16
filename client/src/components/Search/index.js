@@ -44,7 +44,7 @@ class Search extends Component {
   render() {
     return (
       <div className="my-5">
-        <div className="stickyPart">
+        <div>
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="location">

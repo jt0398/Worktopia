@@ -6,7 +6,7 @@ export class Header extends Component {
   render() {
     return (
       <>
-        {/* <div className="stickyPart"> */}
+       
           <Navbar bg="dark" expand="lg">
             <Navbar.Brand className="text-warning" href="/main">
               Worktopia
@@ -27,7 +27,7 @@ export class Header extends Component {
               </Nav.Item>
             </Nav>
           </Navbar>
-        {/* </div> */}
+        
       </>
     );
   }

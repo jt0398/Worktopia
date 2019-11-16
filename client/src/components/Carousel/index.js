@@ -10,7 +10,8 @@ function ControlledCarousel() {
     setDirection(e.direction);
   };
 
-  return (
+    return (
+     <>
     <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
       <Carousel.Item>
         <img
@@ -58,8 +59,9 @@ function ControlledCarousel() {
           </p>
         </Carousel.Caption> */}
       </Carousel.Item>
-    </Carousel>
+            </Carousel>
+            </>
   );
-}
-
-export default ControlledCarousel;
+          }
+          
+          export default ControlledCarousel;
