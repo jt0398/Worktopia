@@ -9,10 +9,11 @@ import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
 import API from "../utils/workspaceAPI";
+import HashMap from "hashmap";
 
 class SearchResults extends Component {
   state = {
-    addresses: [],
+    addresses: new HashMap(),
     workspaces: [],
     searchParams: {
       location: "",
@@ -20,7 +21,8 @@ class SearchResults extends Component {
       checkoutDate: moment(new Date(), "yyyy-mm-dd"),
       room: 0,
       people: 0
-    }
+    },
+    locations: []
   };
 
   // Handles updating component state when the user types into the input field
@@ -51,10 +53,42 @@ class SearchResults extends Component {
   loadWorkspaces = () => {
     API.searchWorkspace(this.state.searchParams)
       .then(res => {
-        console.log("test", res.data);
-        this.setState({ workspaces: res.data });
+        let addrList = new HashMap();
+
+        for (const workspace of res.data) {
+          addrList.set(
+            "L" + workspace.WorkspaceLocation.id,
+            workspace.WorkspaceLocation.full_address
+          );
+        }
+
+        this.setState({ workspaces: res.data, addresses: addrList });
+
+        return res;
+      })
+      .then(() => {
+        this.loadLocations();
       })
       .catch(err => console.log(err));
+  };
+
+  loadLocations = () => {
+    let locationList = [];
+
+    for (let address of this.state.addresses) {
+      API.getGeoLoc(address.value)
+        .then(res => {
+          locationList.push([
+            res.data.results[0].locations[0].latLng.lat,
+            res.data.results[0].locations[0].latLng.lng
+          ]);
+
+          this.setState({ locations: locationList });
+
+          console.log(this.state.locations);
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   handleFormSearch = event => {
@@ -80,9 +114,9 @@ class SearchResults extends Component {
         </Row>
         <Row>
           <Col md="3">
-            <Map />
+            <Map locations={this.state.locations} />
             <Form>
-              <FeatureList onClick={this.handleFeatureSelect} />
+              {/*  <FeatureList onClick={this.handleFeatureSelect} /> */}
             </Form>
           </Col>
           <Col md="9" sm="12">

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Button from "react-bootstrap/Button";
 import "./style.css";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -21,50 +20,25 @@ class MapView extends Component {
   }
 
   state = {
-    locations: [{ lat: 0, lng: 0 }],
-    center: [],
+    center: [0, 0],
     zoom: 2
   };
 
-  componentDidMount() {
-    this.loadLocations();
-  }
-
-  loadLocations = () => {
-    //Call API to get list of locations this.props.locations
-    var address = "7 Joshua Avenue,Toronto";
-    //var address2 = "100 Harbor Street,Toronto";
-
-    axios
-      .get(
-        `http://www.mapquestapi.com/geocoding/v1/address?key=nh19TzR7IdecXSA4NTJkWiV4xFTTQYzn&location=${address}`
-      )
-      .then(res => {
-        this.setState({
-          locations: [
-            {
-              lat: res.data.results[0].locations[0].latLng.lat,
-              lng: res.data.results[0].locations[0].latLng.lng
-            }
-          ],
-          zoom: 19
-        });
-
-        console.log(this.state.locations);
-      })
-      .catch(err => console.log(err));
-  };
-
   render() {
-    const position = [this.state.locations[0].lat, this.state.locations[0].lng];
-
     return (
       <div className="my-5">
-        <Map className="map" center={position} zoom={this.state.zoom}>
+        <Map className="map" center={this.state.center} zoom={this.state.zoom}>
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          {this.props.locations.map((pos, index) => {
+            return (
+              <Marker key={index} position={pos} icon={this.myIcon}>
+                <Popup>All details Here.</Popup>
+              </Marker>
+            );
+          })}
         </Map>
       </div>
     );

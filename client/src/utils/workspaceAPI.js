@@ -1,4 +1,5 @@
 import axios from "axios";
+require("dotenv").config();
 
 export default {
   // Gets all workspaces
@@ -16,6 +17,12 @@ export default {
         "Content-Type": "application/json"
       }
     });
+  },
+  getGeoLoc: function(address) {
+    let key = process.env.MAP_KEY;
+    return axios.get(
+      `http://www.mapquestapi.com/geocoding/v1/address?key=nh19TzR7IdecXSA4NTJkWiV4xFTTQYzn&location=${address}`
+    );
   }
   // Deletes the Workspace with the given id
   /* deleteWorkspace: function(id) {

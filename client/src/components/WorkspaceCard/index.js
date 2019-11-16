@@ -25,10 +25,14 @@ function WorkspaceCard({
           <Card.Body>
             <Card.Title>{name}</Card.Title>
             <Card.Text>
-              <p>{fulladdress}</p>
-              <p>Description: {description}</p>
-              <p>Dimensions: {dimension}</p>
-              <p>{!imgStyle && `Price: ${rental_price}`}</p>
+              {fulladdress}
+              <br />
+              <br />
+              Description: {description}
+              <br />
+              Dimensions: {dimension}
+              <br />
+              {!imgStyle && `Price: ${rental_price}`}
             </Card.Text>
           </Card.Body>
         </div>

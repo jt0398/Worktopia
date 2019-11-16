@@ -41,7 +41,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="my-5 stickyPart">
+      <div className="my-5">
         <Form>
           <Form.Row>
             <Form.Group as={Col}>

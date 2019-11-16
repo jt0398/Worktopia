@@ -50,7 +50,10 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findBySearch: function(req, res) {
-    console.log(req.body.checkinDate);
+    /*  console.log(
+      //moment(req.body.checkinDate).diff(moment(req.body.checkoutDate), "days")
+      moment().subtract(2, "months")
+    ); */
     const location = req.body.location;
     const checkindate = req.body.checkinDate;
     const checkoutdate = req.body.checkoutDate;
