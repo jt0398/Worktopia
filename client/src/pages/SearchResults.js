@@ -13,7 +13,7 @@ import HashMap from "hashmap";
 
 class SearchResults extends Component {
   state = {
-    addresses: new HashMap(),
+    addresses: new HashMap(), //Keeps address unique to avoid rendering in map multiple times
     workspaces: [],
     searchParams: {
       location: "",
@@ -37,10 +37,13 @@ class SearchResults extends Component {
     });
   };
 
+  //Update Check In state
   handleCheckInChange = date =>
     this.setState({
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
+
+  //Update Check Out state
   handleCheckOutChange = date =>
     this.setState({
       searchParams: { ...this.state.searchParams, checkoutDate: date }
@@ -48,13 +51,16 @@ class SearchResults extends Component {
 
   componentDidMount() {
     //this.loadWorkspaces();
+    //TODO: add search input to cache to load it in different pages
   }
 
+  //Load workspace data from API call
   loadWorkspaces = () => {
     API.searchWorkspace(this.state.searchParams)
       .then(res => {
         let addrList = new HashMap();
 
+        //Add unique address to the list
         for (const workspace of res.data) {
           addrList.set(
             "L" + workspace.WorkspaceLocation.id,
@@ -62,35 +68,40 @@ class SearchResults extends Component {
           );
         }
 
+        //Update workspace and address state to render results and map
         this.setState({ workspaces: res.data, addresses: addrList });
-
-        return res;
       })
       .then(() => {
+        //Get geolocation of the addresses
         this.loadLocations();
       })
       .catch(err => console.log(err));
   };
 
+  //Get geolocation from API
   loadLocations = () => {
     let locationList = [];
 
+    //Loops thru unique addresses
     for (let address of this.state.addresses) {
+      //Get geolocation
       API.getGeoLoc(address.value)
         .then(res => {
+          //Adds geolocation into an array
           locationList.push([
+            address.value,
             res.data.results[0].locations[0].latLng.lat,
             res.data.results[0].locations[0].latLng.lng
           ]);
 
+          //Updates geolocation array to render in map
           this.setState({ locations: locationList });
-
-          console.log(this.state.locations);
         })
         .catch(err => console.log(err));
     }
   };
 
+  //Handle search button submit event
   handleFormSearch = event => {
     event.preventDefault();
     this.loadWorkspaces();
@@ -103,6 +114,7 @@ class SearchResults extends Component {
       <Container>
         <Row>
           <Col>
+            {/*Search Box*/}
             <Search
               {...this.state.searchParams}
               onChange={this.handleSearchInputChange}
@@ -114,12 +126,15 @@ class SearchResults extends Component {
         </Row>
         <Row>
           <Col md="3">
+            {/*Map*/}
             <Map locations={this.state.locations} />
+            {/*Feature List*/}
             <Form>
               {/*  <FeatureList onClick={this.handleFeatureSelect} /> */}
             </Form>
           </Col>
           <Col md="9" sm="12">
+            {/*Search Result*/}
             {this.state.workspaces.map((workspace, index) => {
               return (
                 <WorkspaceCard

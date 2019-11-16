@@ -24,18 +24,57 @@ class MapView extends Component {
     zoom: 2
   };
 
+  componentDidMount() {
+    const leafletMap = this.leafletMap;
+
+    leafletMap.on("zoomend", () => {
+      const updatedZoomLevel = leafletMap.getZoom();
+      this.handleZoomLevelChange(updatedZoomLevel);
+    });
+  }
+
+  componentWillUpdate() {
+    this.getBounds();
+  }
+
+  handleZoomLevelChange(newZoomLevel) {
+    this.setState({ zoom: newZoomLevel });
+  }
+
+  getBounds() {
+    const positions = this.props.locations.map(loc => [loc[1], loc[2]]);
+    const myBounds = new L.LatLngBounds(positions);
+    const leafletMap = this.leafletMap;
+
+    if (myBounds._northEast) {
+      leafletMap.fitBounds(myBounds); //Centers and zooms the map around the bounds
+    }
+  }
+
   render() {
     return (
       <div className="my-5">
-        <Map className="map" center={this.state.center} zoom={this.state.zoom}>
+        <Map
+          className="map"
+          center={this.state.center}
+          zoom={this.state.zoom}
+          ref={map => {
+            this.leafletMap = map && map.leafletElement;
+          }}
+          boundsOptions={{ padding: [50, 50] }}
+        >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {this.props.locations.map((pos, index) => {
             return (
-              <Marker key={index} position={pos} icon={this.myIcon}>
-                <Popup>All details Here.</Popup>
+              <Marker
+                key={index}
+                position={[pos[1], pos[2]]}
+                icon={this.myIcon}
+              >
+                <Popup>{pos[0]}</Popup>
               </Marker>
             );
           })}
