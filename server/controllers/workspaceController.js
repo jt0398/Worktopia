@@ -3,11 +3,15 @@ var Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const moment = require("moment");
 
-async function updateWorkSpace(workSpaceId, workSpace) {
-  return db.Workspace.update(workSpace, { where: { id: workSpaceId } });
+async function updateWorkSpace(workSpaceId, workSpace, transaction) {
+  return db.Workspace.update(
+    workSpace,
+    { where: { id: workSpaceId } },
+    { transaction }
+  );
 }
 
-async function updateWorkSpaceFeatures(workSpaceId, featureArray) {
+async function updateWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
   var workSpaceFeaturePromises = [];
 
   featureArray.forEach(feature => {
@@ -17,27 +21,67 @@ async function updateWorkSpaceFeatures(workSpaceId, featureArray) {
       FeatureId: feature.label
     };
     workSpaceFeaturePromises.push(
-      db.WorkspaceFeature.upsert(workSpaceFeature, {
-        where: {
-          WorkspaceId: workSpaceId,
-          FeatureId: feature.label
-        }
-      })
+      db.WorkspaceFeature.upsert(
+        workSpaceFeature,
+        {
+          where: {
+            WorkspaceId: workSpaceId,
+            FeatureId: feature.label
+          }
+        },
+        { transaction }
+      )
     );
   });
   return Sequelize.Promise.all(workSpaceFeaturePromises);
   // return workSpaceFeaturePromises;
 }
 
-async function updateWorkSpacePic(workSpacePic) {
-  return db.WorkspacePic.upsert(workSpacePic, {
-    where: {
-      image_path: workSpacePic.image_path,
-      // image_path: null,
-      WorkspaceId: workSpacePic.workSpaceId
-    }
-  });
+async function updateWorkSpacePic(workSpacePic, transaction) {
+  return db.WorkspacePic.upsert(
+    workSpacePic,
+    {
+      where: {
+        image_path: workSpacePic.image_path,
+        // image_path: null,
+        WorkspaceId: workSpacePic.workSpaceId
+      }
+    },
+    { transaction }
+  );
 }
+
+async function deleteWorkSpaceAvailability(WorkspaceId, transaction) {
+  console.log("delete11", WorkspaceId);
+  return db.WorkspaceAvailability.destroy(
+    {
+      where: {
+        WorkspaceId: WorkspaceId
+      }
+    },
+    { transaction }
+  );
+}
+
+async function createCalendarAvailability(
+  WorkspaceId,
+  startDate,
+  endDate,
+  transaction
+) {
+  var bookedDates = [];
+  var currentDate = moment(startDate);
+  var stopDate = moment(endDate).add(1, "days");
+  while (currentDate <= stopDate) {
+    bookedDates.push({
+      date: moment(currentDate).format("MM/DD/YYYY"),
+      WorkspaceId: WorkspaceId
+    });
+    currentDate = moment(currentDate).add(1, "days");
+  }
+  return db.WorkspaceAvailability.bulkCreate(bookedDates, { transaction });
+}
+
 async function updateWorkSpaceDetail(workSpaceDetailObject) {
   var workSpaceId = workSpaceDetailObject.workSpaceId;
   var workSpace = {
@@ -55,17 +99,40 @@ async function updateWorkSpaceDetail(workSpaceDetailObject) {
     // image_path: null,
     WorkspaceId: workSpaceDetailObject.workSpaceId
   };
+  let transaction;
+  try {
+    transaction = await db.sequelizeConnection.transaction();
 
-  var updateWorkSpaceTable = await updateWorkSpace(workSpaceId, workSpace);
-  var updateWorkSpaceFeaturesTable = await updateWorkSpaceFeatures(
-    workSpaceId,
-    workSpaceDetailObject.FEATURE_LIST
-  );
-  var updateWorkSpacePicTable = await updateWorkSpacePic(workSpacePic);
-  console.log(updateWorkSpaceTable);
-  console.log(updateWorkSpaceFeaturesTable);
-  console.log(updateWorkSpacePicTable);
+    var updateWorkSpaceTable = await updateWorkSpace(
+      workSpaceId,
+      workSpace,
+      transaction
+    );
+    var updateWorkSpaceFeaturesTable = await updateWorkSpaceFeatures(
+      workSpaceId,
+      workSpaceDetailObject.FEATURE_LIST,
+      transaction
+    );
+    var updateWorkSpacePicTable = await updateWorkSpacePic(
+      workSpacePic,
+      transaction
+    );
+    var deleteCalendarDates = await deleteWorkSpaceAvailability(
+      workSpaceId,
+      transaction
+    );
+    var createCalendarDates = await createCalendarAvailability(
+      workSpaceId,
+      workSpaceDetailObject.startDate,
+      workSpaceDetailObject.endDate,
+      transaction
+    );
+    await transaction.commit();
+  } catch (err) {
+    await transaction.rollback();
+  }
 }
+
 
 module.exports = {
   findAll: function(req, res) {
