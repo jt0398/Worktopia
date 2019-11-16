@@ -43,5 +43,12 @@ module.exports = {
     })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  findAllByWorkSpaceId: function(req, res) {
+    db.Booking.findAll({
+      where: { WorkSpaceId: req.params.id }
+    })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   }
 };

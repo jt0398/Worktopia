@@ -11,4 +11,7 @@ router.route("/user/:id").get(bookingController.findAllByUser);
 // Matches with "/api/booking/owner/:id"
 router.route("/owner/:id").get(bookingController.findAllByOwner);
 
+// Matches with "/api/booking/workspace/:id"
+router.route("/workspace/:id").get(bookingController.findAllByWorkSpaceId);
+
 module.exports = router;
