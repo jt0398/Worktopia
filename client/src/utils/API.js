@@ -33,7 +33,13 @@ export default {
   getFeatureList() {
     return axios.get("/api/features");
   },
-  updateWorkSpaceObject(workSpaceDetailObject){
-    return axios.put(`/api/workspace/${workSpaceDetailObject.workSpaceId}`, workSpaceDetailObject);
+  updateWorkSpaceObject(workSpaceDetailObject) {
+    return axios.put(
+      `/api/workspace/${workSpaceDetailObject.workSpaceId}`,
+      workSpaceDetailObject
+    );
+  },
+  getBookingByWorkspace(workSpaceId) {
+    return axios.get(`/api/booking/workspace/${workSpaceId}`);
   }
 };

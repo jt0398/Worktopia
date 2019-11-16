@@ -12,6 +12,7 @@ import FeatureList from "../components/FeatureList";
 import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
+var moment = require("moment");
 
 const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
 
@@ -35,11 +36,14 @@ class WorkSpaceDetail extends Component {
     endDate: null,
     focusedInput: null,
     LOCATION_LIST: [],
-    FEATURE_LIST: []
+    FEATURE_LIST: [],
+    BOOKED_DATES: []
   };
 
-  handleDateSelection = ({ startDate, endDate }) =>
+  handleDateSelection = ({ startDate, endDate }) => {
+    console.log("date selection");
     this.setState({ startDate, endDate });
+  };
 
   handleFocusChange = focusedInput => this.setState({ focusedInput });
 
@@ -164,6 +168,21 @@ class WorkSpaceDetail extends Component {
         });
       });
     });
+    API.getBookingByWorkspace(this.props.match.params.id).then(res => {
+      var tempBookingList = [];
+      res.data.forEach(booking => {
+        var currentDate = moment(booking.start_date);
+        var stopDate = moment(booking.end_date).add(1, "days");
+        while (currentDate <= stopDate) {
+          tempBookingList.push(moment(currentDate).format("MM/DD/YYYY"));
+          currentDate = moment(currentDate).add(1, "days");
+        }
+      });
+      this.setState({
+        BOOKED_DATES: tempBookingList
+      });
+    });
+
     API.getWorkSpaceById(this.props.match.params.id)
       .then(res => {
         let fetchedWorkSpaceDetail = res.data[0];
@@ -211,6 +230,14 @@ class WorkSpaceDetail extends Component {
       .catch(err => console.error(err));
   };
 
+  checkIfDayIsBlocked = momentDate => {
+    let dateBeingChecked = momentDate.format("MM/DD/YYYY");
+    if (this.state.BOOKED_DATES.indexOf(dateBeingChecked) === -1) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   render() {
     return (
       <Container fluid>
@@ -333,6 +360,7 @@ class WorkSpaceDetail extends Component {
                 onDatesChange={this.handleDateSelection}
                 focusedInput={this.state.focusedInput}
                 onFocusChange={this.handleFocusChange}
+                isDayBlocked={this.checkIfDayIsBlocked}
               ></DateRangePicker>
               <br></br>
               <br></br>
