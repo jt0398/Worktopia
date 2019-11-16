@@ -42,7 +42,6 @@ class MapView extends Component {
   }
 
   getBounds() {
-    console.log(this.props.locations);
     const positions = this.props.locations.map(loc => [loc[1], loc[2]]);
     const myBounds = new L.LatLngBounds(positions);
     const leafletMap = this.leafletMap;
