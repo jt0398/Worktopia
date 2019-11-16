@@ -66,29 +66,30 @@ class WorkSpaceDetail extends Component {
     }
   };
 
-  validateFormCompletion = () => {
-    return !(
-      this.state.workSpaceName &&
-      this.state.workspaceDescription &&
-      this.state.workSpaceLocation &&
-      this.state.workSpaceOccupancy &&
-      this.state.workSpaceDimensions &&
-      this.state.workSpaceDailyRate &&
-      this.state.startDate &&
-      this.state.endDate &&
-      this.state.imageFileName
-    );
-  };
+  // validateFormCompletion = () => {
+  //   return !(
+  //     this.state.workSpaceName &&
+  //     this.state.workspaceDescription &&
+  //     this.state.workSpaceLocation &&
+  //     this.state.workSpaceOccupancy &&
+  //     this.state.workSpaceDimensions &&
+  //     this.state.workSpaceDailyRate &&
+  //     this.state.startDate &&
+  //     this.state.endDate &&
+  //     this.state.imageFileName
+  //   );
+  // };
 
   handleFormSubmit = event => {
     event.preventDefault();
     let workSpaceDetailObject = this.state;
+    console.log(workSpaceDetailObject);
     delete workSpaceDetailObject.selectedFile;
     delete workSpaceDetailObject.message;
     delete workSpaceDetailObject.defaultmessage;
     delete workSpaceDetailObject.uploading;
     delete workSpaceDetailObject.focusedInput;
-    delete workSpaceDetailObject.LOCATION_LIST;
+    // delete workSpaceDetailObject.LOCATION_LIST;
     console.log(workSpaceDetailObject);
     API.updateWorkSpaceObject(workSpaceDetailObject)
       .then(res => console.log(res.data))
@@ -186,12 +187,14 @@ class WorkSpaceDetail extends Component {
     API.getWorkSpaceById(this.props.match.params.id)
       .then(res => {
         let fetchedWorkSpaceDetail = res.data[0];
+        console.log(fetchedWorkSpaceDetail.WorkspaceLocation);
         this.setState({
           workSpaceId: parseInt(this.props.match.params.id),
           workSpaceName: fetchedWorkSpaceDetail.name,
           workspaceDescription: fetchedWorkSpaceDetail.description,
-          workSpaceLocation:
+          workSpaceLocationName:
             fetchedWorkSpaceDetail.WorkspaceLocation.full_address,
+          workSpaceLocation: fetchedWorkSpaceDetail.WorkspaceLocation.id,
           workSpaceOccupancy: fetchedWorkSpaceDetail.no_occupants,
           workSpaceDimensions: fetchedWorkSpaceDetail.dimension,
           workSpaceDailyRate: fetchedWorkSpaceDetail.rental_price,
@@ -337,7 +340,7 @@ class WorkSpaceDetail extends Component {
                 variant="primary"
                 type="submit"
                 className="btn btn-success"
-                disabled={this.validateFormCompletion()}
+                // disabled={this.validateFormCompletion()}
                 onClick={this.handleFormSubmit}
               >
                 Submit
