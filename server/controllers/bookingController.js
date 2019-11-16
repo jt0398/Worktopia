@@ -22,6 +22,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findAllByOwner: function(req, res) {
+    console.log("abc");
     db.Booking.findAll({
       include: [
         {
@@ -38,7 +39,8 @@ module.exports = {
             },
             { model: db.WorkspacePic }
           ]
-        }
+        },
+        { model: db.User }
       ]
     })
       .then(dbModel => res.json(dbModel))

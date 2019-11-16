@@ -3,23 +3,24 @@ import { Link } from "react-router-dom";
 import { Label } from "../../Form/index";
 import Card from "react-bootstrap/Card";
 import { Row } from "react-bootstrap";
+import moment from "moment";
 
 function Ownerbooking({
   rowStyle,
-  idStyle,
   imgStyle,
   bodyStyle,
-  src,
   id,
+  start_date,
+  image_path,
   name,
-  user,
+  username,
   description,
   dimension,
-  userName,
-  userEmail,
+  email,
+  phone_no,
   userContact,
-  check_in_date,
-  check_out_date,
+
+  end_date,
   rental_price
 }) {
   return (
@@ -33,11 +34,14 @@ function Ownerbooking({
           {/* </div> */}
         </div>
 
-        <div className={imgStyle}>
+        <div className={bodyStyle}>
           <Card.Body>
             <Card.Title>Image</Card.Title>
-
-            <Card.Img src={src} />
+            <br />
+            <Card.Img
+              src={image_path}
+              style={{ height: "17vh", width: "20vh" }}
+            />
           </Card.Body>
         </div>
 
@@ -57,15 +61,15 @@ function Ownerbooking({
         {/* Workspace Description */}
         <div className={bodyStyle}>
           <Card.Body>
-            <Card.Title>{user}</Card.Title>
+            <Card.Title>Customer</Card.Title>
             <br></br>
             <Card.Text>
-              UserName :{userName}
+              {username}
               <br />
               <br />
-              {userEmail} <br />
+              {email} <br />
               <br />
-              {userContact}
+              {phone_no}
             </Card.Text>
           </Card.Body>
         </div>
@@ -75,7 +79,7 @@ function Ownerbooking({
         <div className={bodyStyle}>
           <Card.Body>
             <Card.Title>Check In Date</Card.Title>
-            <Card.Text>{check_in_date}</Card.Text>
+            <Card.Text>{moment(start_date).format("DD/MM/YYYY")}</Card.Text>
           </Card.Body>
         </div>
 
@@ -85,16 +89,16 @@ function Ownerbooking({
           <Card.Body>
             <Card.Title>Check Out Date</Card.Title>
 
-            <Card.Text>{check_out_date}</Card.Text>
+            <Card.Text>{moment(end_date).format("DD/MM/YYYY")}</Card.Text>
           </Card.Body>
         </div>
 
-        <div className={bodyStyle}>
+        <div className={imgStyle}>
           <Card.Body>
-            <Card.Title>Price(TOTAL)</Card.Title>
+            <Card.Title>Price</Card.Title>
 
             <Card.Text>
-              Price: {rental_price} <br />
+              ${rental_price} <br />
             </Card.Text>
           </Card.Body>
         </div>
