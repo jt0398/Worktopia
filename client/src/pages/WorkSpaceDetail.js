@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import Modal from "react-bootstrap/Modal";
 import FileUpload from "../components/FileUpload";
 import FeatureList from "../components/FeatureList";
 import "react-dates/initialize";
@@ -37,7 +38,8 @@ class WorkSpaceDetail extends Component {
     focusedInput: null,
     LOCATION_LIST: [],
     FEATURE_LIST: [],
-    BOOKED_DATES: []
+    BOOKED_DATES: [],
+    modalStatus: false
   };
 
   handleDateSelection = ({ startDate, endDate }) => {
@@ -66,32 +68,35 @@ class WorkSpaceDetail extends Component {
     }
   };
 
-  validateFormCompletion = () => {
-    return !(
-      this.state.workSpaceName &&
-      this.state.workspaceDescription &&
-      this.state.workSpaceLocation &&
-      this.state.workSpaceOccupancy &&
-      this.state.workSpaceDimensions &&
-      this.state.workSpaceDailyRate &&
-      this.state.startDate &&
-      this.state.endDate &&
-      this.state.imageFileName
-    );
-  };
+  // validateFormCompletion = () => {
+  //   return !(
+  //     this.state.workSpaceName &&
+  //     this.state.workspaceDescription &&
+  //     this.state.workSpaceLocation &&
+  //     this.state.workSpaceOccupancy &&
+  //     this.state.workSpaceDimensions &&
+  //     this.state.workSpaceDailyRate &&
+  //     this.state.startDate &&
+  //     this.state.endDate &&
+  //     this.state.imageFileName
+  //   );
+  // };
 
   handleFormSubmit = event => {
     event.preventDefault();
     let workSpaceDetailObject = this.state;
+    console.log(workSpaceDetailObject);
     delete workSpaceDetailObject.selectedFile;
     delete workSpaceDetailObject.message;
     delete workSpaceDetailObject.defaultmessage;
     delete workSpaceDetailObject.uploading;
     delete workSpaceDetailObject.focusedInput;
-    delete workSpaceDetailObject.LOCATION_LIST;
+    // delete workSpaceDetailObject.LOCATION_LIST;
     console.log(workSpaceDetailObject);
     API.updateWorkSpaceObject(workSpaceDetailObject)
-      .then(res => console.log(res.data))
+      .then(res => {
+        this.handleShow();
+      })
       .catch(err => console.error(err));
   };
 
@@ -186,12 +191,14 @@ class WorkSpaceDetail extends Component {
     API.getWorkSpaceById(this.props.match.params.id)
       .then(res => {
         let fetchedWorkSpaceDetail = res.data[0];
+        console.log(fetchedWorkSpaceDetail.WorkspaceLocation);
         this.setState({
           workSpaceId: parseInt(this.props.match.params.id),
           workSpaceName: fetchedWorkSpaceDetail.name,
           workspaceDescription: fetchedWorkSpaceDetail.description,
-          workSpaceLocation:
+          workSpaceLocationName:
             fetchedWorkSpaceDetail.WorkspaceLocation.full_address,
+          workSpaceLocation: fetchedWorkSpaceDetail.WorkspaceLocation.id,
           workSpaceOccupancy: fetchedWorkSpaceDetail.no_occupants,
           workSpaceDimensions: fetchedWorkSpaceDetail.dimension,
           workSpaceDailyRate: fetchedWorkSpaceDetail.rental_price,
@@ -238,6 +245,19 @@ class WorkSpaceDetail extends Component {
       return true;
     }
   };
+
+  handleShow = () => {
+    this.setState({
+      modalStatus: true
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      modalStatus: false
+    });
+  };
+
   render() {
     return (
       <Container fluid>
@@ -337,7 +357,7 @@ class WorkSpaceDetail extends Component {
                 variant="primary"
                 type="submit"
                 className="btn btn-success"
-                disabled={this.validateFormCompletion()}
+                // disabled={this.validateFormCompletion()}
                 onClick={this.handleFormSubmit}
               >
                 Submit
@@ -372,6 +392,22 @@ class WorkSpaceDetail extends Component {
             </Jumbotron>
           </Col>
         </Row>
+        <Modal
+          show={this.state.modalStatus}
+          onHide={this.handleClose}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Workspace has been succesfully updated!!!
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <Button onClick={this.handleClose}>OK</Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     );
   }
