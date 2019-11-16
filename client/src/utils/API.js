@@ -38,5 +38,6 @@ export default {
   },
   getBookingByWorkspace(workSpaceId) {
     return axios.get(`/api/booking/workspace/${workSpaceId}`);
+    
   }
 };
