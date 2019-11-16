@@ -41,5 +41,14 @@ export default {
   },
   getBookingByWorkspace(workSpaceId) {
     return axios.get(`/api/booking/workspace/${workSpaceId}`);
+  },
+  saveLocation: function(locationData) {
+    return axios.post("/api/location/add", locationData);
+  },
+  getLocations: function() {
+    return axios.get("/api/location");
+  },
+  getLocation: function(locationId) {
+    return axios.get("/api/location/" + locationId);
   }
 };
