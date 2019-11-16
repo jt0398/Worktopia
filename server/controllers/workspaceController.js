@@ -115,8 +115,17 @@ module.exports = {
   },
   findBySearch: function(req, res) {
     /*  console.log(
-      //moment(req.body.checkinDate).diff(moment(req.body.checkoutDate), "days")
-      moment().subtract(2, "months")
+      const daysCount = moment(req.body.checkinDate).diff(moment(req.body.checkoutDate), "days")
+      //moment().subtract(2, "months")
+
+      sequelize.where(sequelize.fn('COUNT', sequelize.col('products.id')) '>', 0)
+
+      where: {
+        date: { [Op.between]: [checkindate, checkoutdate] },
+        [Op.and]: [
+          sequelize.where(sequelize.fn('count'), Op.gte, daysCount)
+        ]
+      }
     ); */
     const location = req.body.location;
     const checkindate = req.body.checkinDate;
@@ -150,7 +159,8 @@ module.exports = {
         {
           model: db.WorkspaceAvailability,
           where: { date: { [Op.between]: [checkindate, checkoutdate] } } //{ id: { [Op.gt]: [0] } }
-        }
+        },
+        { model: db.Feature }
       ]
     })
       .then(dbModel => res.json(dbModel))

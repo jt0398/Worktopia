@@ -70,14 +70,6 @@ class BookWorkspace extends Component {
   loadLocations = address => {
     API.getGeoLoc(address)
       .then(res => {
-        console.log([
-          [
-            address,
-            res.data.results[0].locations[0].latLng.lat,
-            res.data.results[0].locations[0].latLng.lng
-          ]
-        ]);
-
         //Updates geolocation array to render in map
         this.setState({
           locations: [
@@ -139,7 +131,9 @@ class BookWorkspace extends Component {
 
             {/*<PriceCard {...this.state.workspaces[0].rental_price} />*/}
             {/*Map*/}
-            <Map locations={this.state.locations} />
+            {this.state.locations.length > 0 && (
+              <Map locations={this.state.locations} boundOnMount={true} />
+            )}
           </Col>
         </Row>
       </Container>

@@ -127,7 +127,7 @@ class SearchResults extends Component {
         <Row>
           <Col md="3">
             {/*Map*/}
-            <Map locations={this.state.locations} />
+            <Map locations={this.state.locations} boundOnMount={false} />
             {/*Feature List*/}
             <Form>
               {/*  <FeatureList onClick={this.handleFeatureSelect} /> */}
@@ -142,11 +142,12 @@ class SearchResults extends Component {
                   rowStyle="row no-gutters"
                   imgStyle="col-md-4"
                   bodyStyle="col-md-6"
-                  {...workspace}
+                  name={workspace.name}
                   src={
                     workspace.WorkspacePics &&
                     workspace.WorkspacePics[0].image_path
                   }
+                  rental_price={workspace.rental_price}
                   fulladdress={workspace.WorkspaceLocation.full_address}
                 />
               );

@@ -21,7 +21,7 @@ class MapView extends Component {
 
   state = {
     center: [0, 0],
-    zoom: 2
+    zoom: 5
   };
 
   componentDidMount() {
@@ -31,10 +31,18 @@ class MapView extends Component {
       const updatedZoomLevel = leafletMap.getZoom();
       this.handleZoomLevelChange(updatedZoomLevel);
     });
+
+    if (this.props.boundOnMount) {
+      this.setState({
+        center: [this.props.locations[0][1], this.props.locations[0][2]]
+      });
+    }
   }
 
   componentWillUpdate() {
-    this.getBounds();
+    if (!this.props.boundOnMount) {
+      this.getBounds();
+    }
   }
 
   handleZoomLevelChange(newZoomLevel) {
