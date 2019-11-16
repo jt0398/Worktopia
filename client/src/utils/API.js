@@ -39,6 +39,9 @@ export default {
       workSpaceDetailObject
     );
   },
+  createWorkSpaceObject(workSpaceDetailObject) {
+    return axios.post("/api/workspace", workSpaceDetailObject);
+  },
   getBookingByWorkspace(workSpaceId) {
     return axios.get(`/api/booking/workspace/${workSpaceId}`);
   }
