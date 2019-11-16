@@ -1,7 +1,7 @@
 const db = require("../models");
 var Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-var moment = require("moment");
+const moment = require("moment");
 
 async function updateWorkSpace(workSpaceId, workSpace, transaction) {
   return db.Workspace.update(
@@ -181,15 +181,17 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findBySearch: function(req, res) {
-    const {
-      location,
-      checkindate,
-      checkoutdate,
-      peoplecount,
-      roomcount
-    } = req.params;
+    /*  console.log(
+      //moment(req.body.checkinDate).diff(moment(req.body.checkoutDate), "days")
+      moment().subtract(2, "months")
+    ); */
+    const location = req.body.location;
+    const checkindate = req.body.checkinDate;
+    const checkoutdate = req.body.checkoutDate;
+    const people = parseInt(req.body.people);
+    const room = parseInt(req.body.room);
 
-    const occupancy = peoplecount / roomcount;
+    const occupancy = Math.floor(people / room);
 
     db.Workspace.findAll({
       where: {
@@ -214,7 +216,7 @@ module.exports = {
         { model: db.WorkspacePic, limit: 1 },
         {
           model: db.WorkspaceAvailability,
-          where: { date: { [Op.between]: [checkindate, checkoutdate] } }
+          where: { date: { [Op.between]: [checkindate, checkoutdate] } } //{ id: { [Op.gt]: [0] } }
         }
       ]
     })
