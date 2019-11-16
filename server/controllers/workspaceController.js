@@ -11,6 +11,10 @@ async function updateWorkSpace(workSpaceId, workSpace, transaction) {
   );
 }
 
+async function createWorkSpace(workSpace, transaction) {
+  return db.Workspace.create(workSpace, { transaction });
+}
+
 async function updateWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
   var workSpaceFeaturePromises = [];
 
@@ -37,6 +41,23 @@ async function updateWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
   // return workSpaceFeaturePromises;
 }
 
+async function createWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
+  var workSpaceFeaturePromises = [];
+  featureArray.forEach(feature => {
+    var workSpaceFeature = {
+      status: feature.status,
+      WorkspaceId: workSpaceId,
+      FeatureId: feature.label
+    };
+    console.log(workSpaceFeature);
+    workSpaceFeaturePromises.push(
+      db.WorkspaceFeature.create(workSpaceFeature, { transaction })
+    );
+  });
+  return Sequelize.Promise.all(workSpaceFeaturePromises);
+  // return workSpaceFeaturePromises;
+}
+
 async function updateWorkSpacePic(workSpacePic, transaction) {
   return db.WorkspacePic.upsert(
     workSpacePic,
@@ -51,6 +72,9 @@ async function updateWorkSpacePic(workSpacePic, transaction) {
   );
 }
 
+async function createWorkSpacePic(workSpacePic, transaction) {
+  return db.WorkspacePic.create(workSpacePic, { transaction });
+}
 async function deleteWorkSpaceAvailability(WorkspaceId, transaction) {
   console.log("delete11", WorkspaceId);
   return db.WorkspaceAvailability.destroy(
@@ -138,11 +162,76 @@ async function updateWorkSpaceDetail(workSpaceDetailObject) {
       createCalendarDates: createCalendarDates
     };
   } catch (err) {
+    console.error(err);
     await transaction.rollback();
   }
 }
 
+async function createWorkSpaceDetail(workSpaceDetailObject) {
+  var workSpace = {
+    name: workSpaceDetailObject.workSpaceName,
+    description: workSpaceDetailObject.workspaceDescription,
+    dimension: workSpaceDetailObject.workSpaceDimensions,
+    no_occupants: workSpaceDetailObject.workSpaceOccupancy,
+    floor: 1,
+    WorkspaceTypeId: 1,
+    rental_price: workSpaceDetailObject.workSpaceDailyRate,
+    isActive: workSpaceDetailObject.activateWorkSpace,
+    WorkspaceLocationId: workSpaceDetailObject.workSpaceLocation
+  };
+  let transaction;
+  try {
+    transaction = await db.sequelizeConnection.transaction();
 
+    var createWorkSpaceTable = await createWorkSpace(workSpace, transaction);
+    var workSpaceId = createWorkSpaceTable.dataValues.id;
+
+    var createWorkSpaceFeaturesTable = await createWorkSpaceFeatures(
+      workSpaceId,
+      workSpaceDetailObject.FEATURE_LIST,
+      transaction
+    );
+    // var createWorkSpaceFeaturesTable = await updateWorkSpaceFeatures(
+    //   workSpaceId,
+    //   workSpaceDetailObject.FEATURE_LIST,
+    //   transaction
+    // );
+
+    var workSpacePic = {
+      image_path: workSpaceDetailObject.imageFileName,
+      // image_path: null,
+      WorkspaceId: workSpaceId
+    };
+
+    if (workSpacePic.image_path) {
+      var createWorkSpacePicTable = await createWorkSpacePic(
+        workSpacePic,
+        transaction
+      );
+
+      // var createWorkSpacePicTable = await updateWorkSpacePic(
+      //   workSpacePic,
+      //   transaction
+      // );
+    }
+    var createCalendarDates = await createCalendarAvailability(
+      workSpaceId,
+      workSpaceDetailObject.startDate,
+      workSpaceDetailObject.endDate,
+      transaction
+    );
+    await transaction.commit();
+    return {
+      createWorkSpaceTable: createWorkSpaceTable,
+      createWorkSpaceFeaturesTable: createWorkSpaceFeaturesTable,
+      createWorkSpacePicTable: createWorkSpacePicTable,
+      createCalendarDates: createCalendarDates
+    };
+  } catch (err) {
+    console.error(err);
+    await transaction.rollback();
+  }
+}
 module.exports = {
   findAll: function(req, res) {
     db.Workspace.findAll({
@@ -232,90 +321,18 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  updateWorkSpaceDetail1: function(req, res) {
-    // res.send(req.body);
-    var workSpaceDetailObject = req.body;
-    var updatedWorkSpaceHeader;
-
-    var workSpace = {
-      name: req.body.workSpaceName,
-      description: req.body.workspaceDescription,
-      dimension: req.body.workSpaceDimensions,
-      no_occupants: req.body.workSpaceOccupancy,
-      floor: 1,
-      rental_price: req.body.workSpaceDailyRate,
-      isActive: req.body.activateWorkSpace,
-      WorkspaceLocationId: req.body.workSpaceLocation
-    };
-
-    var workSpacePic = {
-      image_path: req.body.imageFileName,
-      // image_path: null,
-      WorkspaceId: req.body.workSpaceId
-    };
-
-    db.sequelizeConnection
-      .transaction(t => {
-        return db.Workspace.update(
-          workSpace,
-          { where: { id: req.body.workSpaceId } },
-          { transaction: t }
-        ).then(updatedWorkSpace => {
-          updatedWorkSpaceHeader = updatedWorkSpace;
-          var workSpacePromises = [];
-          req.body.FEATURE_LIST.forEach(feature => {
-            var workSpaceFeature = {
-              status: feature.status,
-              WorkspaceId: req.body.workSpaceId,
-              FeatureId: feature.label
-            };
-            workSpacePromises.push(
-              db.WorkspaceFeature.upsert(
-                workSpaceFeature,
-                {
-                  where: {
-                    WorkspaceId: req.body.workSpaceId,
-                    FeatureId: feature.label
-                  }
-                },
-                { transaction: t }
-              )
-            );
-          });
-          console.log("Finished workspace and features");
-          return Sequelize.Promise.all(workSpacePromises).then(count => {
-            var workSpacePicPromises = [];
-            workSpacePicPromises.push(
-              db.WorkspacePic.upsert(
-                workSpacePic,
-                {
-                  where: {
-                    image_path: req.body.imageFileName,
-                    // image_path: null,
-                    WorkspaceId: req.body.workSpaceId
-                  }
-                },
-                { transaction: t }
-              )
-            );
-            return Sequelize.Promise.all(workSpacePicPromises);
-          });
-        });
-      })
-      .then(() => {
-        res.json(updatedWorkSpaceHeader);
-      })
-      .catch(function(error) {
-        console.log(error);
-        res.sendStatus(400);
-      });
-  },
-
   updateWorkSpaceDetail: function(req, res) {
     var workSpaceDetailObject = req.body;
     updateWorkSpaceDetail(workSpaceDetailObject).then(data =>
       res.json("Success OK")
     );
     console.log("567");
+  },
+  createWorkSpaceDetail: function(req, res) {
+    var workSpaceDetailObject = req.body;
+    createWorkSpaceDetail(workSpaceDetailObject).then(data =>
+      res.json("Success OK")
+    );
+    console.log("999");
   }
 };

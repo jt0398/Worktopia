@@ -19,7 +19,7 @@ const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
 
 class WorkSpaceDetail extends Component {
   state = {
-    workSpaceId: 0,
+    workSpaceId: null,
     workSpaceName: "",
     workspaceDescription: "",
     workSpaceLocation: "",
@@ -43,7 +43,6 @@ class WorkSpaceDetail extends Component {
   };
 
   handleDateSelection = ({ startDate, endDate }) => {
-    console.log("date selection");
     this.setState({ startDate, endDate });
   };
 
@@ -85,19 +84,25 @@ class WorkSpaceDetail extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     let workSpaceDetailObject = this.state;
-    console.log(workSpaceDetailObject);
     delete workSpaceDetailObject.selectedFile;
     delete workSpaceDetailObject.message;
     delete workSpaceDetailObject.defaultmessage;
     delete workSpaceDetailObject.uploading;
     delete workSpaceDetailObject.focusedInput;
     // delete workSpaceDetailObject.LOCATION_LIST;
-    console.log(workSpaceDetailObject);
-    API.updateWorkSpaceObject(workSpaceDetailObject)
-      .then(res => {
-        this.handleShow();
-      })
-      .catch(err => console.error(err));
+    if (workSpaceDetailObject.workSpaceId) {
+      API.updateWorkSpaceObject(workSpaceDetailObject)
+        .then(res => {
+          this.handleShow();
+        })
+        .catch(err => console.error(err));
+    } else {
+      API.createWorkSpaceObject(workSpaceDetailObject)
+        .then(res => {
+          this.handleShow();
+        })
+        .catch(err => console.error(err));
+    }
   };
 
   handleFileChange = event => {
@@ -161,18 +166,79 @@ class WorkSpaceDetail extends Component {
     });
   };
 
-  componentDidMount = () => {
-    console.log("Component Did mount");
-    var tempFeatureList = [];
-    API.getFeatureList().then(res => {
-      res.data.forEach(feature => {
-        tempFeatureList.push({
-          name: feature.name,
-          label: feature.id,
-          status: false
+  loadLocationsByOwner = ownerId => {
+    API.getDistinctLocationsForOwner(ownerId)
+      .then(res => {
+        res.data.forEach(location => {
+          this.setState({
+            LOCATION_LIST: [
+              ...this.state.LOCATION_LIST,
+              { fullAdress: location.full_address, locationId: location.id }
+            ]
+          });
         });
+      })
+      .catch(err => console.error(err));
+  };
+
+  loadFeaturesForWorkSpace = async currentFeatures => {
+    var tempFeatureList = [];
+    const res = await API.getFeatureList();
+    res.data.forEach(feature => {
+      tempFeatureList.push({
+        name: feature.name,
+        label: feature.id,
+        status: false
       });
     });
+
+    if (currentFeatures) {
+      currentFeatures.forEach(workspaceFeature => {
+        let featureIdToBeUpated = workspaceFeature.WorkspaceFeature.FeatureId;
+        let featureStatusToBeUpdated = workspaceFeature.WorkspaceFeature.status;
+        let tempFeature = tempFeatureList.find(
+          x => x.label === featureIdToBeUpated
+        );
+        if (tempFeature) {
+          tempFeature.status = featureStatusToBeUpdated;
+        }
+      });
+      this.setState({
+        FEATURE_LIST: tempFeatureList
+      });
+    } else {
+      this.setState({
+        FEATURE_LIST: tempFeatureList
+      });
+    }
+  };
+
+  loadWorkSpaceDetails = () => {
+    API.getWorkSpaceById(this.props.match.params.id)
+      .then(res => {
+        let fetchedWorkSpaceDetail = res.data[0];
+        this.setState({
+          workSpaceId: parseInt(fetchedWorkSpaceDetail.id),
+          workSpaceName: fetchedWorkSpaceDetail.name,
+          workspaceDescription: fetchedWorkSpaceDetail.description,
+          workSpaceLocationName:
+            fetchedWorkSpaceDetail.WorkspaceLocation.full_address,
+          workSpaceLocation: fetchedWorkSpaceDetail.WorkspaceLocation.id,
+          workSpaceOccupancy: fetchedWorkSpaceDetail.no_occupants,
+          workSpaceDimensions: fetchedWorkSpaceDetail.dimension,
+          workSpaceDailyRate: fetchedWorkSpaceDetail.rental_price,
+          activateWorkSpace: fetchedWorkSpaceDetail.isActive
+        });
+        this.loadFeaturesForWorkSpace(fetchedWorkSpaceDetail.Features);
+        let ownerId = fetchedWorkSpaceDetail.WorkspaceLocation.UserId;
+        this.loadLocationsByOwner(ownerId);
+      })
+      .catch(err => console.error(err));
+  };
+
+  componentDidMount = () => {
+    console.log("Component Did mount");
+
     API.getBookingByWorkspace(this.props.match.params.id).then(res => {
       var tempBookingList = [];
       res.data.forEach(booking => {
@@ -188,53 +254,12 @@ class WorkSpaceDetail extends Component {
       });
     });
 
-    API.getWorkSpaceById(this.props.match.params.id)
-      .then(res => {
-        let fetchedWorkSpaceDetail = res.data[0];
-        console.log(fetchedWorkSpaceDetail.WorkspaceLocation);
-        this.setState({
-          workSpaceId: parseInt(this.props.match.params.id),
-          workSpaceName: fetchedWorkSpaceDetail.name,
-          workspaceDescription: fetchedWorkSpaceDetail.description,
-          workSpaceLocationName:
-            fetchedWorkSpaceDetail.WorkspaceLocation.full_address,
-          workSpaceLocation: fetchedWorkSpaceDetail.WorkspaceLocation.id,
-          workSpaceOccupancy: fetchedWorkSpaceDetail.no_occupants,
-          workSpaceDimensions: fetchedWorkSpaceDetail.dimension,
-          workSpaceDailyRate: fetchedWorkSpaceDetail.rental_price,
-          activateWorkSpace: fetchedWorkSpaceDetail.isActive
-        });
-
-        fetchedWorkSpaceDetail.Features.forEach(workspaceFeature => {
-          let featureIdToBeUpated = workspaceFeature.WorkspaceFeature.FeatureId;
-          let featureStatusToBeUpdated =
-            workspaceFeature.WorkspaceFeature.status;
-          for (var i in tempFeatureList) {
-            if (tempFeatureList[i].label === featureIdToBeUpated) {
-              tempFeatureList[i].status = featureStatusToBeUpdated;
-              break; //Stop this loop, we found it!
-            }
-          }
-          this.setState({
-            FEATURE_LIST: tempFeatureList
-          });
-        });
-
-        let ownerId = fetchedWorkSpaceDetail.WorkspaceLocation.UserId;
-        API.getDistinctLocationsForOwner(ownerId)
-          .then(res => {
-            res.data.forEach(location => {
-              this.setState({
-                LOCATION_LIST: [
-                  ...this.state.LOCATION_LIST,
-                  { fullAdress: location.full_address, locationId: location.id }
-                ]
-              });
-            });
-          })
-          .catch(err => console.error(err));
-      })
-      .catch(err => console.error(err));
+    if (this.props.match.params.id) {
+      this.loadWorkSpaceDetails();
+    } else {
+      this.loadFeaturesForWorkSpace();
+      this.loadLocationsByOwner(2);
+    }
   };
 
   checkIfDayIsBlocked = momentDate => {
