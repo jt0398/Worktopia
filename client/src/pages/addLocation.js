@@ -1,24 +1,25 @@
 import React, { Component } from "react";
-import { Input, DropBox, DropBoxItem, FormBtn, Label } from "../components/Form/index";
+import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Dropdown from "react-bootstrap/Dropdown"
+import Dropdown from "react-bootstrap/Dropdown";
 
-const provinceList = ["Ontario", "Alberta"];
+const provinceList = ["Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon Territory"];
 
 class AddLocation extends Component {
     state = {
-        locationName: "",
-        address: "",
+        addr1: "",
+        addr2: "",
         city: "",
         province: "",
-        postalCode: ""
+        postal_code: ""
     }
+
     handleInputChange = event => {
-        const {name, value} = event.target;
+        const { name, value } = event.target;
         this.setState({
             [name]: value
         });
@@ -31,12 +32,43 @@ class AddLocation extends Component {
     };
 
     handleSave = event => {
-        event.preventdefault();
+        
+        event.preventDefault();
+        // event.stopPropagation();
+            API.saveLocation({
 
+                addr1: this.state.addr1,
+                addr2: this.state.addr2,
+                city: this.state.city,
+                province: this.state.province,
+                postal_code: this.state.postal_code,
+                UserId: 2
+            })
+                .then(res => {
+                    // this.setState({
+                    // addr1: "",
+                    // addr2: "",
+                    // city: "",
+                    // province: "",
+                    // postal_code: ""
+                    console.log(res);
+                // });
+                // console.log("button clicked");
+            })
+                .catch(err => console.log(err));
+        
+               
     };
 
     handleCancel = event => {
         event.preventdefault();
+        this.setState({
+            addr1: "",
+            addr2: "",
+            city: "",
+            province: "",
+            postal_code: ""
+        });
     }
 
     render() {
@@ -46,22 +78,22 @@ class AddLocation extends Component {
                     <Col size="md-6">
                         <Form>
                             <Form.Group>
-                                <Form.Label>Location Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter location name"
-                                    value={this.state.locationName}
-                                    onChange={this.handleInputChange}
-                                    name="locationName"
-                                />
-                                <br></br>
                                 <Form.Label>Address</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter address"
-                                    value={this.state.address}
+                                    value={this.state.addr1}
                                     onChange={this.handleInputChange}
-                                    name="address"
+                                    name="addr1"
+                                />
+                                <br></br>
+                                <Form.Label>Address 2</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter address"
+                                    value={this.state.addr2}
+                                    onChange={this.handleInputChange}
+                                    name="addr2"
                                 />
                                 <br></br>
                                 <Form.Label>City</Form.Label>
@@ -81,6 +113,7 @@ class AddLocation extends Component {
                                     <Dropdown.Menu>
                                         {provinceList.map(province => (
                                             <Dropdown.Item
+                                                key={province}
                                                 eventKey={province}
                                                 onSelect={this.handleProvinceSelection}
                                                 name="province"
@@ -95,9 +128,9 @@ class AddLocation extends Component {
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter postal code"
-                                    value={this.state.postalCode}
+                                    value={this.state.postal_code}
                                     onChange={this.handleInputChange}
-                                    name="postalCode"
+                                    name="postal_code"
                                 />
                                 <br></br>
                             </Form.Group>
@@ -107,12 +140,12 @@ class AddLocation extends Component {
                                 className="btn btn-success"
                                 disabled={
                                     !(
-                                        this.state.locationName &&
-                                        this.state.address &&
+                                        
+                                        this.state.addr1 &&
                                         this.state.city &&
                                         this.state.province &&
-                                        this.state.postalCode
-                                        
+                                        this.state.postal_code
+
                                     )
                                 }
                                 onClick={this.handleSave}
