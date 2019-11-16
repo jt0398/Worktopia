@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import Modal from "react-bootstrap/Modal";
 import FileUpload from "../components/FileUpload";
 import FeatureList from "../components/FeatureList";
 import "react-dates/initialize";
@@ -37,7 +38,8 @@ class WorkSpaceDetail extends Component {
     focusedInput: null,
     LOCATION_LIST: [],
     FEATURE_LIST: [],
-    BOOKED_DATES: []
+    BOOKED_DATES: [],
+    modalStatus: false
   };
 
   handleDateSelection = ({ startDate, endDate }) => {
@@ -92,7 +94,9 @@ class WorkSpaceDetail extends Component {
     // delete workSpaceDetailObject.LOCATION_LIST;
     console.log(workSpaceDetailObject);
     API.updateWorkSpaceObject(workSpaceDetailObject)
-      .then(res => console.log(res.data))
+      .then(res => {
+        this.handleShow();
+      })
       .catch(err => console.error(err));
   };
 
@@ -241,6 +245,19 @@ class WorkSpaceDetail extends Component {
       return true;
     }
   };
+
+  handleShow = () => {
+    this.setState({
+      modalStatus: true
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      modalStatus: false
+    });
+  };
+
   render() {
     return (
       <Container fluid>
@@ -375,6 +392,22 @@ class WorkSpaceDetail extends Component {
             </Jumbotron>
           </Col>
         </Row>
+        <Modal
+          show={this.state.modalStatus}
+          onHide={this.handleClose}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Workspace has been succesfully updated!!!
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <Button onClick={this.handleClose}>OK</Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     );
   }

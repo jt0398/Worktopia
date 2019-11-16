@@ -71,7 +71,7 @@ async function createCalendarAvailability(
 ) {
   var bookedDates = [];
   var currentDate = moment(startDate);
-  var stopDate = moment(endDate).add(1, "days");
+  var stopDate = moment(endDate);
   while (currentDate <= stopDate) {
     bookedDates.push({
       date: moment(currentDate).format("MM/DD/YYYY"),
@@ -113,10 +113,12 @@ async function updateWorkSpaceDetail(workSpaceDetailObject) {
       workSpaceDetailObject.FEATURE_LIST,
       transaction
     );
-    var updateWorkSpacePicTable = await updateWorkSpacePic(
-      workSpacePic,
-      transaction
-    );
+    if (workSpacePic.image_path) {
+      var updateWorkSpacePicTable = await updateWorkSpacePic(
+        workSpacePic,
+        transaction
+      );
+    }
     var deleteCalendarDates = await deleteWorkSpaceAvailability(
       workSpaceId,
       transaction
@@ -128,6 +130,13 @@ async function updateWorkSpaceDetail(workSpaceDetailObject) {
       transaction
     );
     await transaction.commit();
+    return {
+      updateWorkSpaceTable: updateWorkSpaceTable,
+      updateWorkSpaceFeaturesTable: updateWorkSpaceFeaturesTable,
+      updateWorkSpacePicTable: updateWorkSpacePicTable,
+      deleteCalendarDates: deleteCalendarDates,
+      createCalendarDates: createCalendarDates
+    };
   } catch (err) {
     await transaction.rollback();
   }
@@ -304,7 +313,9 @@ module.exports = {
 
   updateWorkSpaceDetail: function(req, res) {
     var workSpaceDetailObject = req.body;
-    updateWorkSpaceDetail(workSpaceDetailObject);
+    updateWorkSpaceDetail(workSpaceDetailObject).then(data =>
+      res.json("Success OK")
+    );
     console.log("567");
   }
 };
