@@ -13,11 +13,6 @@ router
 /*.delete(workspaceController.remove); */
 
 // Matches with "/api/workspace/search/result"
-router
-  /*  .route(
-    "/search/results/:location/:checkindate/:checkoutdate/:peoplecount/:roomcount"
-  ) */
-  .route("/search/results/")
-  .post(workspaceController.findBySearch);
+router.route("/search/results/").post(workspaceController.findBySearch);
 
 module.exports = router;

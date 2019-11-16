@@ -142,7 +142,6 @@ async function updateWorkSpaceDetail(workSpaceDetailObject) {
   }
 }
 
-
 module.exports = {
   findAll: function(req, res) {
     db.Workspace.findAll({
@@ -158,7 +157,7 @@ module.exports = {
     db.Workspace.findAll({
       include: [
         { model: db.WorkspaceLocation, where: { id: req.parms.id } },
-        { model: db.WorkspacePic }
+        { model: db.WorkspacePic, limit: 1 }
       ]
     })
       .then(dbModel => res.json(dbModel))

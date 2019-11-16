@@ -9,6 +9,7 @@ import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
 import API from "../utils/workspaceAPI";
+import miscAPI from "../utils/API";
 import HashMap from "hashmap";
 
 class SearchResults extends Component {
@@ -22,7 +23,8 @@ class SearchResults extends Component {
       room: 0,
       people: 0
     },
-    locations: []
+    locations: [],
+    FEATURE_LIST: []
   };
 
   // Handles updating component state when the user types into the input field
@@ -50,9 +52,26 @@ class SearchResults extends Component {
     });
 
   componentDidMount() {
-    //this.loadWorkspaces();
     //TODO: add search input to cache to load it in different pages
+    this.loadFeatures();
   }
+
+  //Loads feature list
+  loadFeatures = () => {
+    let tempFeatureList = [];
+
+    miscAPI.getFeatureList().then(res => {
+      res.data.forEach(feature => {
+        tempFeatureList.push({
+          name: feature.name,
+          label: feature.id,
+          status: false
+        });
+      });
+
+      this.setState({ FEATURE_LIST: tempFeatureList });
+    });
+  };
 
   //Load workspace data from API call
   loadWorkspaces = () => {
@@ -107,7 +126,20 @@ class SearchResults extends Component {
     this.loadWorkspaces();
   };
 
-  handleFeatureSelect = event => {};
+  handleFeatureSelection = event => {
+    let featureIdToBeUpated = event.target.id;
+    let tempArray = this.state.FEATURE_LIST;
+    for (var i in tempArray) {
+      if (tempArray[i].label.toString() === featureIdToBeUpated) {
+        tempArray[i].status = !tempArray[i].status;
+        break; //Stop this loop, we found it!
+      }
+    }
+    console.log(tempArray);
+    this.setState({
+      FEATURE_LIST: tempArray
+    });
+  };
 
   render() {
     return (
@@ -130,7 +162,10 @@ class SearchResults extends Component {
             <Map locations={this.state.locations} boundOnMount={false} />
             {/*Feature List*/}
             <Form>
-              {/*  <FeatureList onClick={this.handleFeatureSelect} /> */}
+              <FeatureList
+                handleFeatureSelection={this.handleFeatureSelection.bind(this)}
+                features={this.state.FEATURE_LIST}
+              ></FeatureList>
             </Form>
           </Col>
           <Col md="9" sm="12">
