@@ -14,9 +14,10 @@ router
 
 // Matches with "/api/workspace/search/result"
 router
-  .route(
+  /*  .route(
     "/search/results/:location/:checkindate/:checkoutdate/:peoplecount/:roomcount"
-  )
-  .get(workspaceController.findBySearch);
+  ) */
+  .route("/search/results/")
+  .post(workspaceController.findBySearch);
 
 module.exports = router;
