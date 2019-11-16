@@ -32,5 +32,8 @@ export default {
   },
   getFeatureList() {
     return axios.get("/api/features");
+  },
+  updateWorkSpaceObject(workSpaceDetailObject){
+    return axios.put(`/api/workspace/${workSpaceDetailObject.workSpaceId}`, workSpaceDetailObject);
   }
 };
