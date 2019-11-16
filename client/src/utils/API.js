@@ -48,7 +48,7 @@ export default {
   getLocations: function() {
     return axios.get("/api/location");
   },
-  getLocation: function(id) {
-    return axios.get("/api/location/" + id);
+  getLocation: function(locationId) {
+    return axios.get("/api/location/" + locationId);
   }
 };
