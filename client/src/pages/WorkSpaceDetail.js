@@ -16,6 +16,7 @@ import "react-dates/lib/css/_datepicker.css";
 var moment = require("moment");
 
 const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
+const OWNER_ID = 1;
 
 class WorkSpaceDetail extends Component {
   state = {
@@ -258,7 +259,7 @@ class WorkSpaceDetail extends Component {
       this.loadWorkSpaceDetails();
     } else {
       this.loadFeaturesForWorkSpace();
-      this.loadLocationsByOwner(2);
+      this.loadLocationsByOwner(OWNER_ID);
     }
   };
 
