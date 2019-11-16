@@ -142,6 +142,7 @@ async function updateWorkSpaceDetail(workSpaceDetailObject) {
   }
 }
 
+
 module.exports = {
   findAll: function(req, res) {
     db.Workspace.findAll({
