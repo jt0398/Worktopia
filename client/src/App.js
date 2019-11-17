@@ -11,6 +11,8 @@ import BookWorkspace from "./pages/BookWorkspace";
 import OwnerBooking from "./pages/ownerBooking";
 import UserBooking from "./pages/userBooking";
 import NoMatch from "./pages/NoMatch";
+import Payments from "./pages/Payments";
+
 import "./pages/css/MainPage.css";
 // "./css/MainPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -39,6 +41,8 @@ function App() {
           <Route exact path="/owner/addlocation" component={AddLocation} />
           <Route exact path="/owner/booking" component={OwnerBooking} />
           <Route exact path="/user/booking" component={UserBooking} />
+          <Route exact path="/payments" component={Payments} />
+
           <Route component={NoMatch} />
         </Switch>
       </div>
