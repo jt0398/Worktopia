@@ -51,14 +51,14 @@ function WorkspaceCard({
                   <br />
                 </>
               )}
-              {!imgStyle && `Price: ${rental_price}`}
+              {!imgStyle && `Price: $${rental_price}`}
             </Card.Text>
           </Card.Body>
         </div>
         {imgStyle && (
           <div className="col-md-2">
             <span className="align-middle">
-              Price: {rental_price} <br />
+              Price: ${rental_price} <br />
               <Link
                 to={`/booking/workspace/${workspaceID}`}
                 class="btn btn-primary"

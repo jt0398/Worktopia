@@ -26,7 +26,9 @@ class SearchResults extends Component {
     },
     locations: [],
     FEATURE_LIST: [],
-    hashFeatures: new HashMap()
+    hashFeatures: new HashMap(),
+    searching: false,
+    searchComplete: false
   };
 
   // Handles updating component state when the user types into the input field
@@ -95,6 +97,8 @@ class SearchResults extends Component {
       .then(() => {
         //Get geolocation of the addresses
         this.loadLocations();
+
+        this.setState({ searchComplete: true, searching: false });
       })
       .catch(err => console.log(err));
   };
@@ -125,6 +129,7 @@ class SearchResults extends Component {
   //Handle search button submit event
   handleFormSearch = event => {
     event.preventDefault();
+    this.setState({ searchComplete: false, searching: true });
     this.loadWorkspaces();
   };
 
@@ -176,8 +181,6 @@ class SearchResults extends Component {
         </Row>
         <Row>
           <Col md="3">
-            {/*Map*/}
-            <Map locations={this.state.locations} boundOnMount={false} />
             {/*Feature List*/}
             <Form>
               <FeatureList
@@ -185,10 +188,14 @@ class SearchResults extends Component {
                 features={this.state.FEATURE_LIST}
               ></FeatureList>
             </Form>
+            {/*Map*/}
+            <Map locations={this.state.locations} boundOnMount={false} />
           </Col>
           <Col md="9" sm="12">
             <div className="h6">
-              {this.state.workspaces.length} results found.
+              {this.state.searchComplete && (
+                <>{this.state.workspaces.length} result(s) found.</>
+              )}
             </div>
             {/*Search Result*/}
             {this.state.workspaces.map(workspace => {
