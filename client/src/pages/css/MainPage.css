@@ -35,13 +35,32 @@ html {
 }
 .demo {
   margin-top: 20px;
-  border: 2px solid red;
-  height: 55vh;
+
+  height: 54vh;
   width: 100%;
-  background-image: url("/images/pic2.png");
+  z-index: -1;
+
+  background-image: url("/images/image.jpg");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
+  opacity: 0.87;
+  background-color: rgba(0, 0, 0);
+  background-position: center;
 }
+
+#text1 {
+  position: relative;
+  left: 90px;
+  top: 50px;
+}
+
+.btn1 {
+  background-color: rgb(255, 175, 77);
+  color: white;
+  width: 150px;
+  border-radius: 50px;
+}
+
 #textimg {
   margin-top: 60px;
 }
