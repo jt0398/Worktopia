@@ -14,7 +14,7 @@ export class Header extends Component {
             <Nav
               defaultActiveKey="/main"
               as="ul"
-              class="nav justify-content-end"
+              className="nav justify-content-end"
             >
               <Nav.Item as="li">
                 <Nav.Link className="text-light" href="/main">
