@@ -148,7 +148,7 @@ module.exports = {
   findAllByLocation: function(req, res) {
     db.Workspace.findAll({
       include: [
-        { model: db.WorkspaceLocation, where: { id: req.parms.id } },
+        { model: db.WorkspaceLocation, where: { id: req.params.id } },
         { model: db.WorkspacePic }
       ]
     })

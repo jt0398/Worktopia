@@ -28,6 +28,7 @@ function App() {
           <Route exact path="/searchresults" component={SearchResults} />
           <Route exact path="/workspacebooking" component={BookWorkspace} />
           <Route exact path="/owner" component={OwnerLocations} />
+          <Route exact path="/owner/:id" component={OwnerLocations} />
           <Route exact path="/owner/addlocation" component={AddLocation} />
           <Route exact path="/owner/booking" component={OwnerBooking} />
           <Route exact path="/user/booking" component={UserBooking} />
