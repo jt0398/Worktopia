@@ -202,11 +202,24 @@ module.exports = {
         ]
       }
     ); */
+
+    console.log("selected features " + JSON.stringify(req.body));
+
     const location = req.body.location;
     const checkindate = req.body.checkinDate;
     const checkoutdate = req.body.checkoutDate;
     const people = parseInt(req.body.people);
     const room = parseInt(req.body.room);
+
+    let featureWhere = { id: { [Op.gt]: [0] } };
+
+    if (req.body.selectedFeatures.length > 0) {
+      featureWhere = {
+        id: { [Op.in]: req.body.selectedFeatures }
+      };
+    }
+
+    console.log(featureWhere);
 
     const occupancy = Math.floor(people / room);
 
@@ -233,9 +246,9 @@ module.exports = {
         { model: db.WorkspacePic, limit: 1 },
         {
           model: db.WorkspaceAvailability,
-          where: { date: { [Op.between]: [checkindate, checkoutdate] } } //{ id: { [Op.gt]: [0] } }
+          where: { date: { [Op.between]: [checkindate, checkoutdate] } }
         },
-        { model: db.Feature }
+        { model: db.Feature, where: featureWhere }
       ]
     })
       .then(dbModel => res.json(dbModel))

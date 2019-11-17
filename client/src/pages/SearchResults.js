@@ -21,10 +21,12 @@ class SearchResults extends Component {
       checkinDate: moment(new Date(), "yyyy-mm-dd"),
       checkoutDate: moment(new Date(), "yyyy-mm-dd"),
       room: 0,
-      people: 0
+      people: 0,
+      selectedFeatures: []
     },
     locations: [],
-    FEATURE_LIST: []
+    FEATURE_LIST: [],
+    hashFeatures: new HashMap()
   };
 
   // Handles updating component state when the user types into the input field
@@ -127,17 +129,33 @@ class SearchResults extends Component {
   };
 
   handleFeatureSelection = event => {
-    let featureIdToBeUpated = event.target.id;
+    let tmpHash = this.state.hashFeatures;
+    const featureIdToBeUpated = event.target.id;
     let tempArray = this.state.FEATURE_LIST;
+
     for (var i in tempArray) {
       if (tempArray[i].label.toString() === featureIdToBeUpated) {
-        tempArray[i].status = !tempArray[i].status;
+        tempArray[i].status = !tempArray[i].status; //Updates the checkbox checked property
+
+        if (tempArray[i].status) {
+          tmpHash.set(featureIdToBeUpated, parseInt(featureIdToBeUpated));
+        } else {
+          tmpHash.delete(featureIdToBeUpated);
+        }
+
         break; //Stop this loop, we found it!
       }
     }
-    console.log(tempArray);
+
+    const features = tmpHash.values();
+
     this.setState({
-      FEATURE_LIST: tempArray
+      searchParams: { ...this.state.searchParams, selectedFeatures: features }
+    });
+
+    this.setState({
+      FEATURE_LIST: tempArray,
+      hashFeatures: tmpHash
     });
   };
 
@@ -169,11 +187,14 @@ class SearchResults extends Component {
             </Form>
           </Col>
           <Col md="9" sm="12">
+            <div className="h6">
+              {this.state.workspaces.length} results found.
+            </div>
             {/*Search Result*/}
-            {this.state.workspaces.map((workspace, index) => {
+            {this.state.workspaces.map(workspace => {
               return (
                 <WorkspaceCard
-                  key={index}
+                  key={workspace.id}
                   rowStyle="row no-gutters"
                   imgStyle="col-md-4"
                   bodyStyle="col-md-6"
@@ -184,6 +205,8 @@ class SearchResults extends Component {
                   }
                   rental_price={workspace.rental_price}
                   fulladdress={workspace.WorkspaceLocation.full_address}
+                  features={workspace.Features}
+                  workspaceID={workspace.id}
                 />
               );
             })}

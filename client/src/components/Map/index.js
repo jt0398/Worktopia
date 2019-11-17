@@ -20,8 +20,8 @@ class MapView extends Component {
   }
 
   state = {
-    center: [0, 0],
-    zoom: 5
+    center: [43.6532, -79.3832],
+    zoom: 7
   };
 
   componentDidMount() {
@@ -55,7 +55,7 @@ class MapView extends Component {
     const leafletMap = this.leafletMap;
 
     if (myBounds._northEast) {
-      leafletMap.fitBounds(myBounds); //Centers and zooms the map around the bounds
+      leafletMap.fitBounds(myBounds); //Centers and zooms the map around the bounds --> change to compute https://carto.com/blog/center-of-points/
     }
   }
 
