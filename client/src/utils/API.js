@@ -47,5 +47,8 @@ export default {
   },
   getLocationByOwner() {
     return axios.get("/api/location/owner/2");
+  },
+  getLocationById(locationId) {
+    return axios.get("/api/location" + locationId);
   }
 };
