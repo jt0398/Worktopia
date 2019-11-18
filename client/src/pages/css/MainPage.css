@@ -7,7 +7,14 @@ height: 100%;
     box-sizing: border-box;
 }
 
-.searchBox{
+.intro {
+  padding: 180px;
+  font-size: 70px;
+  color: white;
+  text-shadow: 3px 3px black;
+}
+
+.boxShadow{
   box-shadow: 3px 2px 10px 18px lightgray;
 }
 
@@ -18,20 +25,47 @@ h1 {
 
 .textNimg{
   box-shadow: 3px 2px 10px 18px lightgrey;
+  height: 35vh;
+  margin-bottom: 55px;
 }
 
 h5 {
-  text-shadow: 3px 2px lightgrey
-  ;
+  text-shadow: 3px 2px lightgrey;
 }
-.stickyPart {
-  /* position: -webkit-sticky; */
-  position: sticky;
-  top: 0; 
-  background-color: white;
-  /* padding: 50px; */
-  /* font-size: 20px; */
- } 
+
+.footer {
+  border: 2px solid rebeccapurple;
+}
+
+.demo {
+  margin-top: 20px;
+  /* border: 2px solid red; */
+  height: 55vh;
+  width: 100%;
+background-image: url("/images/pic2.png");
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+
+
+}
+#textimg{
+margin-top: 60px;
+}
+
+.parallaxImg {
+  /* The image used */
+  background-image: url("/images/pic3.png");
+  margin-bottom: 55px;
+  /* Full height */
+  height: 150px;
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 
 
