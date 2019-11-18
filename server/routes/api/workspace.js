@@ -2,8 +2,10 @@ const router = require("express").Router();
 const workspaceController = require("../../controllers/workspaceController");
 
 // Matches with "/api/workspace"
-router.route("/").get(workspaceController.findAll);
-//.post(workspaceController.create);
+router
+  .route("/")
+  .get(workspaceController.findAll)
+  .post(workspaceController.createWorkSpaceDetail);
 
 // Matches with "/api/workspace/:id"
 router

@@ -29,10 +29,16 @@ function WorkspaceCard({
               {fulladdress}
               <br />
               <br />
-              Description: {description}
-              <br />
-              Dimensions: {dimension}
-              <br />
+              {description && (
+                <>
+                  Description: {description} <br />
+                </>
+              )}
+              {dimension && (
+                <>
+                  Dimensions: {dimension} <br />
+                </>
+              )}
               {!imgStyle && `Price: ${rental_price}`}
             </Card.Text>
           </Card.Body>

@@ -39,6 +39,9 @@ export default {
       workSpaceDetailObject
     );
   },
+  createWorkSpaceObject(workSpaceDetailObject) {
+    return axios.post("/api/workspace", workSpaceDetailObject);
+  },
   getBookingByWorkspace(workSpaceId) {
     return axios.get(`/api/booking/workspace/${workSpaceId}`);
   },
@@ -50,5 +53,14 @@ export default {
   },
   getLocationById(locationId) {
     return axios.get("/api/location" + locationId);
+  },
+  saveLocation: function(locationData) {
+    return axios.post("/api/location/add", locationData);
+  },
+  getLocations: function() {
+    return axios.get("/api/location");
+  },
+  getLocation: function(locationId) {
+    return axios.get("/api/location/" + locationId);
   }
 };

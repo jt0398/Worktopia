@@ -97,25 +97,6 @@ class Search extends Component {
             <Form.Group as={Col}>
               <Form.Label>
                 <strong>
-                  <i class="fas fa-search-plus"></i> Rooms
-                </strong>
-              </Form.Label>
-              <Form.Control
-                as="select"
-                required
-                onChange={this.props.onChange}
-                value={this.props.room}
-                name="room"
-              >
-                <option>Choose...</option>
-                {this.rooms.map((room, index) => {
-                  return <option key={index}>{room}</option>;
-                })}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Label>
-                <strong>
                   <i class="fas fa-user-friends"></i> People
                 </strong>
               </Form.Label>
@@ -129,6 +110,25 @@ class Search extends Component {
                 <option>Choose...</option>
                 {this.people.map((person, index) => {
                   return <option key={index}>{person}</option>;
+                })}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Label>
+                <strong>
+                  <i class="fas fa-search-plus"></i> Rooms
+                </strong>
+              </Form.Label>
+              <Form.Control
+                as="select"
+                required
+                onChange={this.props.onChange}
+                value={this.props.room}
+                name="room"
+              >
+                <option>Choose...</option>
+                {this.rooms.map((room, index) => {
+                  return <option key={index}>{room}</option>;
                 })}
               </Form.Control>
             </Form.Group>
