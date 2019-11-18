@@ -15,6 +15,9 @@ module.exports = function(sequelize, DataTypes) {
     postal_code: {
       type: DataTypes.STRING(20)
     },
+    country: {
+      type: DataTypes.STRING(20)
+    },
     full_address: {
       type: DataTypes.STRING,
       get() {
@@ -24,10 +27,12 @@ module.exports = function(sequelize, DataTypes) {
           this.getDataValue("addr2") +
           " " +
           this.getDataValue("city") +
-          " " +
+          ", " +
           this.getDataValue("province") +
           " " +
-          this.getDataValue("postal_code")
+          this.getDataValue("postal_code") +
+          " " +
+          this.getDataValue("country")
         );
       }
     }

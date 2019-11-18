@@ -11,6 +11,11 @@ import moment from "moment";
 import API from "../utils/workspaceAPI";
 import miscAPI from "../utils/API";
 import HashMap from "hashmap";
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng
+} from "react-places-autocomplete";
 
 class SearchResults extends Component {
   state = {
@@ -24,7 +29,8 @@ class SearchResults extends Component {
       people: 0,
       selectedFeatures: []
     },
-    locations: [],
+    locations: [], //geolocations based on address
+    centerGeoLoc: [43.6532, -79.3832],
     FEATURE_LIST: [],
     hashFeatures: new HashMap(),
     searching: false,
@@ -43,17 +49,42 @@ class SearchResults extends Component {
     });
   };
 
+  //Update Location state
+  handleLocationChange = location => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, location: location }
+    });
+  };
+
+  handleLocationSelect = location => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, location: location }
+    });
+
+    geocodeByAddress(location)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        this.setState({
+          centerGeoLoc: [latLng.lat, latLng.lng]
+        });
+        console.log("Success", latLng);
+      })
+      .catch(error => console.error("Error", error));
+  };
+
   //Update Check In state
-  handleCheckInChange = date =>
+  handleCheckInChange = date => {
     this.setState({
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
+  };
 
   //Update Check Out state
-  handleCheckOutChange = date =>
+  handleCheckOutChange = date => {
     this.setState({
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
+  };
 
   componentDidMount() {
     //TODO: add search input to cache to load it in different pages
@@ -176,6 +207,8 @@ class SearchResults extends Component {
               onSubmit={this.handleFormSearch}
               onCheckInChange={this.handleCheckInChange}
               onCheckOutChange={this.handleCheckOutChange}
+              onLocationChange={this.handleLocationChange}
+              onSelectLocation={this.handleLocationSelect}
             />
           </Col>
         </Row>
@@ -189,7 +222,10 @@ class SearchResults extends Component {
               ></FeatureList>
             </Form>
             {/*Map*/}
-            <Map locations={this.state.locations} boundOnMount={false} />
+            <Map
+              locations={this.state.locations}
+              centerGeoLoc={this.state.centerGeoLoc}
+            />
           </Col>
           <Col md="9" sm="12">
             <div className="h6">

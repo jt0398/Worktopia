@@ -59,6 +59,7 @@ INSERT INTO `workspacelocations`
   `city`,
   `province`,
   `postal_code`,
+  `country`,
   `full_address`,
   `UserId`,
   `createdAt`,
@@ -68,8 +69,9 @@ VALUES(
   '123 Dundas Street',
   '',
   'Mississauga',
-  'Ontario',
+  'ON',
   'A4N 3G1',
+  'Canada',
   '',
   1, now(), now()
 );
@@ -81,6 +83,7 @@ INSERT INTO `workspacelocations`
   `city`,
   `province`,
   `postal_code`,
+  `country`,
   `full_address`,
   `UserId`,
   `createdAt`,
@@ -90,8 +93,9 @@ VALUES(
   '701 Thomas Rd.',
   '',
   'Mississauga',
-  'Ontario',
+  'ON',
   'L2Y 4S1',
+  'Canada',
   '',
   1, now(), now()
 );
@@ -103,6 +107,7 @@ INSERT INTO `workspacelocations`
   `city`,
   `province`,
   `postal_code`,
+  `country`,
   `full_address`,
   `UserId`,
   `createdAt`,
@@ -112,8 +117,9 @@ VALUES(
   '67 Burnhamthorpe Rd',
   '',
   'Mississauga',
-  'Ontario',
+  'ON',
   'B2P 4R7',
+  'Canada',
   '',
   2, now(), now()
 );
@@ -125,6 +131,7 @@ INSERT INTO `workspacelocations`
   `city`,
   `province`,
   `postal_code`,
+  `country`,
   `full_address`,
   `UserId`,
   `createdAt`,
@@ -134,8 +141,9 @@ VALUES(
   '1033 Courtney Park',
   '',
   'Mississauga',
-  'Ontario',
+  'ON',
   'L1S 6M2',
+  'Canada',
   '',
   2, now(), now()
 );
@@ -180,7 +188,7 @@ VALUES ('Great Room'
 , 250.99
 , 1
 , now(), now()
-,1,4); 
+,1,1); 
 
 INSERT INTO workspaces (
 `name`,
@@ -203,7 +211,7 @@ VALUES ('Downtown Coworking Space'
 , 690.99
 , 1
 , now(), now()
-,1,4); 
+,1,1); 
 
 INSERT INTO workspaces (
 `name`,
@@ -226,7 +234,7 @@ VALUES ('Standard Private Office'
 , 1500.00
 , 1
 , now(), now()
-,1,4); 
+,1,2); 
 
 INSERT INTO workspaces (
 `name`,
@@ -249,7 +257,7 @@ VALUES ('Office Suites'
 , 1500.00
 , 1
 , now(), now()
-,1,4); 
+,1,2); 
 
 
 INSERT INTO workspaces (

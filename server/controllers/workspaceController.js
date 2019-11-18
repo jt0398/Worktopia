@@ -293,7 +293,7 @@ module.exports = {
       }
     ); */
 
-    const location = req.body.location;
+    const location = req.body.location.split(",").join("");
     const checkindate = moment(req.body.checkinDate).subtract(1, "days");
     const checkoutdate = req.body.checkoutDate;
     const people = parseInt(req.body.people);
@@ -328,11 +328,31 @@ module.exports = {
           model: db.WorkspaceLocation,
           where: {
             [Op.or]: [
+              Sequelize.where(
+                Sequelize.fn(
+                  "concat",
+                  Sequelize.col("addr1"),
+                  " ",
+                  Sequelize.col("addr2"),
+                  " ",
+                  Sequelize.col("city"),
+                  " ",
+                  Sequelize.col("province"),
+                  " ",
+                  Sequelize.col("country"),
+                  " ",
+                  Sequelize.col("postal_code")
+                ),
+                {
+                  [Op.like]: `%${location}%`
+                }
+              ),
               { addr1: { [Op.like]: `%${location}%` } },
               { addr2: { [Op.like]: `%${location}%` } },
               { city: { [Op.like]: `%${location}%` } },
               { province: { [Op.like]: `%${location}%` } },
-              { postal_code: { [Op.like]: `%${location}%` } }
+              { postal_code: { [Op.like]: `%${location}%` } },
+              { country: { [Op.like]: `%${location}%` } }
             ]
           }
         },
@@ -351,8 +371,9 @@ module.exports = {
         { model: db.Feature, through: { where: featureWhere }, required: true },
         {
           model: db.Booking,
+          required: false,
           where: {
-            [Op.and]: [
+            [Op.or]: [
               {
                 start_date: {
                   [Op.notBetween]: [checkindate, checkoutdate]
