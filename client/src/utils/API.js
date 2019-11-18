@@ -52,7 +52,7 @@ export default {
     return axios.get("/api/location/owner/2");
   },
   getLocationById(locationId) {
-    return axios.get("/api/location" + locationId);
+    return axios.get("/api/location/" + locationId);
   },
   saveLocation: function(locationData) {
     return axios.post("/api/location/add", locationData);

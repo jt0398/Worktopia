@@ -16,8 +16,44 @@ class AddLocation extends Component {
         addr2: "",
         city: "",
         province: "",
-        postal_code: ""
+        postal_code: "",
+        locationId: null,
+        userId: null
     }
+
+    componentDidMount = () => {
+      this.updateLocation(this.props.match.params.id);
+    };
+
+    updateLocation = id => {
+        if (id) {
+            API.getLocationById(id)
+                .then(res => {
+                    let fetchedLocationDetail = res.data[0];
+                    this.setState({
+                        addr1: fetchedLocationDetail.addr1,
+                        addr2: fetchedLocationDetail.addr2,
+                        city: fetchedLocationDetail.city,
+                        province: fetchedLocationDetail.province,
+                        postal_code: fetchedLocationDetail.postal_code,
+                        locationId: parseInt(fetchedLocationDetail.id),
+                        userId: parseInt(fetchedLocationDetail.UserId)
+
+                    });
+                })
+        }
+        else {
+            this.setState({
+                addr1: "",
+                addr2: "",
+                city: "",
+                province: "",
+                postal_code: "",
+                locationId: null,
+                userId: null
+            });
+        }
+    };
 
     handleInputChange = event => {
         const { name, value } = event.target;
