@@ -68,13 +68,6 @@ class Search extends Component {
                   <i class="fas fa-thumbtack"></i> Locations
                 </strong>
               </Form.Label>
-              {/* <Form.Control
-                type="text"
-                required
-                onChange={this.props.onChange}
-                value={this.props.location}
-                name="location"
-              /> */}
               <PlacesAutocomplete
                 value={this.state.address}
                 onChange={this.handleChange}
