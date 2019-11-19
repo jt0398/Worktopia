@@ -291,8 +291,6 @@ module.exports = {
 
     let featureWhere = "(SELECT DISTINCT WorkspaceId FROM workspacefeatures)";
 
-    /* featureWhere = { FeatureId: { [Op.gt]: [0] } }; */
-
     if (req.body.selectedFeatures.length > 0) {
       featureWhere =
         "(SELECT WorkspaceId " +
@@ -300,8 +298,6 @@ module.exports = {
         " WHERE FeatureId IN (" +
         req.body.selectedFeatures.join(",") +
         "))";
-      /* FeatureId: { [Op.in]: req.body.selectedFeatures },
-        status: { [Op.eq]: true } */
     }
 
     db.Workspace.findAll({
@@ -377,8 +373,7 @@ module.exports = {
           }
         },
         {
-          model:
-            db.Feature /* , through: { where: featureWhere }, required: true */
+          model: db.Feature
         }
       ]
     })
