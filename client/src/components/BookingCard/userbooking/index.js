@@ -63,7 +63,7 @@ function UserBooking({
         </div>
 
         {/* Workspace Description */}
-        {/* <div className={lStyle}> */}
+        <div className={chkinoutStyle}>
         <Card.Body className="cardBody">
           <Card.Header className="cardHeader">Location</Card.Header>
           <br></br>
@@ -76,7 +76,7 @@ function UserBooking({
             {city} <br />
           </Card.Text>
         </Card.Body>
-        {/* </div> */}
+        </div>
 
         {/* CheckIn Date */}
         <div className={chkinoutStyle}>
