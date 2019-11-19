@@ -4,6 +4,7 @@ function Footer() {
   return (
     <span className="text-center text-secondary">
       <p className=" footer">
+        <br></br>
         <i class="fab fa-facebook fa-3x"></i>&nbsp;&nbsp;&nbsp;
         <i class="fab fa-twitter fa-3x"></i>&nbsp;&nbsp;&nbsp;
         <i class="fab fa-instagram fa-3x"></i>&nbsp;&nbsp;&nbsp;

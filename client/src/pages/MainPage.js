@@ -141,7 +141,9 @@ class MainPage extends Component {
         <div className="boxShadow">
           <div className="parallaxImg"></div>
         </div>
-        <Footer />
+        <div className="mainPageFooter">
+          <Footer />
+        </div>
       </Container>
     );
   }
