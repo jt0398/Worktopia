@@ -30,15 +30,6 @@ class MapView extends Component {
       const updatedZoomLevel = leafletMap.getZoom();
       this.handleZoomLevelChange(updatedZoomLevel);
     });
-
-    console.log("componentDidMount " + this.props.centerGeoLoc);
-  }
-
-  componentWillUpdate() {
-    /* this.setState({
-      center: this.props.centerGeoLoc
-    });*/
-    console.log("getSnapshotBeforeUpdate " + this.props.centerGeoLoc);
   }
 
   handleZoomLevelChange(newZoomLevel) {
