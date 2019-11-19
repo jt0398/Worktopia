@@ -134,7 +134,7 @@ class WorkSpaceDetail extends Component {
           selectedFile: null,
           message: "Uploaded successfully",
           uploading: false,
-          imageFileName: res.data.saveAs
+          imageFileName: res.data.publicUrl
         });
       })
       .catch(err => {
