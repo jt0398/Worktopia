@@ -3,7 +3,6 @@ import "./style.css";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import axios from "axios";
 
 class MapView extends Component {
   constructor(props) {

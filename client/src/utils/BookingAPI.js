@@ -11,5 +11,9 @@ export default {
 
   getUserDetails: function(userId) {
     return axios.get(`/api/booking/owner/${userId}`);
+  },
+
+  bookWorkspace: function(booking) {
+    return axios.post(`/api/booking/workspace`);
   }
 };

@@ -22,11 +22,17 @@ class SearchResults extends Component {
     addresses: new HashMap(), //Keeps address unique to avoid rendering in map multiple times
     workspaces: [],
     searchParams: {
-      location: "",
-      checkinDate: moment(new Date(), "yyyy-mm-dd"),
-      checkoutDate: moment(new Date(), "yyyy-mm-dd"),
-      room: 0,
-      people: 0,
+      location: localStorage.getItem("location") || "",
+      checkinDate:
+        (localStorage.getItem("checkinDate") &&
+          moment(localStorage.getItem("checkinDate"), "yyyy-mm-dd")) ||
+        moment(new Date(), "yyyy-mm-dd"),
+      checkoutDate:
+        (localStorage.getItem("checkoutDate") &&
+          moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
+        moment(new Date(), "yyyy-mm-dd"),
+      room: localStorage.getItem("room") || 0,
+      people: localStorage.getItem("people") || 0,
       selectedFeatures: []
     },
     locations: [], //geolocations based on address
@@ -47,6 +53,8 @@ class SearchResults extends Component {
         [name]: value
       }
     });
+
+    localStorage.setItem(name, value);
   };
 
   //Update Location state
@@ -54,12 +62,16 @@ class SearchResults extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, location: location }
     });
+
+    localStorage.setItem("location", location);
   };
 
   handleLocationSelect = location => {
     this.setState({
       searchParams: { ...this.state.searchParams, location: location }
     });
+
+    localStorage.setItem("location", location);
 
     geocodeByAddress(location)
       .then(results => getLatLng(results[0]))
@@ -77,6 +89,8 @@ class SearchResults extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
+
+    localStorage.setItem("checkinDate", date);
   };
 
   //Update Check Out state
@@ -84,10 +98,11 @@ class SearchResults extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
+
+    localStorage.setItem("checkoutDate", date);
   };
 
   componentDidMount() {
-    //TODO: add search input to cache to load it in different pages
     this.loadFeatures();
   }
 
