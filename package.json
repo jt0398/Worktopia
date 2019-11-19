@@ -46,6 +46,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "react": "^16.11.0",
+    "react-animated-css": "^1.2.1",
     "react-dates": "^21.4.0",
     "react-dom": "^16.11.0",
     "react-places-autocomplete": "^7.2.1",
