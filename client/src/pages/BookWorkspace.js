@@ -6,9 +6,8 @@ import WorkspaceCard from "../components/WorkspaceCard";
 import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
-import API from "../utils/workspaceAPI";
+import workspaceAPI from "../utils/workspaceAPI";
 import PriceCard from "../components/PriceCard";
-import Button from "react-bootstrap/Button";
 import {
   geocodeByAddress,
   geocodeByPlaceId,
@@ -19,11 +18,18 @@ class BookWorkspace extends Component {
   state = {
     workspaces: [],
     searchParams: {
-      location: "",
-      checkinDate: moment(new Date(), "yyyy-mm-dd"),
-      checkoutDate: moment(new Date(), "yyyy-mm-dd"),
-      room: 0,
-      people: 0
+      location: localStorage.getItem("location") || "",
+      checkinDate:
+        (localStorage.getItem("checkinDate") &&
+          moment(localStorage.getItem("checkinDate"), "yyyy-mm-dd")) ||
+        moment(new Date(), "yyyy-mm-dd"),
+      checkoutDate:
+        (localStorage.getItem("checkoutDate") &&
+          moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
+        moment(new Date(), "yyyy-mm-dd"),
+      room: localStorage.getItem("room") || 0,
+      people: localStorage.getItem("people") || 0,
+      selectedFeatures: []
     },
     locations: [], //geolocations based on address
     centerGeoLoc: [43.6532, -79.3832]
@@ -39,6 +45,8 @@ class BookWorkspace extends Component {
         [name]: value
       }
     });
+
+    localStorage.setItem(name, value);
   };
 
   //Update Location state
@@ -46,6 +54,8 @@ class BookWorkspace extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, location: location }
     });
+
+    localStorage.setItem("location", location);
   };
 
   handleLocationSelect = location => {
@@ -53,13 +63,14 @@ class BookWorkspace extends Component {
       searchParams: { ...this.state.searchParams, location: location }
     });
 
+    localStorage.setItem("location", location);
+
     geocodeByAddress(location)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
         this.setState({
           centerGeoLoc: [latLng.lat, latLng.lng]
         });
-        console.log("Success", latLng);
       })
       .catch(error => console.error("Error", error));
   };
@@ -69,6 +80,8 @@ class BookWorkspace extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
+
+    localStorage.setItem("checkinDate", date);
   };
 
   //Update Check Out state
@@ -76,6 +89,8 @@ class BookWorkspace extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
+
+    localStorage.setItem("checkoutDate", date);
   };
 
   componentDidMount() {
@@ -83,7 +98,8 @@ class BookWorkspace extends Component {
   }
 
   loadWorkspaces = () => {
-    API.getWorkspace(this.props.match.params.id)
+    workspaceAPI
+      .getWorkspace(this.props.match.params.id)
       .then(res => {
         const workspace = res.data.length && res.data[0];
 
@@ -98,7 +114,8 @@ class BookWorkspace extends Component {
 
   //Get geolocation from API
   loadLocations = address => {
-    API.getGeoLoc(address)
+    workspaceAPI
+      .getGeoLoc(address)
       .then(res => {
         //Updates geolocation array to render in map
         this.setState({
@@ -120,6 +137,7 @@ class BookWorkspace extends Component {
 
   handleFormSearch = event => {
     event.preventDefault();
+    window.location.href = "/searchresults";
   };
 
   render() {
@@ -159,11 +177,7 @@ class BookWorkspace extends Component {
             })}
           </Col>
           <Col md="3">
-            <Button type="submit" href="#">
-              Confirm Booking
-            </Button>
-
-            {/*<PriceCard {...this.state.workspaces[0].rental_price} />*/}
+            <PriceCard {...this.state.workspaces[0]} />
             {/*Map*/}
             {this.state.locations.length > 0 && (
               <Map

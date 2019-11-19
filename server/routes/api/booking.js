@@ -17,4 +17,7 @@ router
   .get(bookingController.findAllByWorkSpaceId)
   .post(bookingController.create);
 
+// Matches with "/api/booking/workspace
+router.route("/workspace").post(bookingController.create);
+
 module.exports = router;
