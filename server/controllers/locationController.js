@@ -23,7 +23,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    db.WorkspaceLocation.findOneAndUpdate({ _id: req.params.id }, req.body)
+    db.WorkspaceLocation.update(req.body, {where: { id: req.params.id }} )
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }

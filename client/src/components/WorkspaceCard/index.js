@@ -9,6 +9,7 @@ function WorkspaceCard({
   bodyStyle,
   src,
   variant,
+  imgClass,
   name,
   description,
   dimension,
@@ -18,17 +19,16 @@ function WorkspaceCard({
   workspaceID
 }) {
   return (
-    <Card className="my-3">
+    <Card className="my-3 h-100">
       <div className={rowStyle}>
         <div className={imgStyle}>
-          <Card.Img variant={variant} src={src} />
+          <Card.Img className={imgClass} variant={variant} src={src} />
         </div>
         <div className={bodyStyle}>
           <Card.Body>
             <Card.Title>{name}</Card.Title>
             <Card.Text>
               {fulladdress}
-              <br />
               <br />
               {description && (
                 <>

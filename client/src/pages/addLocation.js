@@ -16,8 +16,44 @@ class AddLocation extends Component {
         addr2: "",
         city: "",
         province: "",
-        postal_code: ""
+        postal_code: "",
+        locationId: null,
+        userId: null
     }
+
+    componentDidMount = () => {
+        this.updateLocation(this.props.match.params.id);
+    };
+
+    updateLocation = id => {
+        if (id) {
+            API.getLocationById(id)
+                .then(res => {
+                    let fetchedLocationDetail = res.data[0];
+                    this.setState({
+                        addr1: fetchedLocationDetail.addr1,
+                        addr2: fetchedLocationDetail.addr2,
+                        city: fetchedLocationDetail.city,
+                        province: fetchedLocationDetail.province,
+                        postal_code: fetchedLocationDetail.postal_code,
+                        locationId: parseInt(fetchedLocationDetail.id),
+                        userId: parseInt(fetchedLocationDetail.UserId)
+
+                    });
+                })
+        }
+        else {
+            this.setState({
+                addr1: "",
+                addr2: "",
+                city: "",
+                province: "",
+                postal_code: "",
+                locationId: null,
+                userId: null
+            });
+        }
+    };
 
     handleInputChange = event => {
         const { name, value } = event.target;
@@ -36,29 +72,43 @@ class AddLocation extends Component {
 
         event.preventDefault();
         // event.stopPropagation();
-        API.saveLocation({
-
-            addr1: this.state.addr1,
-            addr2: this.state.addr2,
-            city: this.state.city,
-            province: this.state.province,
-            postal_code: this.state.postal_code,
-            UserId: 2
-        })
-            .then(res => {
-                this.setState({
-                    addr1: "",
-                    addr2: "",
-                    city: "",
-                    province: "",
-                    postal_code: ""
-                });
+        if (this.props.match.params.id) {
+            API.updateLocation(this.props.match.params.id, {
+                addr1: this.state.addr1,
+                addr2: this.state.addr2,
+                city: this.state.city,
+                province: this.state.province,
+                postal_code: this.state.postal_code,
+                UserId: 2
             })
-            .catch(err => console.log(err));
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
+        }
+        else {
+            API.saveLocation({
+
+                addr1: this.state.addr1,
+                addr2: this.state.addr2,
+                city: this.state.city,
+                province: this.state.province,
+                postal_code: this.state.postal_code,
+                UserId: 2
+            })
+                .then(res => {
+                    this.setState({
+                        addr1: "",
+                        addr2: "",
+                        city: "",
+                        province: "",
+                        postal_code: ""
+                    });
+                })
+                .catch(err => console.log(err));
+        }
     };
 
     handleCancel = event => {
-        event.preventdefault();
+        event.preventDefault();
         this.setState({
             addr1: "",
             addr2: "",

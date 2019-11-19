@@ -17,4 +17,6 @@ router
 // Matches with "/api/workspace/search/result"
 router.route("/search/results/").post(workspaceController.findBySearch);
 
+router.route("/location/:id").get(workspaceController.findAllByLocation);
+
 module.exports = router;

@@ -38,7 +38,9 @@ function App() {
             component={BookWorkspace}
           />
           <Route exact path="/owner" component={OwnerLocations} />
-          <Route exact path="/owner/addlocation" component={AddLocation} />
+          <Route exact path="/owner/:id" component={OwnerLocations} />
+          <Route exact path="/location" component={AddLocation} />
+          <Route exact path="/owner/editlocation/:id" component={AddLocation} />
           <Route exact path="/owner/booking" component={OwnerBooking} />
           <Route exact path="/user/booking" component={UserBooking} />
           <Route exact path="/payments" component={Payments} />

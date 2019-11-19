@@ -45,6 +45,15 @@ export default {
   getBookingByWorkspace(workSpaceId) {
     return axios.get(`/api/booking/workspace/${workSpaceId}`);
   },
+  getWorkspaceByLocation(locationId) {
+    return axios.get("/api/workspace/location/"+ locationId);
+  },
+  getLocationByOwner() {
+    return axios.get("/api/location/owner/2");
+  },
+  getLocationById(locationId) {
+    return axios.get("/api/location/" + locationId);
+  },
   saveLocation: function(locationData) {
     return axios.post("/api/location/add", locationData);
   },
@@ -53,6 +62,9 @@ export default {
   },
   getLocation: function(locationId) {
     return axios.get("/api/location/" + locationId);
+  },
+  updateLocation: function(locationId, locationData) {
+    return axios.put(`/api/location/${locationId}`, locationData);
   },
   makePayment: function(token) {
     console.log("Hitting axios for makePayment");
