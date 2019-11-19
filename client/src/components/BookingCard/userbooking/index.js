@@ -8,7 +8,8 @@ function UserBooking({
   rowStyle,
   idStyle,
   imgStyle,
-  bodyStyle,
+  chkinoutStyle,
+  desStyle,
   image_path,
   id,
   name,
@@ -22,31 +23,35 @@ function UserBooking({
   rental_price
 }) {
   return (
-    <Card className="my-3">
+    <Card className="card border-info mb-4">
       <div className={rowStyle}>
-        <div className={imgStyle}>
-          <Card.Body>
-            <Card.Title>ID</Card.Title>
-            <Card.Text> {id} </Card.Text>
+        <div className={idStyle}>
+          <Card.Body className="cardBody">
+            <Card.Header className="cardHeader">ID</Card.Header>
+            <br></br>
+            <Card.Text>{id}</Card.Text>
           </Card.Body>
-          {/* </div> */}
         </div>
+        {/* </div> */}
 
-        <div className={bodyStyle}>
-          <Card.Body>
-            <Card.Title>Image</Card.Title>
-            <br />
+        <div className={imgStyle}>
+          <Card.Body className="cardBody">
+            {/* <Card.Header className="cardHeader">Image</Card.Header> */}
+            {/* <br /> */}
             <Card.Img
+              className="cardImg"
               src={image_path}
-              style={{ height: "17vh", width: "20vh" }}
+              //style={{ height: "17vh", width: "20vh" }}
             />
           </Card.Body>
         </div>
 
-        <div className={bodyStyle}>
-          {/* Workspace Description */}
-          <Card.Body>
-            <Card.Title>{name}</Card.Title>
+        {/* Workspace Description */}
+
+        <div className={desStyle}>
+          <Card.Body className="cardBody">
+            <Card.Header className="cardHeader">{name}</Card.Header>
+            <br></br>
             <Card.Text>
               Description: {description}
               <br />
@@ -58,44 +63,45 @@ function UserBooking({
         </div>
 
         {/* Workspace Description */}
-        <div className={bodyStyle}>
-          <Card.Body>
-            <Card.Title>Location</Card.Title>
-            <br></br>
-            <Card.Text>
-              Address: <br></br>
-              {addr1}
-              <br />
-              <br />
-              City: <br></br>
-              {city} <br />
-            </Card.Text>
-          </Card.Body>
-        </div>
+        {/* <div className={lStyle}> */}
+        <Card.Body className="cardBody">
+          <Card.Header className="cardHeader">Location</Card.Header>
+          <br></br>
+          <Card.Text>
+            Address: <br></br>
+            {addr1}
+            <br />
+            <br />
+            City: <br></br>
+            {city} <br />
+          </Card.Text>
+        </Card.Body>
+        {/* </div> */}
 
         {/* CheckIn Date */}
-
-        <div className={bodyStyle}>
-          <Card.Body>
-            <Card.Title>Check In Date</Card.Title>
+        <div className={chkinoutStyle}>
+          {/* <div className={bodyStyle}> */}
+          <Card.Body className="cardBody">
+            <Card.Header className="cardHeader">In</Card.Header>
+            <br></br>
             <Card.Text>{moment(start_date).format("DD/MM/YYYY")}</Card.Text>
           </Card.Body>
         </div>
 
         {/* Checkout Date */}
 
-        <div className={bodyStyle}>
-          <Card.Body>
-            <Card.Title>Check Out Date</Card.Title>
-
+        <div className={chkinoutStyle}>
+          <Card.Body className="cardBody">
+            <Card.Header className="cardHeader">Out</Card.Header>
+            <br></br>
             <Card.Text>{moment(end_date).format("DD/MM/YYYY")}</Card.Text>
           </Card.Body>
         </div>
 
-        <div className={imgStyle}>
-          <Card.Body>
-            <Card.Title>Price</Card.Title>
-
+        <div className={chkinoutStyle}>
+          <Card.Body className="cardBody">
+            <Card.Header className="cardHeader">CAD</Card.Header>
+            <br></br>
             <Card.Text>
               {rental_price} <br />
             </Card.Text>
