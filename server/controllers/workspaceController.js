@@ -2,6 +2,7 @@ const db = require("../models");
 var Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const moment = require("moment");
+const Model = require("sequelize/lib/model");
 
 async function updateWorkSpace(workSpaceId, workSpace, transaction) {
   return db.Workspace.update(
@@ -246,8 +247,8 @@ module.exports = {
   findAllByLocation: function(req, res) {
     db.Workspace.findAll({
       include: [
-        { model: db.WorkspaceLocation, where: { id: req.params.id } },
-        { model: db.WorkspacePic }
+        { model: db.WorkspaceLocation, where: { id: req.parms.id } },
+        { model: db.WorkspacePic, limit: 1 }
       ]
     })
       .then(dbModel => res.json(dbModel))
@@ -279,32 +280,87 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findBySearch: function(req, res) {
-    /*  console.log(
-      const daysCount = moment(req.body.checkinDate).diff(moment(req.body.checkoutDate), "days")
-      //moment().subtract(2, "months")
-
-      sequelize.where(sequelize.fn('COUNT', sequelize.col('products.id')) '>', 0)
-
-      where: {
-        date: { [Op.between]: [checkindate, checkoutdate] },
-        [Op.and]: [
-          sequelize.where(sequelize.fn('count'), Op.gte, daysCount)
-        ]
-      }
-    ); */
-    const location = req.body.location;
-    const checkindate = req.body.checkinDate;
-    const checkoutdate = req.body.checkoutDate;
+    const location = req.body.location.split(",").join("");
+    const checkindate = moment(req.body.checkinDate)
+      .subtract(1, "days")
+      .format("YYYY-MM-DD");
+    const checkoutdate = moment(req.body.checkoutDate).format("YYYY-MM-DD");
     const people = parseInt(req.body.people);
     const room = parseInt(req.body.room);
-
     const occupancy = Math.floor(people / room);
+
+    let featureWhere = { FeatureId: { [Op.gt]: [0] } };
+
+    if (req.body.selectedFeatures.length > 0) {
+      featureWhere = {
+        FeatureId: { [Op.in]: req.body.selectedFeatures },
+        status: { [Op.eq]: true }
+      };
+    }
+
+    // Separate your query options
+    const queryOptions = {
+      attributes: ["WorkspaceId"],
+      where: {
+        [Op.or]: [
+          {
+            start_date: {
+              [Op.between]: [checkindate, checkoutdate]
+            }
+          },
+          {
+            end_date: {
+              [Op.between]: [checkindate, checkoutdate]
+            }
+          }
+        ]
+      }
+    };
+
+    /* const bookingSQL = Model.Sequelize.dialect.QueryGenerator.selectQuery(
+      "bookings",
+      {
+        attributes: ["WorkspaceId"],
+        where: {
+          [Op.or]: [
+            {
+              start_date: {
+                [Op.between]: [checkindate, checkoutdate]
+              }
+            },
+            {
+              end_date: {
+                [Op.between]: [checkindate, checkoutdate]
+              }
+            }
+          ]
+        }
+      }
+    ).slice(0, -1); // to remove the ';' from the end of the SQL */
 
     db.Workspace.findAll({
       where: {
         [Op.and]: [
           { isActive: true },
-          { no_occupants: { [Op.gte]: occupancy } }
+          { no_occupants: { [Op.gte]: occupancy } },
+          {
+            id: {
+              [Op.notIn]: Sequelize.literal(
+                "(SELECT DISTINCT WorkspaceId " +
+                  " FROM bookings " +
+                  " WHERE start_date BETWEEN '" +
+                  checkindate +
+                  "' AND '" +
+                  checkoutdate +
+                  "' " +
+                  " OR end_date BETWEEN '" +
+                  checkindate +
+                  "' AND '" +
+                  checkoutdate +
+                  "')"
+              )
+            }
+          }
         ]
       },
       include: [
@@ -312,23 +368,49 @@ module.exports = {
           model: db.WorkspaceLocation,
           where: {
             [Op.or]: [
+              Sequelize.where(
+                Sequelize.fn(
+                  "concat",
+                  Sequelize.col("addr1"),
+                  " ",
+                  Sequelize.col("addr2"),
+                  " ",
+                  Sequelize.col("city"),
+                  " ",
+                  Sequelize.col("province"),
+                  " ",
+                  Sequelize.col("country"),
+                  " ",
+                  Sequelize.col("postal_code")
+                ),
+                {
+                  [Op.like]: `%${location}%`
+                }
+              ),
               { addr1: { [Op.like]: `%${location}%` } },
               { addr2: { [Op.like]: `%${location}%` } },
               { city: { [Op.like]: `%${location}%` } },
               { province: { [Op.like]: `%${location}%` } },
-              { postal_code: { [Op.like]: `%${location}%` } }
+              { postal_code: { [Op.like]: `%${location}%` } },
+              { country: { [Op.like]: `%${location}%` } }
             ]
           }
         },
         { model: db.WorkspacePic, limit: 1 },
         {
           model: db.WorkspaceAvailability,
-          where: { date: { [Op.between]: [checkindate, checkoutdate] } } //{ id: { [Op.gt]: [0] } }
+          where: {
+            date: {
+              [Op.between]: [checkindate, checkoutdate]
+            }
+          }
         },
-        { model: db.Feature }
+        { model: db.Feature, through: { where: featureWhere }, required: true }
       ]
     })
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        res.json(dbModel);
+      })
       .catch(err => res.status(422).json(err));
   },
   updateWorkSpaceDetail: function(req, res) {

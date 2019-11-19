@@ -7,6 +7,7 @@ const locationRoutes = require("./location");
 const bookingRoutes = require("./booking");
 const ownerRoutes = require("./owner");
 const featureRoutes = require("./feature");
+const stripeRoutes = require("./stripe");
 
 router.use("/user", userRoutes);
 router.use("/login", loginRoutes);
@@ -16,5 +17,7 @@ router.use("/location", locationRoutes);
 router.use("/booking", bookingRoutes);
 router.use("/owner", ownerRoutes);
 router.use("/features", featureRoutes);
+router.use("/stripepayment", stripeRoutes);
+
 
 module.exports = router;

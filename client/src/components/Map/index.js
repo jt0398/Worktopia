@@ -20,8 +20,7 @@ class MapView extends Component {
   }
 
   state = {
-    center: [0, 0],
-    zoom: 5
+    zoom: 9
   };
 
   componentDidMount() {
@@ -31,18 +30,6 @@ class MapView extends Component {
       const updatedZoomLevel = leafletMap.getZoom();
       this.handleZoomLevelChange(updatedZoomLevel);
     });
-
-    if (this.props.boundOnMount) {
-      this.setState({
-        center: [this.props.locations[0][1], this.props.locations[0][2]]
-      });
-    }
-  }
-
-  componentWillUpdate() {
-    if (!this.props.boundOnMount) {
-      this.getBounds();
-    }
   }
 
   handleZoomLevelChange(newZoomLevel) {
@@ -55,8 +42,10 @@ class MapView extends Component {
     const leafletMap = this.leafletMap;
 
     if (myBounds._northEast) {
-      leafletMap.fitBounds(myBounds); //Centers and zooms the map around the bounds
+      leafletMap.fitBounds(myBounds); //Centers and zooms the map around the bounds --> change to compute https://carto.com/blog/center-of-points/
     }
+
+    //boundsOptions={{ padding: [50, 50] }}
   }
 
   render() {
@@ -64,12 +53,11 @@ class MapView extends Component {
       <div className="my-5">
         <Map
           className="map"
-          center={this.state.center}
+          center={this.props.centerGeoLoc}
           zoom={this.state.zoom}
           ref={map => {
             this.leafletMap = map && map.leafletElement;
           }}
-          boundsOptions={{ padding: [50, 50] }}
         >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

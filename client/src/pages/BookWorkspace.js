@@ -7,9 +7,13 @@ import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
 import API from "../utils/workspaceAPI";
-import HashMap from "hashmap";
 import PriceCard from "../components/PriceCard";
 import Button from "react-bootstrap/Button";
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng
+} from "react-places-autocomplete";
 
 class BookWorkspace extends Component {
   state = {
@@ -21,7 +25,8 @@ class BookWorkspace extends Component {
       room: 0,
       people: 0
     },
-    locations: []
+    locations: [], //geolocations based on address
+    centerGeoLoc: [43.6532, -79.3832]
   };
 
   // Handles updating component state when the user types into the input field
@@ -36,17 +41,42 @@ class BookWorkspace extends Component {
     });
   };
 
+  //Update Location state
+  handleLocationChange = location => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, location: location }
+    });
+  };
+
+  handleLocationSelect = location => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, location: location }
+    });
+
+    geocodeByAddress(location)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        this.setState({
+          centerGeoLoc: [latLng.lat, latLng.lng]
+        });
+        console.log("Success", latLng);
+      })
+      .catch(error => console.error("Error", error));
+  };
+
   //Update Check In state
-  handleCheckInChange = date =>
+  handleCheckInChange = date => {
     this.setState({
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
+  };
 
   //Update Check Out state
-  handleCheckOutChange = date =>
+  handleCheckOutChange = date => {
     this.setState({
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
+  };
 
   componentDidMount() {
     this.loadWorkspaces();
@@ -78,6 +108,10 @@ class BookWorkspace extends Component {
               res.data.results[0].locations[0].latLng.lat,
               res.data.results[0].locations[0].latLng.lng
             ]
+          ],
+          centerGeoLoc: [
+            res.data.results[0].locations[0].latLng.lat,
+            res.data.results[0].locations[0].latLng.lng
           ]
         });
       })
@@ -87,8 +121,6 @@ class BookWorkspace extends Component {
   handleFormSearch = event => {
     event.preventDefault();
   };
-
-  handleFeatureSelect = event => {};
 
   render() {
     return (
@@ -102,6 +134,8 @@ class BookWorkspace extends Component {
               onSubmit={this.handleFormSearch}
               onCheckInChange={this.handleCheckInChange}
               onCheckOutChange={this.handleCheckOutChange}
+              onLocationChange={this.handleLocationChange}
+              onSelectLocation={this.handleLocationSelect}
             />
           </Col>
         </Row>
@@ -132,7 +166,10 @@ class BookWorkspace extends Component {
             {/*<PriceCard {...this.state.workspaces[0].rental_price} />*/}
             {/*Map*/}
             {this.state.locations.length > 0 && (
-              <Map locations={this.state.locations} boundOnMount={true} />
+              <Map
+                locations={this.state.locations}
+                centerGeoLoc={this.state.centerGeoLoc}
+              />
             )}
           </Col>
         </Row>
