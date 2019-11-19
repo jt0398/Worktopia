@@ -9,6 +9,8 @@ import CardDeck from "react-bootstrap/CardDeck";
 import FeatureList from "../components/FeatureList";
 import UserBooking from "../components/BookingCard/userbooking";
 import Search from "../components/Search";
+import Footer from "../components/Footer";
+import "./css/UserBkgPage.css";
 
 class userBooking extends Component {
   state = {
@@ -37,16 +39,23 @@ class userBooking extends Component {
 
   render() {
     return (
-      <Container>
-        <Row>
+      <Container fluid>
+        <div className="pbg">
+          <h5 className="yourBooking text-center">Your Booking</h5>
+        </div>
+        <Row text-center>
           <Col md="12" sm="12">
             {this.state.workspaces.map(workspace => {
               return (
                 <UserBooking
                   rowStyle="row no-gutters"
-                  idStyle="col-md-1"
-                  imgStyle="col-md-1"
-                  bodyStyle="col-md-2"
+                  idStyle="col-sm"
+                  imgStyle="col-sm-4"
+                  desStyle="col-sm-2"
+                  chkinoutStyle="col-sm-1.5"
+                  //  idStyle="col-md-1"
+                  // imgStyle="col-md-2"
+                  // bodyStyle="col-md-2"
                   {...workspace}
                   {...workspace.Workspace}
                   {...workspace.Workspace.WorkspaceLocation}
@@ -56,6 +65,9 @@ class userBooking extends Component {
             })}
           </Col>
         </Row>
+        <div className="pbg"></div>
+        <br></br>
+        <Footer />
       </Container>
     );
   }
