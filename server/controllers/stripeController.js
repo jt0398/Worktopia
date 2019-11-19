@@ -5,9 +5,9 @@ module.exports = {
     const token = req.body.id; // Using Express
     const charge = await stripe.charges
       .create({
-        amount: 100, //Make sure this is passed in CENTS
+        amount: req.body.amount, //Make sure this is passed in CENTS
         currency: "cad",
-        description: "Example charge",
+        description: req.body.description,
         source: token
       })
       .then(resp => {

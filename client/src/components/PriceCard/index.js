@@ -43,6 +43,12 @@ class PriceCard extends Component {
               response.statusText
           );
 
+          localStorage.removeItem("location");
+          localStorage.removeItem("checkinDate");
+          localStorage.removeItem("checkoutDate");
+          localStorage.removeItem("room");
+          localStorage.removeItem("people");
+
           this.handleShow();
         });
       })
