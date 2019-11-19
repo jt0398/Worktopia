@@ -5,11 +5,6 @@ import Button from "react-bootstrap/Button";
 import { SingleDatePicker } from "react-dates";
 import "./style.css";
 import PlacesAutocomplete from "react-places-autocomplete";
-import {
-  geocodeByAddress,
-  geocodeByPlaceId,
-  getLatLng
-} from "react-places-autocomplete";
 
 class Search extends Component {
   constructor(props) {

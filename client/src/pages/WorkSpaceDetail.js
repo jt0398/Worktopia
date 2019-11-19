@@ -13,6 +13,7 @@ import FeatureList from "../components/FeatureList";
 import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
+import "./css/WorkSpaceDetail.css";
 var moment = require("moment");
 
 const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
