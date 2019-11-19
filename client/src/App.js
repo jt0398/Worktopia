@@ -37,8 +37,8 @@ function App() {
           />
           <Route exact path="/owner" component={OwnerLocations} />
           <Route exact path="/owner/:id" component={OwnerLocations} />
-          <Route exact path="/owner/addlocation" component={AddLocation} />
-          <Route exact path="/owner/addlocation/:id" component={AddLocation} />
+          <Route exact path="/location" component={AddLocation} />
+          <Route exact path="/owner/editlocation/:id" component={AddLocation} />
           <Route exact path="/owner/booking" component={OwnerBooking} />
           <Route exact path="/user/booking" component={UserBooking} />
           <Route component={NoMatch} />

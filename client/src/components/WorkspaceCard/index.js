@@ -17,7 +17,7 @@ function WorkspaceCard({
   fulladdress
 }) {
   return (
-    <Card className="my-3">
+    <Card className="my-3 h-100">
       <div className={rowStyle}>
         <div className={imgStyle}>
           <Card.Img className={imgClass} variant={variant} src={src} />
@@ -27,7 +27,6 @@ function WorkspaceCard({
             <Card.Title>{name}</Card.Title>
             <Card.Text>
               {fulladdress}
-              <br />
               <br />
               {description && (
                 <>

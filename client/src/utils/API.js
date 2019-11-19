@@ -62,5 +62,8 @@ export default {
   },
   getLocation: function(locationId) {
     return axios.get("/api/location/" + locationId);
+  },
+  updateLocation: function(locationId, locationData) {
+    return axios.put(`/api/location/${locationId}`, locationData);
   }
 };
