@@ -20,7 +20,7 @@ class MapView extends Component {
   }
 
   state = {
-    zoom: 7
+    zoom: 9
   };
 
   componentDidMount() {

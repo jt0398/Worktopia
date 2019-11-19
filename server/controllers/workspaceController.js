@@ -2,6 +2,7 @@ const db = require("../models");
 var Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const moment = require("moment");
+const Model = require("sequelize/lib/model");
 
 async function updateWorkSpace(workSpaceId, workSpace, transaction) {
   return db.Workspace.update(
@@ -279,25 +280,14 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findBySearch: function(req, res) {
-    /*  console.log(
-      const daysCount = moment(req.body.checkinDate).diff(moment(req.body.checkoutDate), "days")
-      //moment().subtract(2, "months")
-
-      Sequelize.where(Sequelize.fn('COUNT', sequelize.col('products.id')) '>', 0)
-
-      where: {
-        date: { [Op.between]: [checkindate, checkoutdate] },
-        [Op.and]: [
-          Sequelize.where(Sequelize.fn('count'), Op.gte, daysCount)
-        ]
-      }
-    ); */
-
     const location = req.body.location.split(",").join("");
-    const checkindate = moment(req.body.checkinDate).subtract(1, "days");
-    const checkoutdate = req.body.checkoutDate;
+    const checkindate = moment(req.body.checkinDate)
+      .subtract(1, "days")
+      .format("YYYY-MM-DD");
+    const checkoutdate = moment(req.body.checkoutDate).format("YYYY-MM-DD");
     const people = parseInt(req.body.people);
     const room = parseInt(req.body.room);
+    const occupancy = Math.floor(people / room);
 
     let featureWhere = { FeatureId: { [Op.gt]: [0] } };
 
@@ -308,19 +298,69 @@ module.exports = {
       };
     }
 
-    /*   
-    console.log("---------selected--------" + JSON.stringify(featureWhere));
-    const daysCount = Math.abs(
-      moment(req.body.checkinDate).diff(moment(req.body.checkoutDate), "days")
-    ); */
+    // Separate your query options
+    const queryOptions = {
+      attributes: ["WorkspaceId"],
+      where: {
+        [Op.or]: [
+          {
+            start_date: {
+              [Op.between]: [checkindate, checkoutdate]
+            }
+          },
+          {
+            end_date: {
+              [Op.between]: [checkindate, checkoutdate]
+            }
+          }
+        ]
+      }
+    };
 
-    const occupancy = Math.floor(people / room);
+    /* const bookingSQL = Model.Sequelize.dialect.QueryGenerator.selectQuery(
+      "bookings",
+      {
+        attributes: ["WorkspaceId"],
+        where: {
+          [Op.or]: [
+            {
+              start_date: {
+                [Op.between]: [checkindate, checkoutdate]
+              }
+            },
+            {
+              end_date: {
+                [Op.between]: [checkindate, checkoutdate]
+              }
+            }
+          ]
+        }
+      }
+    ).slice(0, -1); // to remove the ';' from the end of the SQL */
 
     db.Workspace.findAll({
       where: {
         [Op.and]: [
           { isActive: true },
-          { no_occupants: { [Op.gte]: occupancy } }
+          { no_occupants: { [Op.gte]: occupancy } },
+          {
+            id: {
+              [Op.notIn]: Sequelize.literal(
+                "(SELECT DISTINCT WorkspaceId " +
+                  " FROM bookings " +
+                  " WHERE start_date BETWEEN '" +
+                  checkindate +
+                  "' AND '" +
+                  checkoutdate +
+                  "' " +
+                  " OR end_date BETWEEN '" +
+                  checkindate +
+                  "' AND '" +
+                  checkoutdate +
+                  "')"
+              )
+            }
+          }
         ]
       },
       include: [
@@ -362,31 +402,10 @@ module.exports = {
           where: {
             date: {
               [Op.between]: [checkindate, checkoutdate]
-            } /* ,
-            [Op.and]: [
-              Sequelize.where(Sequelize.fn("count"), Op.gte, daysCount)
-            ] */
+            }
           }
         },
-        { model: db.Feature, through: { where: featureWhere }, required: true },
-        {
-          model: db.Booking,
-          required: false,
-          where: {
-            [Op.or]: [
-              {
-                start_date: {
-                  [Op.notBetween]: [checkindate, checkoutdate]
-                }
-              },
-              {
-                end_date: {
-                  [Op.notBetween]: [checkindate, checkoutdate]
-                }
-              }
-            ]
-          }
-        }
+        { model: db.Feature, through: { where: featureWhere }, required: true }
       ]
     })
       .then(dbModel => {
