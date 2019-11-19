@@ -49,10 +49,10 @@ class userBooking extends Component {
               return (
                 <UserBooking
                   rowStyle="row no-gutters"
-                  idStyle="col-sm"
-                  imgStyle="col-sm-4"
-                  desStyle="col-sm-2"
-                  chkinoutStyle="col-sm-1.5"
+                  idStyle="col-md"
+                  imgStyle="col-md-4"
+                  desStyle="col-md-2"
+                  chkinoutStyle="col-md-1.5"
                   //  idStyle="col-md-1"
                   // imgStyle="col-md-2"
                   // bodyStyle="col-md-2"
