@@ -12,6 +12,9 @@ router.route("/user/:id").get(bookingController.findAllByUser);
 router.route("/owner/:id").get(bookingController.findAllByOwner);
 
 // Matches with "/api/booking/workspace/:id"
-router.route("/workspace/:id").get(bookingController.findAllByWorkSpaceId);
+router
+  .route("/workspace/:id")
+  .get(bookingController.findAllByWorkSpaceId)
+  .post(bookingController.create);
 
 module.exports = router;

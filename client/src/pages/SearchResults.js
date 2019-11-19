@@ -9,7 +9,13 @@ import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
 import API from "../utils/workspaceAPI";
+import miscAPI from "../utils/API";
 import HashMap from "hashmap";
+import {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng
+} from "react-places-autocomplete";
 
 class SearchResults extends Component {
   state = {
@@ -20,9 +26,15 @@ class SearchResults extends Component {
       checkinDate: moment(new Date(), "yyyy-mm-dd"),
       checkoutDate: moment(new Date(), "yyyy-mm-dd"),
       room: 0,
-      people: 0
+      people: 0,
+      selectedFeatures: []
     },
-    locations: []
+    locations: [], //geolocations based on address
+    centerGeoLoc: [43.6532, -79.3832],
+    FEATURE_LIST: [],
+    hashFeatures: new HashMap(),
+    searching: false,
+    searchComplete: false
   };
 
   // Handles updating component state when the user types into the input field
@@ -37,22 +49,64 @@ class SearchResults extends Component {
     });
   };
 
+  //Update Location state
+  handleLocationChange = location => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, location: location }
+    });
+  };
+
+  handleLocationSelect = location => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, location: location }
+    });
+
+    geocodeByAddress(location)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        this.setState({
+          centerGeoLoc: [latLng.lat, latLng.lng]
+        });
+        console.log("Success", latLng);
+      })
+      .catch(error => console.error("Error", error));
+  };
+
   //Update Check In state
-  handleCheckInChange = date =>
+  handleCheckInChange = date => {
     this.setState({
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
+  };
 
   //Update Check Out state
-  handleCheckOutChange = date =>
+  handleCheckOutChange = date => {
     this.setState({
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
+  };
 
   componentDidMount() {
-    //this.loadWorkspaces();
     //TODO: add search input to cache to load it in different pages
+    this.loadFeatures();
   }
+
+  //Loads feature list
+  loadFeatures = () => {
+    let tempFeatureList = [];
+
+    miscAPI.getFeatureList().then(res => {
+      res.data.forEach(feature => {
+        tempFeatureList.push({
+          name: feature.name,
+          label: feature.id,
+          status: false
+        });
+      });
+
+      this.setState({ FEATURE_LIST: tempFeatureList });
+    });
+  };
 
   //Load workspace data from API call
   loadWorkspaces = () => {
@@ -74,6 +128,8 @@ class SearchResults extends Component {
       .then(() => {
         //Get geolocation of the addresses
         this.loadLocations();
+
+        this.setState({ searchComplete: true, searching: false });
       })
       .catch(err => console.log(err));
   };
@@ -104,10 +160,40 @@ class SearchResults extends Component {
   //Handle search button submit event
   handleFormSearch = event => {
     event.preventDefault();
+    this.setState({ searchComplete: false, searching: true });
     this.loadWorkspaces();
   };
 
-  handleFeatureSelect = event => {};
+  handleFeatureSelection = event => {
+    let tmpHash = this.state.hashFeatures;
+    const featureIdToBeUpated = event.target.id;
+    let tempArray = this.state.FEATURE_LIST;
+
+    for (var i in tempArray) {
+      if (tempArray[i].label.toString() === featureIdToBeUpated) {
+        tempArray[i].status = !tempArray[i].status; //Updates the checkbox checked property
+
+        if (tempArray[i].status) {
+          tmpHash.set(featureIdToBeUpated, parseInt(featureIdToBeUpated));
+        } else {
+          tmpHash.delete(featureIdToBeUpated);
+        }
+
+        break; //Stop this loop, we found it!
+      }
+    }
+
+    const features = tmpHash.values();
+
+    this.setState({
+      searchParams: { ...this.state.searchParams, selectedFeatures: features }
+    });
+
+    this.setState({
+      FEATURE_LIST: tempArray,
+      hashFeatures: tmpHash
+    });
+  };
 
   render() {
     return (
@@ -121,24 +207,37 @@ class SearchResults extends Component {
               onSubmit={this.handleFormSearch}
               onCheckInChange={this.handleCheckInChange}
               onCheckOutChange={this.handleCheckOutChange}
+              onLocationChange={this.handleLocationChange}
+              onSelectLocation={this.handleLocationSelect}
             />
           </Col>
         </Row>
         <Row>
           <Col md="3">
-            {/*Map*/}
-            <Map locations={this.state.locations} boundOnMount={false} />
             {/*Feature List*/}
             <Form>
-              {/*  <FeatureList onClick={this.handleFeatureSelect} /> */}
+              <FeatureList
+                handleFeatureSelection={this.handleFeatureSelection.bind(this)}
+                features={this.state.FEATURE_LIST}
+              ></FeatureList>
             </Form>
+            {/*Map*/}
+            <Map
+              locations={this.state.locations}
+              centerGeoLoc={this.state.centerGeoLoc}
+            />
           </Col>
           <Col md="9" sm="12">
+            <div className="h6">
+              {this.state.searchComplete && (
+                <>{this.state.workspaces.length} result(s) found.</>
+              )}
+            </div>
             {/*Search Result*/}
-            {this.state.workspaces.map((workspace, index) => {
+            {this.state.workspaces.map(workspace => {
               return (
                 <WorkspaceCard
-                  key={index}
+                  key={workspace.id}
                   rowStyle="row no-gutters"
                   imgStyle="col-md-4"
                   bodyStyle="col-md-6"
@@ -149,6 +248,8 @@ class SearchResults extends Component {
                   }
                   rental_price={workspace.rental_price}
                   fulladdress={workspace.WorkspaceLocation.full_address}
+                  features={workspace.Features}
+                  workspaceID={workspace.id}
                 />
               );
             })}

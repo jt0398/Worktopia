@@ -13,7 +13,9 @@ function WorkspaceCard({
   description,
   dimension,
   rental_price,
-  fulladdress
+  fulladdress,
+  features,
+  workspaceID
 }) {
   return (
     <Card className="my-3">
@@ -38,17 +40,31 @@ function WorkspaceCard({
                   Dimensions: {dimension} <br />
                 </>
               )}
-              {!imgStyle && `Price: ${rental_price}`}
+              {features && (
+                <>
+                  Features:{" "}
+                  {features.map((feature, index) => {
+                    return index !== features.length - 1
+                      ? feature.name + ", "
+                      : feature.name;
+                  })}
+                  <br />
+                </>
+              )}
+              {!imgStyle && `Price: $${rental_price}`}
             </Card.Text>
           </Card.Body>
         </div>
         {imgStyle && (
           <div className="col-md-2">
             <span className="align-middle">
-              Price: {rental_price} <br />
-              <Button type="submit" href="#">
+              Price: ${rental_price} <br />
+              <Link
+                to={`/booking/workspace/${workspaceID}`}
+                class="btn btn-primary"
+              >
                 Book
-              </Button>
+              </Link>
             </span>
           </div>
         )}
