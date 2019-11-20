@@ -14,6 +14,7 @@ import "react-dates/initialize";
 import { DateRangePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 import Footer from "../components/Footer";
+import { RemainingChar } from "../components/Form";
 import "./css/WorkSpaceDetail.css";
 var moment = require("moment");
 
@@ -42,7 +43,8 @@ class WorkSpaceDetail extends Component {
     LOCATION_LIST: [],
     FEATURE_LIST: [],
     BOOKED_DATES: [],
-    modalStatus: false
+    modalStatus: false,
+    validated: false
   };
 
   handleDateSelection = ({ startDate, endDate }) => {
@@ -70,41 +72,36 @@ class WorkSpaceDetail extends Component {
     }
   };
 
-  // validateFormCompletion = () => {
-  //   return !(
-  //     this.state.workSpaceName &&
-  //     this.state.workspaceDescription &&
-  //     this.state.workSpaceLocation &&
-  //     this.state.workSpaceOccupancy &&
-  //     this.state.workSpaceDimensions &&
-  //     this.state.workSpaceDailyRate &&
-  //     this.state.startDate &&
-  //     this.state.endDate &&
-  //     this.state.imageFileName
-  //   );
-  // };
 
   handleFormSubmit = event => {
     event.preventDefault();
-    let workSpaceDetailObject = this.state;
-    delete workSpaceDetailObject.selectedFile;
-    delete workSpaceDetailObject.message;
-    delete workSpaceDetailObject.defaultmessage;
-    delete workSpaceDetailObject.uploading;
-    delete workSpaceDetailObject.focusedInput;
-    // delete workSpaceDetailObject.LOCATION_LIST;
-    if (workSpaceDetailObject.workSpaceId) {
-      API.updateWorkSpaceObject(workSpaceDetailObject)
-        .then(res => {
-          this.handleShow();
-        })
-        .catch(err => console.error(err));
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.setState({ validated: true });
     } else {
-      API.createWorkSpaceObject(workSpaceDetailObject)
-        .then(res => {
-          this.handleShow();
-        })
-        .catch(err => console.error(err));
+      this.setState({ validated: true });
+      let workSpaceDetailObject = this.state;
+      delete workSpaceDetailObject.selectedFile;
+      delete workSpaceDetailObject.message;
+      delete workSpaceDetailObject.defaultmessage;
+      delete workSpaceDetailObject.uploading;
+      delete workSpaceDetailObject.focusedInput;
+      // delete workSpaceDetailObject.LOCATION_LIST;
+      if (workSpaceDetailObject.workSpaceId) {
+        API.updateWorkSpaceObject(workSpaceDetailObject)
+          .then(res => {
+            this.handleShow();
+          })
+          .catch(err => console.error(err));
+      } else {
+        API.createWorkSpaceObject(workSpaceDetailObject)
+          .then(res => {
+            this.handleShow();
+          })
+          .catch(err => console.error(err));
+      }
     }
   };
 
@@ -293,7 +290,11 @@ class WorkSpaceDetail extends Component {
           <div className="header">WorkSpace</div>
           <Row>
             <Col size="md-6">
-              <Form>
+              <Form
+                noValidate
+                validated={this.state.validated}
+                onSubmit={this.handleFormSubmit}
+              >
                 <Form.Group>
                   <div className="titleText">
                     <Form.Label>Work Space Name</Form.Label>
@@ -304,7 +305,14 @@ class WorkSpaceDetail extends Component {
                     value={this.state.workSpaceName}
                     onChange={this.handleInputChange}
                     name="workSpaceName"
+                    maxlength={50}
+                    required
                   />
+                  <RemainingChar
+                    remainingCharCount={50 - this.state.workSpaceName.length}
+                  ></RemainingChar>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+
                   <br></br>
                   <div className="titleText">
                     <Form.Label>Workspace Description</Form.Label>
@@ -316,7 +324,16 @@ class WorkSpaceDetail extends Component {
                     onChange={this.handleInputChange}
                     name="workspaceDescription"
                     placeholder="Describe your workspace"
+                    maxlength={250}
+                    required
                   />
+                  <RemainingChar
+                    remainingCharCount={
+                      250 - this.state.workspaceDescription.length
+                    }
+                  ></RemainingChar>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+
                   <br></br>
                   <div className="titleText">
                     <Form.Label>Workspace Location</Form.Label>
@@ -373,7 +390,10 @@ class WorkSpaceDetail extends Component {
                     value={this.state.workSpaceDimensions}
                     onChange={this.handleInputChange}
                     name="workSpaceDimensions"
+                    required
                   />
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+
                   <br></br>
                   <div className="titleText">
                     <Form.Label>Work Space rates</Form.Label>
@@ -384,7 +404,10 @@ class WorkSpaceDetail extends Component {
                     value={this.state.workSpaceDailyRate}
                     onChange={this.handleInputChange}
                     name="workSpaceDailyRate"
+                    required
                   />
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+
                   <br></br>
                   <Form.Check
                     type="switch"
@@ -400,8 +423,6 @@ class WorkSpaceDetail extends Component {
                   variant="info"
                   type="submit"
                   className="btn btn-success"
-                  // disabled={this.validateFormCompletion()}
-                  onClick={this.handleFormSubmit}
                 >
                   Submit
                 </Button>
