@@ -20,14 +20,15 @@ h1 {
 }
 .textNimg {
   box-shadow: 3px 2px 10px 18px lightgrey;
-  height: 35vh;
+  height: 55vh;
   margin-bottom: 55px;
 }
 h5 {
   text-shadow: 3px 2px lightgrey;
 }
-.footer {
-  border: 2px solid rebeccapurple;
+.mainPageFooter {
+  border: 2px transparent;
+  box-shadow: 8px 8px 8px 8px rgb(143, 140, 139);
 }
 .demo {
   margin-top: 20px;
