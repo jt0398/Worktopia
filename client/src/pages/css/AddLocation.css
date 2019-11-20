@@ -36,11 +36,11 @@ html {
   text-shadow: 1px 1px yellowgreen;
 }
 
-button {
+#locationBtn {
     box-shadow: 5px 5px rgb(159, 165, 165);
 }
 
-.dropdownBasic {
+#dropdownBasic {
    box-shadow:  5px 5px rgb(159, 165, 165);
 }
 

@@ -183,7 +183,11 @@ class AddLocation extends Component {
                     <Form.Label>Province</Form.Label>
                   </div>
                   <Dropdown>
-                    <Dropdown.Toggle variant="dark" className="dropdown-basic" id="dropdownBasic">
+                    <Dropdown.Toggle
+                      variant="dark"
+                      className="dropdown-basic"
+                      id="dropdownBasic"
+                    >
                       {this.state.province || "Choose Province"}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -218,7 +222,9 @@ class AddLocation extends Component {
                 <br></br>
               </Form.Group>
               <Col md={6}>
+                {/* <div id="locationBtn1"> */}
                 <Button
+                  id="locationBtn"
                   variant="primary"
                   type="submit"
                   className="btn btn-dark"
@@ -234,8 +240,10 @@ class AddLocation extends Component {
                 >
                   Save
                 </Button>
+                {/* </div> */}
                 &nbsp;&nbsp;&nbsp;
                 <Button
+                  id="locationBtn"
                   variant="secondary"
                   type="button"
                   className="btn btn-dark"
@@ -243,6 +251,7 @@ class AddLocation extends Component {
                 >
                   Cancel
                 </Button>
+                {/* </div> */}
               </Col>
 
               <div className="locationFooter">
