@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 
 
-const provinceList = ["Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Northwest Territories", "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon Territory"];
+const provinceList = [["Alberta","AB"], ["British Columbia","BC"], ["Manitoba","MB"], ["New Brunswick","NB"], ["Newfoundland and Labrador","NL"], ["Northwest Territories","NT"], ["Nova Scotia","NS"], ["Nunavut","NU"], ["Ontario","ON"], ["Prince Edward Island","PE"], ["Quebec","QC"], ["Saskatchewan","SK"], ["Yukon Territory","YT"]];
 
 class AddLocation extends Component {
     state = {
@@ -17,6 +17,7 @@ class AddLocation extends Component {
         city: "",
         province: "",
         postal_code: "",
+        country: "Canada",
         locationId: null,
         userId: null
     }
@@ -36,6 +37,7 @@ class AddLocation extends Component {
                         city: fetchedLocationDetail.city,
                         province: fetchedLocationDetail.province,
                         postal_code: fetchedLocationDetail.postal_code,
+                        country: fetchedLocationDetail.country,
                         locationId: parseInt(fetchedLocationDetail.id),
                         userId: parseInt(fetchedLocationDetail.UserId)
 
@@ -49,6 +51,7 @@ class AddLocation extends Component {
                 city: "",
                 province: "",
                 postal_code: "",
+                country: "Canada",
                 locationId: null,
                 userId: null
             });
@@ -78,6 +81,7 @@ class AddLocation extends Component {
                 addr2: this.state.addr2,
                 city: this.state.city,
                 province: this.state.province,
+                country: this.state.country,
                 postal_code: this.state.postal_code,
                 UserId: 2
             })
@@ -92,6 +96,7 @@ class AddLocation extends Component {
                 city: this.state.city,
                 province: this.state.province,
                 postal_code: this.state.postal_code,
+                country: this.state.country,
                 UserId: 2
             })
                 .then(res => {
@@ -100,7 +105,8 @@ class AddLocation extends Component {
                         addr2: "",
                         city: "",
                         province: "",
-                        postal_code: ""
+                        postal_code: "",
+                        country: "Canada"
                     });
                 })
                 .catch(err => console.log(err));
@@ -114,7 +120,8 @@ class AddLocation extends Component {
             addr2: "",
             city: "",
             province: "",
-            postal_code: ""
+            postal_code: "",
+            country: "Canada"
         });
     }
 
@@ -158,14 +165,14 @@ class AddLocation extends Component {
                                         {this.state.province || "Choose Province"}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        {provinceList.map(province => (
+                                        {provinceList.map((province, index) => (
                                             <Dropdown.Item
-                                                key={province}
-                                                eventKey={province}
+                                                key={province[1]}
+                                                eventKey={province[1]}
                                                 onSelect={this.handleProvinceSelection}
                                                 name="province"
                                             >
-                                                {province}
+                                                {province[0]}
                                             </Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
@@ -178,6 +185,16 @@ class AddLocation extends Component {
                                     value={this.state.postal_code}
                                     onChange={this.handleInputChange}
                                     name="postal_code"
+                                />
+                                <br></br>
+                                <Form.Label>Country</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder={this.state.country}
+                                    value={this.state.country}
+                                    disabled="disabled"
+                                    onChange={this.handleInputChange}
+                                    name="country"
                                 />
                                 <br></br>
                             </Form.Group>
