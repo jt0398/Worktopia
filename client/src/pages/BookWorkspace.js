@@ -8,11 +8,7 @@ import Map from "../components/Map";
 import moment from "moment";
 import workspaceAPI from "../utils/workspaceAPI";
 import PriceCard from "../components/PriceCard";
-import {
-  geocodeByAddress,
-  geocodeByPlaceId,
-  getLatLng
-} from "react-places-autocomplete";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 class BookWorkspace extends Component {
   state = {
@@ -58,6 +54,7 @@ class BookWorkspace extends Component {
     localStorage.setItem("location", location);
   };
 
+  //Handle Google dropdown select
   handleLocationSelect = location => {
     this.setState({
       searchParams: { ...this.state.searchParams, location: location }
@@ -94,6 +91,15 @@ class BookWorkspace extends Component {
   };
 
   componentDidMount() {
+    //If there's no Check-In or Check-Out data, set the same default value as state
+    if (!localStorage.getItem("checkinDate")) {
+      localStorage.setItem("checkinDate", moment(new Date(), "yyyy-mm-dd"));
+    }
+
+    if (!localStorage.getItem("checkoutDate")) {
+      localStorage.setItem("checkoutDate", moment(new Date(), "yyyy-mm-dd"));
+    }
+
     this.loadWorkspaces();
   }
 
