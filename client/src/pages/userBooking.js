@@ -50,7 +50,7 @@ class userBooking extends Component {
                 <UserBooking className="text-center"
                   rowStyle="row no-gutters"
                   idStyle="col-md-0.8"
-                  imgStyle="col-md-4"
+                  imgStyle="col-md-3"
                   desStyle="col-md-2"
                   chkinoutStyle="col-md-1.5"
                   //  idStyle="col-md-1"
