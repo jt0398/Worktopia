@@ -29,7 +29,9 @@ class MainPage extends Component {
         <Row>
           <Col size="md-12">
             <div className="boxShadow">
-              <Search />
+              <div className="searchSection">
+                <Search />
+              </div>
             </div>
           </Col>
         </Row>
