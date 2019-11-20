@@ -11,11 +11,7 @@ import moment from "moment";
 import API from "../utils/workspaceAPI";
 import miscAPI from "../utils/API";
 import HashMap from "hashmap";
-import {
-  geocodeByAddress,
-  geocodeByPlaceId,
-  getLatLng
-} from "react-places-autocomplete";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 class SearchResults extends Component {
   state = {
@@ -66,6 +62,7 @@ class SearchResults extends Component {
     localStorage.setItem("location", location);
   };
 
+  //Handle Google dropdown select
   handleLocationSelect = location => {
     this.setState({
       searchParams: { ...this.state.searchParams, location: location }
@@ -79,7 +76,6 @@ class SearchResults extends Component {
         this.setState({
           centerGeoLoc: [latLng.lat, latLng.lng]
         });
-        console.log("Success", latLng);
       })
       .catch(error => console.error("Error", error));
   };
@@ -104,6 +100,24 @@ class SearchResults extends Component {
 
   componentDidMount() {
     this.loadFeatures();
+
+    //If there's no Check-In or Check-Out data, set the same default value as state
+    if (!localStorage.getItem("checkinDate")) {
+      localStorage.setItem("checkinDate", moment(new Date(), "yyyy-mm-dd"));
+    }
+
+    if (!localStorage.getItem("checkoutDate")) {
+      localStorage.setItem("checkoutDate", moment(new Date(), "yyyy-mm-dd"));
+    }
+
+    //If the user submitted search from homepage or booking page, load data on page load
+    if (
+      this.state.searchParams.location &&
+      this.state.searchParams.room &&
+      this.state.searchParams.people
+    ) {
+      this.loadWorkspaces();
+    }
   }
 
   //Loads feature list
