@@ -8,3 +8,86 @@ html {
   box-sizing: border-box;
 }
 
+.bg { 
+  background-image: url("/images/pic6.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+ }
+
+.header {
+    background-color: rgb(198, 227, 225);
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    border: 10px double;
+    box-shadow: 2px 2px 2px 2px grey;
+}
+
+.titleText{
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+    text-shadow: 2px 1px rgb(147, 201, 196);
+    margin-top:35px;
+}
+
+ label.custom-control-label {
+    font-weight: bold;
+    font-size: 20px;
+    color: rgb(26, 8, 8);
+    text-shadow: 1px 1px white;
+    margin-top:35px;
+ }
+
+ input.form-control {
+     border: 2px solid black;
+ }
+
+ textarea.form-control {
+     border: 2px solid black;
+ }
+
+.footerBorder{
+    border: transparent;
+    box-shadow: 2px 2px 5px 5px rgb(198, 227, 225);
+    margin-top: 30px;
+} 
+
+.jumbotron {
+    margin-top: 35px;
+     border: 2px solid black;
+}
+
+.box {
+    background-color: lightgray;
+}
+
+.inputfile-4 + label figure {
+    background-color: rgb(18, 18, 3);
+}
+
+.inputfile-4 + label {
+    color: black;
+}
+
+button.submit {
+    background-color: rgb(134, 172, 95);
+    box-shadow: 1px 2px black;
+}
+
+h5 {
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+    text-shadow: 2px 1px rgb(147, 201, 196);
+}
+#dropdown-basic {
+   box-shadow: 2px 2px 5px 5px rgb(95, 99, 99);
+}
+
+#subBtn {
+    box-shadow: 2px 2px 5px 5px rgb(95, 99, 99);
+}
+

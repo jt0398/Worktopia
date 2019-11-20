@@ -54,6 +54,13 @@ export function DropBoxItem(props) {
     <a class="dropdown-item" href="#">Ontario </a>
   );
 
+
 };
 
-
+export function RemainingChar(props) {
+  return (
+    <div className="text-muted" style={{ fontStyle: "italic" }}>
+      <p> {props.remainingCharCount} characters left....</p>
+    </div>
+  );
+}
