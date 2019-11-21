@@ -13,7 +13,7 @@ passport.use(
     function(username, password, done) {
       // When a user tries to sign in this code runs
       db.User.findOne({
-        where: { username: username, password: password },
+        where: { username: username },
         include: [{ model: db.UserRole }]
       }).then(function(dbUser) {
         // If there's no user with the given username
