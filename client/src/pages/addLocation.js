@@ -226,7 +226,7 @@ class AddLocation extends Component {
                           <Dropdown.Item
                             key={province[1]}
                             eventKey={province[1]}
-                            onSelect={this.handleProvinceSelection} 
+                            onSelect={this.handleProvinceSelection}
                             name="province"
                           >
                             {province[0]}
@@ -299,9 +299,9 @@ class AddLocation extends Component {
           </div>
         </Container>
       );
-    };
+    }
 
-};
+}
 
 
 export default AddLocation;
