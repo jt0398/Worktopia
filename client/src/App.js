@@ -12,6 +12,7 @@ import OwnerBooking from "./pages/ownerBooking";
 import UserBooking from "./pages/userBooking";
 import NoMatch from "./pages/NoMatch";
 import Payments from "./pages/Payments";
+import Signup from "./pages/SignUp";
 
 import "./pages/css/MainPage.css";
 // "./css/MainPage.css";
@@ -23,8 +24,8 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/main" component={MainPage} />
+          <Route exact path="/" component={MainPage} />
+          <Route exact path="/login" component={Login} />
           <Route exact path="/workspacedetail" component={WorkSpaceDetail} />
           <Route
             exact
@@ -44,6 +45,7 @@ function App() {
           <Route exact path="/owner/booking" component={OwnerBooking} />
           <Route exact path="/user/booking" component={UserBooking} />
           <Route exact path="/payments" component={Payments} />
+          <Route exact path="/signup" component={Signup} />
 
           <Route component={NoMatch} />
         </Switch>
