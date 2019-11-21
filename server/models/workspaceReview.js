@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var WorkspaceReview = sequelize.define(
-    "WorkspaceReview",
+    "workspacereview",
     {
       rating: {
         type: DataTypes.INTEGER,

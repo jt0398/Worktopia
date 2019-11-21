@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var Booking = sequelize.define(
-    "Booking",
+    "booking",
     {
       start_date: {
         type: DataTypes.DATE,

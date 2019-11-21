@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var Feature = sequelize.define(
-    "Feature",
+    "feature",
     {
       name: {
         type: DataTypes.STRING(100),

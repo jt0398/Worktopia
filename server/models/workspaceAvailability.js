@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var WorkspaceAvailability = sequelize.define(
-    "WorkspaceAvailability",
+    "workspaceavailability",
     {
       date: {
         type: DataTypes.DATE,

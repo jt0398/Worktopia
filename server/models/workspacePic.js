@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var WorkspacePic = sequelize.define(
-    "WorkspacePic",
+    "workspacepic",
     {
       image_path: {
         type: DataTypes.STRING(250),

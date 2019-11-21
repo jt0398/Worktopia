@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var WorkspaceFeature = sequelize.define(
-    "WorkspaceFeature",
+    "workspacefeature",
     {
       status: {
         type: DataTypes.BOOLEAN,

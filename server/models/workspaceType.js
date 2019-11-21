@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var WorkspaceType = sequelize.define(
-    "WorkspaceType",
+    "workspacetype",
     {
       name: {
         type: DataTypes.STRING(50),

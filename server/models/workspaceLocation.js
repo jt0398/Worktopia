@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var WorkspaceLocation = sequelize.define(
-    "WorkspaceLocation",
+    "workspacelocation",
     {
       addr1: {
         type: DataTypes.STRING(100)
