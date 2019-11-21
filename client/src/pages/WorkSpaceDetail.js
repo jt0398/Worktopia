@@ -216,6 +216,7 @@ class WorkSpaceDetail extends Component {
     API.getWorkSpaceById(this.props.match.params.id)
       .then(res => {
         let fetchedWorkSpaceDetail = res.data[0];
+        let availabilityArray = fetchedWorkSpaceDetail.WorkspaceAvailabilities;
         this.setState({
           workSpaceId: parseInt(fetchedWorkSpaceDetail.id),
           workSpaceName: fetchedWorkSpaceDetail.name,
@@ -226,7 +227,9 @@ class WorkSpaceDetail extends Component {
           workSpaceOccupancy: fetchedWorkSpaceDetail.no_occupants,
           workSpaceDimensions: fetchedWorkSpaceDetail.dimension,
           workSpaceDailyRate: fetchedWorkSpaceDetail.rental_price,
-          activateWorkSpace: fetchedWorkSpaceDetail.isActive
+          activateWorkSpace: fetchedWorkSpaceDetail.isActive,
+          startDate: moment(availabilityArray[0].date),
+          endDate: moment(availabilityArray[availabilityArray.length - 1].date)
         });
         this.loadFeaturesForWorkSpace(fetchedWorkSpaceDetail.Features);
         let ownerId = fetchedWorkSpaceDetail.WorkspaceLocation.UserId;
@@ -304,7 +307,7 @@ class WorkSpaceDetail extends Component {
                     value={this.state.workSpaceName}
                     onChange={this.handleInputChange}
                     name="workSpaceName"
-                    maxlength={50}
+                    maxLength={50}
                     required
                   />
                   <RemainingChar
@@ -323,7 +326,7 @@ class WorkSpaceDetail extends Component {
                     onChange={this.handleInputChange}
                     name="workspaceDescription"
                     placeholder="Describe your workspace"
-                    maxlength={250}
+                    maxLength={250}
                     required
                   />
                   <RemainingChar

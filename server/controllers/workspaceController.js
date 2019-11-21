@@ -289,12 +289,20 @@ module.exports = {
     const room = parseInt(req.body.room);
     const occupancy = Math.floor(people / room);
 
-    let featureWhere = "(SELECT DISTINCT WorkspaceId FROM workspacefeatures)";
+    let featureTableName = "workspacefeatures";
+    let bookingTableName = "bookings";
+
+    if (process.env.NODE_ENV === "production") {
+      featureTableName = "WorkspaceFeatures";
+      bookingTableName = "Bookings";
+    }
+
+    let featureWhere = `(SELECT DISTINCT WorkspaceId FROM ${featureTableName})`;
 
     if (req.body.selectedFeatures.length > 0) {
       featureWhere =
         "(SELECT WorkspaceId " +
-        " FROM workspacefeatures " +
+        ` FROM ${featureTableName} ` +
         " WHERE FeatureId IN (" +
         req.body.selectedFeatures.join(",") +
         "))";
@@ -309,7 +317,7 @@ module.exports = {
             id: {
               [Op.notIn]: Sequelize.literal(
                 "(SELECT DISTINCT WorkspaceId " +
-                  " FROM bookings " +
+                  ` FROM ${bookingTableName} ` +
                   " WHERE start_date BETWEEN '" +
                   checkindate +
                   "' AND '" +

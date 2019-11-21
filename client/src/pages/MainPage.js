@@ -1,15 +1,133 @@
 import React, { Component } from "react";
-//import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-//import Grid from "../components/Grid";
 import Search from "../components/Search";
 import Footer from "../components/Footer";
 import { Animated } from "react-animated-css";
 import "./css/MainPage.css";
+import OfferCard from "../components/Offer";
+import Testimonials from "../components/Testimonails";
+import moment from "moment";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 class MainPage extends Component {
+  state = {
+    searchParams: {
+      location: localStorage.getItem("location") || "",
+      checkinDate:
+        (localStorage.getItem("checkinDate") &&
+          moment(localStorage.getItem("checkinDate"), "yyyy-mm-dd")) ||
+        moment(new Date(), "yyyy-mm-dd"),
+      checkoutDate:
+        (localStorage.getItem("checkoutDate") &&
+          moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
+        moment(new Date(), "yyyy-mm-dd"),
+      room: localStorage.getItem("room") || 0,
+      people: localStorage.getItem("people") || 0
+    }
+  };
+
+  // Handles updating component state when the user types into the input field
+  handleSearchInputChange = event => {
+    const { name, value } = event.target;
+
+    this.setState({
+      searchParams: {
+        ...this.state.searchParams,
+        [name]: value
+      }
+    });
+
+    localStorage.setItem(name, value);
+  };
+
+  //Update Location state
+  handleLocationChange = location => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, location: location }
+    });
+
+    localStorage.setItem("location", location);
+  };
+
+  //Handle Google dropdown select
+  handleLocationSelect = location => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, location: location }
+    });
+
+    localStorage.setItem("location", location);
+  };
+
+  //Update Check In state
+  handleCheckInChange = date => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, checkinDate: date }
+    });
+
+    localStorage.setItem("checkinDate", date);
+  };
+
+  //Update Check Out state
+  handleCheckOutChange = date => {
+    this.setState({
+      searchParams: { ...this.state.searchParams, checkoutDate: date }
+    });
+
+    localStorage.setItem("checkoutDate", date);
+  };
+
+  componentDidMount() {
+    //If there's no Check-In or Check-Out data, set the same default value as state
+    if (!localStorage.getItem("checkinDate")) {
+      localStorage.setItem("checkinDate", moment(new Date(), "yyyy-mm-dd"));
+    }
+
+    if (!localStorage.getItem("checkoutDate")) {
+      localStorage.setItem("checkoutDate", moment(new Date(), "yyyy-mm-dd"));
+    }
+  }
+
+  handleFormSearch = event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const form = event.currentTarget;
+    form.classList.remove("was-validated");
+
+    const locationField = document.getElementsByName("location")[0];
+    const peopleField = document.getElementsByName("people")[0];
+    const roomField = document.getElementsByName("room")[0];
+
+    if (locationField.value === "") {
+      locationField.setCustomValidity("Invalid field.");
+    } else {
+      locationField.setCustomValidity("");
+    }
+
+    if (peopleField.value.includes("Choose")) {
+      peopleField.setCustomValidity("Invalid field.");
+    } else {
+      peopleField.setCustomValidity("");
+    }
+
+    if (roomField.value.includes("Choose")) {
+      roomField.setCustomValidity("Invalid field.");
+    } else {
+      roomField.setCustomValidity("");
+    }
+
+    if (form.checkValidity() === false) {
+      form.classList.add("was-validated");
+      return;
+    }
+
+    this.setState({ validated: true });
+
+    window.location.href = "/searchresults";
+  };
+
   render() {
     return (
       <Container fluid>
@@ -30,7 +148,16 @@ class MainPage extends Component {
           <Col size="md-12">
             <div className="boxShadow">
               <div className="searchSection">
-                <Search />
+                <Search
+                  {...this.state.searchParams}
+                  validated={this.state.validated}
+                  onChange={this.handleSearchInputChange}
+                  onSubmit={this.handleFormSearch}
+                  onCheckInChange={this.handleCheckInChange}
+                  onCheckOutChange={this.handleCheckOutChange}
+                  onLocationChange={this.handleLocationChange}
+                  onSelectLocation={this.handleLocationSelect}
+                />
               </div>
             </div>
           </Col>
@@ -110,78 +237,18 @@ class MainPage extends Component {
           <div className="parallaxImg"></div>
         </div>
 
-        <div className="boxShadow">
-          <div className="whyGTA">
-            <p>
-              <h2> Why GTA??</h2>
-              <Row>
-                <Col md={6}>
-                  <br></br>
-                  Where work meets play Toronto is known for its 'work hard,
-                  play hard' attitude, but a new cache of coworking spaces are
-                  bringing these spheres together under one roof. Creatives in
-                  Canada's biggest metropolis – one of our 'cities to watch in
-                  2018' – are ditching the sterility of a serviced office and
-                  seeking out hybrid hubs that cater to their business, as well
-                  as their personal interests. Sited in former factories and
-                  warehouses, these professional playgrounds offer wellness
-                  classes, networking and social events, from concerts to
-                  pot-lucks.
-                </Col>
-                <Col md={6}>
-                  <br></br>
-                  Workplace One offers small business, entrepreneurs,
-                  professionals and anyone in between, a customized and unique
-                  work environment in a shared office community. With
-                  customizable offices and services, Workplace One caters to the
-                  constant evolution of a small or growing business. The unique
-                  space design encourages collaboration and provides an energy
-                  that can not be found in a home office or other professional
-                  work environment.
-                </Col>
-              </Row>
-            </p>
-          </div>
+        <div className="testflex ">
+          <Row>
+            <OfferCard></OfferCard>
+          </Row>
         </div>
 
         <div className="boxShadow">
           <div className="parallaxImg"></div>
         </div>
 
-        <div className="boxShadow">
-          <div class="youtubeVideo">
-            <Row>
-              <Col md={12}>
-                <br></br>
-                <h2>Why CoWorking Spaces??</h2>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6} className="text-center">
-                <br></br>
-                <iframe
-                  class="coWorkingVideo"
-                  width="450"
-                  height="315"
-                  src="https://www.youtube.com/embed/C75o5Yw1Uc4"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </Col>
-              <Col md={6} className="text-center">
-                <br></br>
-                <iframe
-                  width="450"
-                  height="315"
-                  src="https://www.youtube.com/embed/Xx91WeRjVN4"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </Col>
-            </Row>
-          </div>
+        <div className="testflex">
+          <Testimonials></Testimonials>
         </div>
 
         <div className="boxShadow">

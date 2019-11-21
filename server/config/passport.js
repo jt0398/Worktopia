@@ -1,39 +1,28 @@
-const SECRET = "jwt-secret";
-const passport = require("passport");
-const passportJWT = require("passport-jwt");
-
+var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
-var db = require("../models");
-// ExtractJwt to help extract the token
-let ExtractJwt = passportJWT.ExtractJwt;
 
-// JwtStrategy which is the strategy for the authentication
-let JwtStrategy = passportJWT.Strategy;
+var db = require("../models");
 
 // Telling passport we want to use a Local Strategy. In other words, we want login with a username/email and password
 passport.use(
-  "login",
   new LocalStrategy(
-    // Our user will sign in using an email, rather than a "username"
+    // Our user will sign in using "username"
     {
-      usernameField: "username",
-      passwordField: "password",
-      session: false
+      usernameField: "username"
     },
     function(username, password, done) {
       // When a user tries to sign in this code runs
       db.User.findOne({
-        where: {
-          username: username
-        }
+        where: { username: username },
+        include: [{ model: db.UserRole }]
       }).then(function(dbUser) {
-        // If there's no user with the given email
+        // If there's no user with the given username
         if (!dbUser) {
           return done(null, false, {
             message: "Incorrect User Id."
           });
         } else if (!dbUser.validPassword(password)) {
-          // If there is a user with the given email, but the password the user gives us is incorrect
+          // If there is a user with the given username, but the password the user gives us is incorrect
           return done(null, false, {
             message: "Incorrect password."
           });
@@ -44,4 +33,16 @@ passport.use(
     }
   )
 );
+
+// In order to help keep authentication state across HTTP requests,
+// Sequelize needs to serialize and deserialize the user
+// Just consider this part boilerplate needed to make it all work
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
 module.exports = passport;

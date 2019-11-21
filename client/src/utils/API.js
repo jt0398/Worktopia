@@ -51,7 +51,9 @@ export default {
     return axios.put(`/api/location/${locationId}`, locationData);
   },
   makePayment: function(token) {
-    console.log("Hitting axios for makePayment");
     return axios.post("/api/stripepayment", token);
+  },
+  createUser: function(user) {
+    return axios.post("/api/user", user);
   }
 };
