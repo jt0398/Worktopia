@@ -6,7 +6,7 @@ import WorkspaceCard from "../components/WorkspaceCard";
 import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
-import workspaceAPI from "../utils/WorkspaceAPI";
+import workspaceAPI from "../utils/workspaceAPI";
 import PriceCard from "../components/PriceCard";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 

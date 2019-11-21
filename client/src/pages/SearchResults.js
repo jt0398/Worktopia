@@ -8,7 +8,7 @@ import WorkspaceCard from "../components/WorkspaceCard";
 import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
-import API from "../utils/WorkspaceAPI";
+import API from "../utils/workspaceAPI";
 import miscAPI from "../utils/API";
 import HashMap from "hashmap";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
@@ -201,18 +201,20 @@ class SearchResults extends Component {
     const peopleField = document.getElementsByName("people")[0];
     const roomField = document.getElementsByName("room")[0];
 
-    console.log(roomField);
-
-    if (!locationField.value) {
+    if (locationField.value === "") {
       locationField.setCustomValidity("Invalid field.");
     }
 
     if (peopleField.value.includes("Choose")) {
       peopleField.setCustomValidity("Invalid field.");
+    } else {
+      peopleField.setCustomValidity("");
     }
 
     if (roomField.value.includes("Choose")) {
       roomField.setCustomValidity("Invalid field.");
+    } else {
+      roomField.setCustomValidity("");
     }
 
     if (form.checkValidity() === false) {

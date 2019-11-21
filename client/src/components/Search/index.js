@@ -110,14 +110,14 @@ class Search extends Component {
               </Form.Label>
               <SingleDatePicker
                 date={this.props.checkinDate} // momentPropTypes.momentObj or null
-                onDateChange={this.props.onCheckInChange} // PropTypes.func.isRequired
+                onDateChange={this.props.onCheckInChange}
                 focused={this.state.focusedCheckIn} // PropTypes.bool
                 onFocusChange={({ focused }) =>
                   this.setState({ focusedCheckIn: focused })
-                } // PropTypes.func.isRequired
-                id="checkinDate" // PropTypes.string.isRequired
-                block
-                required
+                }
+                id="checkinDate"
+                block // PropTypes.bool
+                required // PropTypes.bool
               />
               <Form.Control.Feedback type="invalid">
                 Please select Check-In date.
@@ -131,14 +131,14 @@ class Search extends Component {
               </Form.Label>
               <SingleDatePicker
                 date={this.props.checkoutDate} // momentPropTypes.momentObj or null
-                onDateChange={this.props.onCheckOutChange} // PropTypes.func.isRequired
+                onDateChange={this.props.onCheckOutChange}
                 focused={this.state.focusedCheckOut} // PropTypes.bool
                 onFocusChange={({ focused }) =>
                   this.setState({ focusedCheckOut: focused })
-                } // PropTypes.func.isRequired
-                id="checkoutDate" // PropTypes.string.isRequired
-                block
-                required
+                }
+                id="checkoutDate"
+                block // PropTypes.bool
+                required // PropTypes.bool
               />
               <Form.Control.Feedback type="invalid">
                 Please select Check-Out date.
