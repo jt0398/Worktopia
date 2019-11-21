@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 function WorkspaceCard({
+  cardStyle,
   rowStyle,
   imgStyle,
   bodyStyle,
@@ -19,7 +20,7 @@ function WorkspaceCard({
   workspaceID
 }) {
   return (
-    <Card className="my-3">
+    <Card className={cardStyle}>
       <div className={rowStyle}>
         <div className={imgStyle}>
           <Card.Img className={imgClass} variant={variant} src={src} />
