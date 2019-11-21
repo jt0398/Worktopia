@@ -19,9 +19,9 @@ export default {
     });
   },
   getGeoLoc: function(address) {
-    let key = process.env.MAP_KEY;
+    let key = process.env.REACT_APP_MAP_KEY;
     return axios.get(
-      `http://www.mapquestapi.com/geocoding/v1/address?key=nh19TzR7IdecXSA4NTJkWiV4xFTTQYzn&location=${address}`
+      `https://www.mapquestapi.com/geocoding/v1/address?key=${key}&location=${address}`
     );
   }
   // Deletes the Workspace with the given id

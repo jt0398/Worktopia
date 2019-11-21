@@ -43,7 +43,11 @@ class Search extends Component {
   render() {
     return (
       <div className="my-5">
-        <Form>
+        <Form
+          noValidate
+          validated={this.props.validated}
+          onSubmit={this.props.onSubmit}
+        >
           <Form.Row>
             <Form.Group as={Col}>
               <Form.Label>
@@ -113,7 +117,11 @@ class Search extends Component {
                 } // PropTypes.func.isRequired
                 id="checkinDate" // PropTypes.string.isRequired
                 block
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                Please select Check-In date.
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>
@@ -130,7 +138,11 @@ class Search extends Component {
                 } // PropTypes.func.isRequired
                 id="checkoutDate" // PropTypes.string.isRequired
                 block
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                Please select Check-Out date.
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>
@@ -150,6 +162,9 @@ class Search extends Component {
                   return <option key={index}>{person}</option>;
                 })}
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select number of people.
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>
@@ -169,14 +184,12 @@ class Search extends Component {
                   return <option key={index}>{room}</option>;
                 })}
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select number of rooms.
+              </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
-          <Button
-            type="submit"
-            href="#"
-            className="btn btn-info"
-            onClick={this.props.onSubmit}
-          >
+          <Button type="submit" className="btn btn-info">
             Search
           </Button>
         </Form>
