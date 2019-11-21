@@ -16,13 +16,13 @@ module.exports = {
           model: db.Workspace,
           include: [{ model: db.WorkspacePic }, { model: db.WorkspaceLocation }]
         }
-      ]
+      ],
+      order: [["createdAt", "DESC"]]
     })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findAllByOwner: function(req, res) {
-    console.log("abc");
     db.Booking.findAll({
       include: [
         {
@@ -41,7 +41,8 @@ module.exports = {
           ]
         },
         { model: db.User }
-      ]
+      ],
+      order: [["createdAt", "DESC"]]
     })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
@@ -54,6 +55,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
+    console.log(req.body);
     db.Booking.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

@@ -6,29 +6,51 @@ html {
 * {
   box-sizing: border-box;
 }
+
 .intro {
   padding: 180px;
   font-size: 70px;
   color: white;
   text-shadow: 3px 3px black;
 }
+
+.searchSection {
+  padding: 30px;
+}
+
 .boxShadow {
   box-shadow: 3px 2px 10px 18px lightgray;
 }
+
 h1 {
   text-shadow: 3px 2px paleturquoise;
 }
-.textNimg {
-  box-shadow: 3px 2px 10px 18px lightgrey;
-  height: 35vh;
-  margin-bottom: 55px;
+
+.imgNtext {
+padding: 30px;
 }
+
+.whyGTA {
+  padding: 30px;
+}
+
 h5 {
   text-shadow: 3px 2px lightgrey;
 }
-.footer {
-  border: 2px solid rebeccapurple;
+
+h2 {
+  text-shadow: 3px 2px paleturquoise;
 }
+
+.youtubeVideo {
+  padding: 30px;
+}
+
+.mainPageFooter {
+  border: 2px transparent;
+  box-shadow: 8px 8px 8px 8px rgb(143, 140, 139);
+}
+
 .demo {
   margin-top: 20px;
   /* border: 2px solid red; */
@@ -39,9 +61,11 @@ h5 {
   background-size: cover;
   background-position: center;
 }
-#textimg {
+
+/* #textimg {
   margin-top: 60px;
-}
+} */
+
 .parallaxImg {
   /* The image used */
   background-image: url("/images/pic3.png");

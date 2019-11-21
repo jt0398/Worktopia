@@ -47,12 +47,12 @@ class userBooking extends Component {
           <Col md="12" sm="12">
             {this.state.workspaces.map(workspace => {
               return (
-                <UserBooking
+                <UserBooking className="text-center"
                   rowStyle="row no-gutters"
-                  idStyle="col-sm"
-                  imgStyle="col-sm-4"
-                  desStyle="col-sm-2"
-                  chkinoutStyle="col-sm-1.5"
+                  idStyle="col-md-0.8"
+                  imgStyle="col-md-3"
+                  desStyle="col-md-2"
+                  chkinoutStyle="col-md-1.5"
                   //  idStyle="col-md-1"
                   // imgStyle="col-md-2"
                   // bodyStyle="col-md-2"

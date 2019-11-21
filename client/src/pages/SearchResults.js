@@ -11,22 +11,24 @@ import moment from "moment";
 import API from "../utils/workspaceAPI";
 import miscAPI from "../utils/API";
 import HashMap from "hashmap";
-import {
-  geocodeByAddress,
-  geocodeByPlaceId,
-  getLatLng
-} from "react-places-autocomplete";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 class SearchResults extends Component {
   state = {
     addresses: new HashMap(), //Keeps address unique to avoid rendering in map multiple times
     workspaces: [],
     searchParams: {
-      location: "",
-      checkinDate: moment(new Date(), "yyyy-mm-dd"),
-      checkoutDate: moment(new Date(), "yyyy-mm-dd"),
-      room: 0,
-      people: 0,
+      location: localStorage.getItem("location") || "",
+      checkinDate:
+        (localStorage.getItem("checkinDate") &&
+          moment(localStorage.getItem("checkinDate"), "yyyy-mm-dd")) ||
+        moment(new Date(), "yyyy-mm-dd"),
+      checkoutDate:
+        (localStorage.getItem("checkoutDate") &&
+          moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
+        moment(new Date(), "yyyy-mm-dd"),
+      room: localStorage.getItem("room") || 0,
+      people: localStorage.getItem("people") || 0,
       selectedFeatures: []
     },
     locations: [], //geolocations based on address
@@ -47,6 +49,8 @@ class SearchResults extends Component {
         [name]: value
       }
     });
+
+    localStorage.setItem(name, value);
   };
 
   //Update Location state
@@ -54,12 +58,17 @@ class SearchResults extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, location: location }
     });
+
+    localStorage.setItem("location", location);
   };
 
+  //Handle Google dropdown select
   handleLocationSelect = location => {
     this.setState({
       searchParams: { ...this.state.searchParams, location: location }
     });
+
+    localStorage.setItem("location", location);
 
     geocodeByAddress(location)
       .then(results => getLatLng(results[0]))
@@ -67,7 +76,6 @@ class SearchResults extends Component {
         this.setState({
           centerGeoLoc: [latLng.lat, latLng.lng]
         });
-        console.log("Success", latLng);
       })
       .catch(error => console.error("Error", error));
   };
@@ -77,6 +85,8 @@ class SearchResults extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
+
+    localStorage.setItem("checkinDate", date);
   };
 
   //Update Check Out state
@@ -84,11 +94,30 @@ class SearchResults extends Component {
     this.setState({
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
+
+    localStorage.setItem("checkoutDate", date);
   };
 
   componentDidMount() {
-    //TODO: add search input to cache to load it in different pages
     this.loadFeatures();
+
+    //If there's no Check-In or Check-Out data, set the same default value as state
+    if (!localStorage.getItem("checkinDate")) {
+      localStorage.setItem("checkinDate", moment(new Date(), "yyyy-mm-dd"));
+    }
+
+    if (!localStorage.getItem("checkoutDate")) {
+      localStorage.setItem("checkoutDate", moment(new Date(), "yyyy-mm-dd"));
+    }
+
+    //If the user submitted search from homepage or booking page, load data on page load
+    if (
+      this.state.searchParams.location &&
+      this.state.searchParams.room &&
+      this.state.searchParams.people
+    ) {
+      this.loadWorkspaces();
+    }
   }
 
   //Loads feature list

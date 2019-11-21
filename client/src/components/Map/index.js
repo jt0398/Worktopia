@@ -3,7 +3,6 @@ import "./style.css";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import axios from "axios";
 
 class MapView extends Component {
   constructor(props) {
@@ -26,6 +25,7 @@ class MapView extends Component {
   componentDidMount() {
     const leafletMap = this.leafletMap;
 
+    //Updates zoom state
     leafletMap.on("zoomend", () => {
       const updatedZoomLevel = leafletMap.getZoom();
       this.handleZoomLevelChange(updatedZoomLevel);
@@ -34,18 +34,6 @@ class MapView extends Component {
 
   handleZoomLevelChange(newZoomLevel) {
     this.setState({ zoom: newZoomLevel });
-  }
-
-  getBounds() {
-    const positions = this.props.locations.map(loc => [loc[1], loc[2]]);
-    const myBounds = new L.LatLngBounds(positions);
-    const leafletMap = this.leafletMap;
-
-    if (myBounds._northEast) {
-      leafletMap.fitBounds(myBounds); //Centers and zooms the map around the bounds --> change to compute https://carto.com/blog/center-of-points/
-    }
-
-    //boundsOptions={{ padding: [50, 50] }}
   }
 
   render() {

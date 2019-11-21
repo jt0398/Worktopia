@@ -19,7 +19,7 @@ function WorkspaceCard({
   workspaceID
 }) {
   return (
-    <Card className="my-3 h-100">
+    <Card className="my-3">
       <div className={rowStyle}>
         <div className={imgStyle}>
           <Card.Img className={imgClass} variant={variant} src={src} />

@@ -63,20 +63,20 @@ function UserBooking({
         </div>
 
         {/* Workspace Description */}
-        {/* <div className={lStyle}> */}
-        <Card.Body className="cardBody">
-          <Card.Header className="cardHeader">Location</Card.Header>
-          <br></br>
-          <Card.Text>
-            Address: <br></br>
-            {addr1}
-            <br />
-            <br />
-            City: <br></br>
-            {city} <br />
-          </Card.Text>
-        </Card.Body>
-        {/* </div> */}
+        <div className={chkinoutStyle}>
+          <Card.Body className="cardBody">
+            <Card.Header className="cardHeader">Location</Card.Header>
+            <br></br>
+            <Card.Text>
+              Address: <br></br>
+              {addr1}
+              <br />
+              <br />
+              City: <br></br>
+              {city} <br />
+            </Card.Text>
+          </Card.Body>
+        </div>
 
         {/* CheckIn Date */}
         <div className={chkinoutStyle}>
@@ -100,10 +100,10 @@ function UserBooking({
 
         <div className={chkinoutStyle}>
           <Card.Body className="cardBody">
-            <Card.Header className="cardHeader">CAD</Card.Header>
+            <Card.Header className="cardHeader bg-warning">CAD</Card.Header>
             <br></br>
-            <Card.Text>
-              {rental_price} <br />
+            <Card.Text><strong>
+              {rental_price} </strong><br />
             </Card.Text>
           </Card.Body>
         </div>
