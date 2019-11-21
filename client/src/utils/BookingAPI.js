@@ -14,6 +14,6 @@ export default {
   },
 
   bookWorkspace: function(booking) {
-    return axios.post(`/api/booking/workspace`);
+    return axios.post(`/api/booking/workspace`, booking);
   }
 };

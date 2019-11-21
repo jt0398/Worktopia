@@ -72,7 +72,6 @@ class WorkSpaceDetail extends Component {
     }
   };
 
-
   handleFormSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -476,6 +475,7 @@ class WorkSpaceDetail extends Component {
             </Modal.Footer>
           </Modal>
         </div>
+
         <div className="footerBorder">
           <Footer />
         </div>

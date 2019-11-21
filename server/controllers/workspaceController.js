@@ -289,54 +289,16 @@ module.exports = {
     const room = parseInt(req.body.room);
     const occupancy = Math.floor(people / room);
 
-    let featureWhere = { FeatureId: { [Op.gt]: [0] } };
+    let featureWhere = "(SELECT DISTINCT WorkspaceId FROM workspacefeatures)";
 
     if (req.body.selectedFeatures.length > 0) {
-      featureWhere = {
-        FeatureId: { [Op.in]: req.body.selectedFeatures },
-        status: { [Op.eq]: true }
-      };
+      featureWhere =
+        "(SELECT WorkspaceId " +
+        " FROM workspacefeatures " +
+        " WHERE FeatureId IN (" +
+        req.body.selectedFeatures.join(",") +
+        "))";
     }
-
-    // Separate your query options
-    const queryOptions = {
-      attributes: ["WorkspaceId"],
-      where: {
-        [Op.or]: [
-          {
-            start_date: {
-              [Op.between]: [checkindate, checkoutdate]
-            }
-          },
-          {
-            end_date: {
-              [Op.between]: [checkindate, checkoutdate]
-            }
-          }
-        ]
-      }
-    };
-
-    /* const bookingSQL = Model.Sequelize.dialect.QueryGenerator.selectQuery(
-      "bookings",
-      {
-        attributes: ["WorkspaceId"],
-        where: {
-          [Op.or]: [
-            {
-              start_date: {
-                [Op.between]: [checkindate, checkoutdate]
-              }
-            },
-            {
-              end_date: {
-                [Op.between]: [checkindate, checkoutdate]
-              }
-            }
-          ]
-        }
-      }
-    ).slice(0, -1); // to remove the ';' from the end of the SQL */
 
     db.Workspace.findAll({
       where: {
@@ -359,6 +321,11 @@ module.exports = {
                   checkoutdate +
                   "')"
               )
+            }
+          },
+          {
+            id: {
+              [Op.in]: Sequelize.literal(featureWhere)
             }
           }
         ]
@@ -405,7 +372,9 @@ module.exports = {
             }
           }
         },
-        { model: db.Feature, through: { where: featureWhere }, required: true }
+        {
+          model: db.Feature
+        }
       ]
     })
       .then(dbModel => {
