@@ -1,10 +1,16 @@
 module.exports = function(sequelize, DataTypes) {
-  var UserRole = sequelize.define("UserRole", {
-    name: {
-      type: DataTypes.STRING(50),
-      allowNull: false
+  var UserRole = sequelize.define(
+    "UserRole",
+    {
+      name: {
+        type: DataTypes.STRING(50),
+        allowNull: false
+      }
+    },
+    {
+      freezeTableName: true
     }
-  });
+  );
 
   UserRole.associate = function(models) {
     models.UserRole.hasMany(models.User, {

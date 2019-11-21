@@ -1,36 +1,42 @@
 module.exports = function(sequelize, DataTypes) {
-  var User = sequelize.define("User", {
-    username: {
-      type: DataTypes.STRING(20),
-      allowNull: false
+  var User = sequelize.define(
+    "User",
+    {
+      username: {
+        type: DataTypes.STRING(20),
+        allowNull: false
+      },
+      password: {
+        type: DataTypes.STRING(20),
+        allowNull: false
+      },
+      email: {
+        type: DataTypes.STRING(50),
+        allowNull: true
+      },
+      addr1: {
+        type: DataTypes.STRING(100)
+      },
+      addr2: {
+        type: DataTypes.STRING(100)
+      },
+      city: {
+        type: DataTypes.STRING(50)
+      },
+      province: {
+        type: DataTypes.STRING(50)
+      },
+      postal_code: {
+        type: DataTypes.STRING(20)
+      },
+      phone_no: {
+        type: DataTypes.STRING(50)
+      }
     },
-    password: {
-      type: DataTypes.STRING(20),
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    addr1: {
-      type: DataTypes.STRING(100)
-    },
-    addr2: {
-      type: DataTypes.STRING(100)
-    },
-    city: {
-      type: DataTypes.STRING(50)
-    },
-    province: {
-      type: DataTypes.STRING(50)
-    },
-    postal_code: {
-      type: DataTypes.STRING(20)
-    },
-    phone_no: {
-      type: DataTypes.STRING(50)
+    {
+      freezeTableName: true
     }
-  });
+  );
 
   User.associate = function(models) {
     models.User.belongsTo(models.UserRole, {
@@ -47,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
-  // Creating a custom method for our User model. This will check if an unhashed password entered by 
+  // Creating a custom method for our User model. This will check if an unhashed password entered by
   //the user can be compared to the hashed password stored in our database
   User.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
