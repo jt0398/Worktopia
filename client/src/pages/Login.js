@@ -15,7 +15,7 @@ class Login extends Component {
   validateFormCompletion = () => {
     return !(this.state.username && this.state.password);
   };
-  
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -26,10 +26,9 @@ class Login extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.username && this.state.password) {
-      console.log("Clicked");
       API.checkLogin(this.state)
         .then(res => {
-          console.log(res.data);
+          console.log("API Response ", res.data);
         })
         .catch(err => console.log(err));
     }
@@ -60,7 +59,8 @@ class Login extends Component {
               />
               <br></br>
 
-              <Button className="btn btn-info"
+              <Button
+                className="btn btn-info"
                 disabled={this.validateFormCompletion()}
                 onClick={this.handleFormSubmit}
               >

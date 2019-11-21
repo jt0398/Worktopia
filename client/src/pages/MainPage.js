@@ -8,6 +8,8 @@ import Search from "../components/Search";
 import Footer from "../components/Footer";
 import { Animated } from "react-animated-css";
 import "./css/MainPage.css";
+import OfferCard from "../components/Offer";
+import Testimonials from "../components/Testimonails";
 
 class MainPage extends Component {
   render() {
@@ -110,44 +112,16 @@ class MainPage extends Component {
           <div className="parallaxImg"></div>
         </div>
 
-        <div className="boxShadow">
-          <div className="whyGTA">
-            <p>
-              <h2> Why GTA??</h2>
-              <Row>
-                <Col md={6}>
-                  <br></br>
-                  Where work meets play Toronto is known for its 'work hard,
-                  play hard' attitude, but a new cache of coworking spaces are
-                  bringing these spheres together under one roof. Creatives in
-                  Canada's biggest metropolis – one of our 'cities to watch in
-                  2018' – are ditching the sterility of a serviced office and
-                  seeking out hybrid hubs that cater to their business, as well
-                  as their personal interests. Sited in former factories and
-                  warehouses, these professional playgrounds offer wellness
-                  classes, networking and social events, from concerts to
-                  pot-lucks.
-                </Col>
-                <Col md={6}>
-                  <br></br>
-                  Workplace One offers small business, entrepreneurs,
-                  professionals and anyone in between, a customized and unique
-                  work environment in a shared office community. With
-                  customizable offices and services, Workplace One caters to the
-                  constant evolution of a small or growing business. The unique
-                  space design encourages collaboration and provides an energy
-                  that can not be found in a home office or other professional
-                  work environment.
-                </Col>
-              </Row>
-            </p>
-          </div>
+        <div className="testflex ">
+          <Row>
+            <OfferCard></OfferCard>
+          </Row>
         </div>
 
         <div className="boxShadow">
           <div className="parallaxImg"></div>
         </div>
-
+        {/* 
         <div className="boxShadow">
           <div class="youtubeVideo">
             <Row>
@@ -182,6 +156,10 @@ class MainPage extends Component {
               </Col>
             </Row>
           </div>
+        </div> */}
+
+        <div className="testflex">
+          <Testimonials></Testimonials>
         </div>
 
         <div className="boxShadow">
