@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var WorkspacePic = sequelize.define(
-    "workspacepic",
+    "WorkspacePic",
     {
       image_path: {
         type: DataTypes.STRING(250),
@@ -14,8 +14,7 @@ module.exports = function(sequelize, DataTypes) {
           unique: true,
           fields: ["image_path"]
         }
-      ],
-      freezeTableName: true
+      ]
     }
   );
 
