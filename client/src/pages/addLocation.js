@@ -156,115 +156,154 @@ class AddLocation extends Component {
             postal_code: "",
             country: "Canada"
         });
-    }
+    };
+
+    render() {
+        return (
+            <Container fluid>
+                <div className="locationBg">
+                    <div className="locheader">Add Location</div>
+                    <Form>
+                        <div className="formAddress">
+                            <Form.Group>
+                                <Col md={12}>
+                                    <div className="formLabel">
+                                        <Form.Label>Address</Form.Label>
+                                    </div>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter address"
+                                        value={this.state.addr1}
+                                        onChange={this.handleInputChange}
+                                        name="addr1"
+                                    />
+                                </Col>
+                                <br></br>
+                                <Col md={12}>
+                                    <div className="formLabel">
+                                        <Form.Label>Address 2</Form.Label>
+                                    </div>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter address"
+                                        value={this.state.addr2}
+                                        onChange={this.handleInputChange}
+                                        name="addr2"
+                                    />
+                                </Col>
+                                <br></br>
+                                <Col md={6}>
+                                    <div className="formLabel">
+                                        <Form.Label>City</Form.Label>
+                                    </div>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter city"
+                                        value={this.state.city}
+                                        onChange={this.handleInputChange}
+                                        name="city"
+                                    />
+                                </Col>
+                                <br></br>
+                                <Col md={4}>
+                                    <div className="formLabel">
+                                        <Form.Label>Province</Form.Label>
+                                    </div>
+                                    <Dropdown>
+                                        <Dropdown.Toggle
+                                            variant="dark"
+                                            className="dropdown-basic"
+                                            id="dropdownBasic"
+                                        >
+                                            {this.state.province || "Choose Province"}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            {provinceList.map((province, index) => (
+                                                <Dropdown.Item
+                                                    key={province[1]}
+                                                    eventKey={province[1]}
+                                                    onSelect={this.handleProvinceSelection}
+                                                    name="province"
+                                                >
+                                                    {province[0]}
+                                                </Dropdown.Item>
+                                            ))}
+
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </Col>
+                                <br></br>
+                                <Col md={4}>
+                                    <div className="formLabel">
+                                        <Form.Label>Postal Code</Form.Label>
+                                    </div>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Enter postal code"
+                                        value={this.state.postal_code}
+                                        onChange={this.handleInputChange}
+                                        name="postal_code"
+                                    />
+                                </Col>
+                                <br></br>
+                                <Col md={6}>
+                                    <div className="formLabel">
+                                        <Form.Label>Country</Form.Label>
+                                    </div>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder={this.state.country}
+                                        value={this.state.country}
+                                        disabled="disabled"
+                                        onChange={this.handleInputChange}
+                                        name="country"
+                                    />
+                                </Col>
+                                <br></br>
+                            </Form.Group>
+                            <Col md={6}>
+                                {/* <div id="locationBtn1"> */}
+                                <Button
+                                    id="locationBtn"
+                                    variant="primary"
+                                    type="submit"
+                                    className="btn btn-dark"
+                                    disabled={
+                                        !(
+                                            this.state.addr1 &&
+                                            this.state.city &&
+                                            this.state.province &&
+                                            this.state.postal_code
+                                        )
+                                    }
+                                    onClick={this.handleSave}
+                                >
+                                    Save
+                    </Button>
+                                {/* </div> */}
+                                &nbsp;&nbsp;&nbsp;
+                    <Button
+                                    id="locationBtn"
+                                    variant="secondary"
+                                    type="button"
+                                    className="btn btn-dark"
+                                    onClick={this.handleCancel}
+                                >
+                                    Cancel
+                    </Button>
+                                {/* </div> */}
+                            </Col>
+                            <div className="locationFooter">
+                                <Footer />
+                            </div>
+                        </div>
+                    </Form>
+                </div>
+            </Container>
+        );
+    };
+
 };
 
-render() {
-    return (
-        <Container fluid>
-            <Row>
-                <Col size="md-6">
-                    <Form>
-                        <Form.Group>
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter address"
-                                value={this.state.addr1}
-                                onChange={this.handleInputChange}
-                                name="addr1"
-                            />
-                            <br></br>
-                            <Form.Label>Address 2</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter address"
-                                value={this.state.addr2}
-                                onChange={this.handleInputChange}
-                                name="addr2"
-                            />
-                            <br></br>
-                            <Form.Label>City</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter city"
-                                value={this.state.city}
-                                onChange={this.handleInputChange}
-                                name="city"
-                            />
-                            <br></br>
-                            <Form.Label>Province</Form.Label>
-                            <Dropdown>
-                                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                    {this.state.province || "Choose Province"}
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    {provinceList.map((province, index) => (
-                                        <Dropdown.Item
-                                            key={province[1]}
-                                            eventKey={province[1]}
-                                            onSelect={this.handleProvinceSelection}
-                                            name="province"
-                                        >
-                                            {province[0]}
-                                        </Dropdown.Item>
-                                    ))}
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            <br></br>
-                            <Form.Label>Postal Code</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter postal code"
-                                value={this.state.postal_code}
-                                onChange={this.handleInputChange}
-                                name="postal_code"
-                            />
-                            <br></br>
-                            <Form.Label>Country</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder={this.state.country}
-                                value={this.state.country}
-                                disabled="disabled"
-                                onChange={this.handleInputChange}
-                                name="country"
-                            />
-                            <br></br>
-                        </Form.Group>
-                        <Button
-                            variant="primary"
-                            type="submit"
-                            className="btn btn-success"
-                            disabled={
-                                !(
-
-                                    this.state.addr1 &&
-                                    this.state.city &&
-                                    this.state.province &&
-                                    this.state.postal_code
-
-                                )
-                            }
-                            onClick={this.handleSave}
-                        >
-                            Save
-                            </Button>
-                        <Button
-                            variant="secondary"
-                            type="button"
-                            className="btn btn-success"
-                            onClick={this.handleCancel}
-                        >
-                            Cancel
-                            </Button>
-
-                    </Form>
-                </Col>
-            </Row>
-        </Container>
-
-    );
-}
 
 export default AddLocation;
