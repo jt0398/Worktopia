@@ -1,20 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
-  var WorkspaceReview = sequelize.define(
-    "WorkspaceReview",
-    {
-      rating: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      comment: {
-        type: DataTypes.STRING(250),
-        allowNull: false
-      }
+  var WorkspaceReview = sequelize.define("WorkspaceReview", {
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    {
-      freezeTableName: true
+    comment: {
+      type: DataTypes.STRING(250),
+      allowNull: false
     }
-  );
+  });
 
   WorkspaceReview.associate = function(models) {
     models.WorkspaceReview.belongsTo(models.User, {

@@ -36,7 +36,8 @@ class SearchResults extends Component {
     FEATURE_LIST: [],
     hashFeatures: new HashMap(),
     searching: false,
-    searchComplete: false
+    searchComplete: false,
+    validated: false
   };
 
   // Handles updating component state when the user types into the input field
@@ -53,17 +54,7 @@ class SearchResults extends Component {
     localStorage.setItem(name, value);
   };
 
-  //Update Location state
-  handleLocationChange = location => {
-    this.setState({
-      searchParams: { ...this.state.searchParams, location: location }
-    });
-
-    localStorage.setItem("location", location);
-  };
-
-  //Handle Google dropdown select
-  handleLocationSelect = location => {
+  updateLocation = location => {
     this.setState({
       searchParams: { ...this.state.searchParams, location: location }
     });
@@ -78,6 +69,16 @@ class SearchResults extends Component {
         });
       })
       .catch(error => console.error("Error", error));
+  };
+
+  //Update Location state
+  handleLocationChange = location => {
+    this.updateLocation(location);
+  };
+
+  //Handle Google dropdown select
+  handleLocationSelect = location => {
+    this.updateLocation(location);
   };
 
   //Update Check In state
@@ -189,7 +190,39 @@ class SearchResults extends Component {
   //Handle search button submit event
   handleFormSearch = event => {
     event.preventDefault();
-    this.setState({ searchComplete: false, searching: true });
+    event.stopPropagation();
+
+    const form = event.currentTarget;
+    form.classList.remove("was-validated");
+
+    const locationField = document.getElementsByName("location")[0];
+    const peopleField = document.getElementsByName("people")[0];
+    const roomField = document.getElementsByName("room")[0];
+
+    if (locationField.value === "") {
+      locationField.setCustomValidity("Invalid field.");
+    } else {
+      locationField.setCustomValidity("");
+    }
+
+    if (peopleField.value.includes("Choose")) {
+      peopleField.setCustomValidity("Invalid field.");
+    } else {
+      peopleField.setCustomValidity("");
+    }
+
+    if (roomField.value.includes("Choose")) {
+      roomField.setCustomValidity("Invalid field.");
+    } else {
+      roomField.setCustomValidity("");
+    }
+
+    if (form.checkValidity() === false) {
+      form.classList.add("was-validated");
+      return;
+    }
+
+    this.setState({ searchComplete: false, searching: true, validated: true });
     this.loadWorkspaces();
   };
 
@@ -232,6 +265,7 @@ class SearchResults extends Component {
             {/*Search Box*/}
             <Search
               {...this.state.searchParams}
+              validated={this.state.validated}
               onChange={this.handleSearchInputChange}
               onSubmit={this.handleFormSearch}
               onCheckInChange={this.handleCheckInChange}

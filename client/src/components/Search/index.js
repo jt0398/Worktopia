@@ -43,7 +43,11 @@ class Search extends Component {
   render() {
     return (
       <div className="my-5">
-        <Form>
+        <Form
+          noValidate
+          validated={this.props.validated}
+          onSubmit={this.props.onSubmit}
+        >
           <Form.Row>
             <Form.Group as={Col}>
               <Form.Label>
@@ -67,9 +71,13 @@ class Search extends Component {
                     <input
                       {...getInputProps({
                         placeholder: "Search Places ...",
-                        className: "location-search-input"
+                        name: "location",
+                        className: "form-control"
                       })}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide location.
+                    </Form.Control.Feedback>
                     <div className="autocomplete-dropdown-container">
                       {loading && <div>Loading...</div>}
                       {suggestions.map(suggestion => {
@@ -106,14 +114,18 @@ class Search extends Component {
               </Form.Label>
               <SingleDatePicker
                 date={this.props.checkinDate} // momentPropTypes.momentObj or null
-                onDateChange={this.props.onCheckInChange} // PropTypes.func.isRequired
+                onDateChange={this.props.onCheckInChange}
                 focused={this.state.focusedCheckIn} // PropTypes.bool
                 onFocusChange={({ focused }) =>
                   this.setState({ focusedCheckIn: focused })
-                } // PropTypes.func.isRequired
-                id="checkinDate" // PropTypes.string.isRequired
-                block
+                }
+                id="checkinDate"
+                block // PropTypes.bool
+                required // PropTypes.bool
               />
+              <Form.Control.Feedback type="invalid">
+                Please select Check-In date.
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>
@@ -123,14 +135,18 @@ class Search extends Component {
               </Form.Label>
               <SingleDatePicker
                 date={this.props.checkoutDate} // momentPropTypes.momentObj or null
-                onDateChange={this.props.onCheckOutChange} // PropTypes.func.isRequired
+                onDateChange={this.props.onCheckOutChange}
                 focused={this.state.focusedCheckOut} // PropTypes.bool
                 onFocusChange={({ focused }) =>
                   this.setState({ focusedCheckOut: focused })
-                } // PropTypes.func.isRequired
-                id="checkoutDate" // PropTypes.string.isRequired
-                block
+                }
+                id="checkoutDate"
+                block // PropTypes.bool
+                required // PropTypes.bool
               />
+              <Form.Control.Feedback type="invalid">
+                Please select Check-Out date.
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>
@@ -150,6 +166,9 @@ class Search extends Component {
                   return <option key={index}>{person}</option>;
                 })}
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select number of people.
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>
@@ -169,14 +188,12 @@ class Search extends Component {
                   return <option key={index}>{room}</option>;
                 })}
               </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                Please select number of rooms.
+              </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
-          <Button
-            type="submit"
-            href="#"
-            className="btn btn-info"
-            onClick={this.props.onSubmit}
-          >
+          <Button type="submit" className="btn btn-info">
             Search
           </Button>
         </Form>
