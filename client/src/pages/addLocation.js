@@ -18,7 +18,8 @@ class AddLocation extends Component {
         province: "",
         postal_code: "",
         locationId: null,
-        userId: null
+        userId: null,
+        isSubmitAllowed: false
     }
 
     componentDidMount = () => {
@@ -187,11 +188,6 @@ class AddLocation extends Component {
                                 className="btn btn-success"
                                 disabled={
                                     !(
-
-                                        this.state.addr1 &&
-                                        this.state.city &&
-                                        this.state.province &&
-                                        this.state.postal_code
 
                                     )
                                 }
