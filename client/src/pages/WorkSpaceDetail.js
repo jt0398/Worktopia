@@ -304,7 +304,7 @@ class WorkSpaceDetail extends Component {
                     value={this.state.workSpaceName}
                     onChange={this.handleInputChange}
                     name="workSpaceName"
-                    maxlength={50}
+                    maxLength={50}
                     required
                   />
                   <RemainingChar
@@ -323,7 +323,7 @@ class WorkSpaceDetail extends Component {
                     onChange={this.handleInputChange}
                     name="workspaceDescription"
                     placeholder="Describe your workspace"
-                    maxlength={250}
+                    maxLength={250}
                     required
                   />
                   <RemainingChar
