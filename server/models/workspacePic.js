@@ -14,7 +14,8 @@ module.exports = function(sequelize, DataTypes) {
           unique: true,
           fields: ["image_path"]
         }
-      ]
+      ],
+      freezeTableName: true
     }
   );
 

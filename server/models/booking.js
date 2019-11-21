@@ -1,18 +1,24 @@
 module.exports = function(sequelize, DataTypes) {
-  var Booking = sequelize.define("Booking", {
-    start_date: {
-      type: DataTypes.DATE,
-      allowNull: false
+  var Booking = sequelize.define(
+    "Booking",
+    {
+      start_date: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      end_date: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      rental_price: {
+        type: DataTypes.FLOAT(11, 4),
+        allowNull: false
+      }
     },
-    end_date: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    rental_price: {
-      type: DataTypes.FLOAT(11, 4),
-      allowNull: false
+    {
+      freezeTableName: true
     }
-  });
+  );
 
   Booking.associate = function(models) {
     models.Booking.belongsTo(models.User, {
