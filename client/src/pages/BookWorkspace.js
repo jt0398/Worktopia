@@ -24,8 +24,7 @@ class BookWorkspace extends Component {
           moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
         moment(new Date(), "yyyy-mm-dd"),
       room: localStorage.getItem("room") || 0,
-      people: localStorage.getItem("people") || 0,
-      selectedFeatures: []
+      people: localStorage.getItem("people") || 0
     },
     locations: [], //geolocations based on address
     centerGeoLoc: [43.6532, -79.3832]
@@ -61,15 +60,6 @@ class BookWorkspace extends Component {
     });
 
     localStorage.setItem("location", location);
-
-    geocodeByAddress(location)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => {
-        this.setState({
-          centerGeoLoc: [latLng.lat, latLng.lng]
-        });
-      })
-      .catch(error => console.error("Error", error));
   };
 
   //Update Check In state
@@ -143,6 +133,40 @@ class BookWorkspace extends Component {
 
   handleFormSearch = event => {
     event.preventDefault();
+    event.stopPropagation();
+
+    const form = event.currentTarget;
+    form.classList.remove("was-validated");
+
+    const locationField = document.getElementsByName("location")[0];
+    const peopleField = document.getElementsByName("people")[0];
+    const roomField = document.getElementsByName("room")[0];
+
+    if (locationField.value === "") {
+      locationField.setCustomValidity("Invalid field.");
+    } else {
+      locationField.setCustomValidity("");
+    }
+
+    if (peopleField.value.includes("Choose")) {
+      peopleField.setCustomValidity("Invalid field.");
+    } else {
+      peopleField.setCustomValidity("");
+    }
+
+    if (roomField.value.includes("Choose")) {
+      roomField.setCustomValidity("Invalid field.");
+    } else {
+      roomField.setCustomValidity("");
+    }
+
+    if (form.checkValidity() === false) {
+      form.classList.add("was-validated");
+      return;
+    }
+
+    this.setState({ validated: true });
+
     window.location.href = "/searchresults";
   };
 
@@ -154,6 +178,7 @@ class BookWorkspace extends Component {
             {/*Search Box*/}
             <Search
               {...this.state.searchParams}
+              validated={this.state.validated}
               onChange={this.handleSearchInputChange}
               onSubmit={this.handleFormSearch}
               onCheckInChange={this.handleCheckInChange}

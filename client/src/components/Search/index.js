@@ -71,9 +71,13 @@ class Search extends Component {
                     <input
                       {...getInputProps({
                         placeholder: "Search Places ...",
-                        className: "location-search-input"
+                        name: "location",
+                        className: "form-control"
                       })}
                     />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide location.
+                    </Form.Control.Feedback>
                     <div className="autocomplete-dropdown-container">
                       {loading && <div>Loading...</div>}
                       {suggestions.map(suggestion => {

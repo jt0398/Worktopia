@@ -28,7 +28,8 @@ class Login extends Component {
     if (this.state.username && this.state.password) {
       API.checkLogin(this.state)
         .then(res => {
-          console.log("API Response ", res.data);
+          localStorage.setItem("UserId", res.data.id);
+          localStorage.setItem("UserRole", res.data.UserRoleId);
         })
         .catch(err => console.log(err));
     }

@@ -195,14 +195,14 @@ class SearchResults extends Component {
     const form = event.currentTarget;
     form.classList.remove("was-validated");
 
-    const locationField = document.getElementsByClassName(
-      "location-search-input"
-    )[0];
+    const locationField = document.getElementsByName("location")[0];
     const peopleField = document.getElementsByName("people")[0];
     const roomField = document.getElementsByName("room")[0];
 
     if (locationField.value === "") {
       locationField.setCustomValidity("Invalid field.");
+    } else {
+      locationField.setCustomValidity("");
     }
 
     if (peopleField.value.includes("Choose")) {
