@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import Modal from "../Modal";
+import { Link } from "react-scroll";
 
 const noLOGIN = [
-  ["HOME", "/"],
+  ["HOME", , "test"],
+  ["ABOUT", , "test1"],
+  ["SERVICES", , "test2"],
+  ["TESTIMONIAL", , "test3"],
   ["LOGIN", "/login"]
 ];
 
@@ -27,8 +31,8 @@ export class Header extends Component {
   };
 
   componentDidMount() {
-    localStorage.setItem("UserId", 1);
-    localStorage.setItem("UserRole", 1);
+    localStorage.setItem("UserId", "");
+    localStorage.setItem("UserRole", "");
 
     //1 Owner, 2 Customer
 
@@ -58,8 +62,8 @@ export class Header extends Component {
     };
     return (
       <>
-        <Navbar bg="dark" expand="lg" collapseOnSelect>
-          <Navbar.Brand className="text-warning" href="/main">
+        <Navbar bg="dark" expand="lg" collapseOnSelect sticky="top">
+          <Navbar.Brand className="text-warning" href="/">
             Worktopia
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -71,6 +75,9 @@ export class Header extends Component {
               onSelect={linktopage}
             >
               {this.state.navItems.map(items => {
+                {
+                  console.log(items);
+                }
                 return (
                   <Nav.Item
                     id="n"
@@ -79,10 +86,19 @@ export class Header extends Component {
                     className="mr-3"
                     style={{ color: "white" }}
                   >
-                    {console.log(window.location)}
-                    <Nav.Link className="text-light" eventKey={items[1]}>
-                      {items[0]}
-                    </Nav.Link>
+                    <Link
+                      activeClass="active"
+                      className="test1"
+                      to={items[2]}
+                      spy={true}
+                      smooth={true}
+                      duration={1200}
+                      offset={-60}
+                    >
+                      <Nav.Link className="text-light" eventKey={items[1]}>
+                        {items[0]}
+                      </Nav.Link>
+                    </Link>
                   </Nav.Item>
                 );
               })}
