@@ -19,7 +19,7 @@ import "./css/WorkSpaceDetail.css";
 var moment = require("moment");
 
 const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
-const OWNER_ID = 2;
+const OWNER_ID = localStorage.getItem("UserId");
 
 class WorkSpaceDetail extends Component {
   state = {

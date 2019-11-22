@@ -1,15 +1,18 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { GoogleLogin } from "react-google-login";
 
 class Login extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    loggedInUser: ""
   };
 
   validateFormCompletion = () => {
@@ -28,14 +31,33 @@ class Login extends Component {
     if (this.state.username && this.state.password) {
       API.checkLogin(this.state)
         .then(res => {
+          console.log("API Response ", res.data);
           localStorage.setItem("UserId", res.data.id);
           localStorage.setItem("UserRole", res.data.UserRoleId);
+          if (res.data.UserRoleId === 1) {
+            this.setState({
+              loggedInUser: "owner"
+            });
+          } else {
+            this.setState({
+              loggedInUser: "user"
+            });
+          }
         })
         .catch(err => console.log(err));
     }
   };
 
+  responseGoogle = response => {
+    console.log(response);
+  };
   render() {
+    if (this.state.loggedInUser === "owner") {
+      return <Redirect to="/owner" />;
+    } else if (this.state.loggedInUser === "user") {
+      return <Redirect to="/" />;
+    }
+
     return (
       <Container fluid>
         <br></br>
@@ -70,6 +92,16 @@ class Login extends Component {
             </form>
           </Col>
         </Row>
+        <br></br>
+        <br></br>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Login"
+          onSuccess={this.responseGoogle}
+          onFailure={this.responseGoogle}
+          cookiePolicy={"single_host_origin"}
+        />
+        ,
       </Container>
     );
   }

@@ -9,10 +9,11 @@ html {
 }
 
 .card-img-top {
-  width: 100%;
-  height: 15vw;
-  object-fit: cover;
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
 }
+ 
 .ownerBg { 
   background-image: url("/images/pic6.png");
   background-position: center;
@@ -51,3 +52,4 @@ html {
   background-color: white;
   
 }
+
