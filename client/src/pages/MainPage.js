@@ -10,6 +10,7 @@ import OfferCard from "../components/Offer";
 import Testimonials from "../components/Testimonails";
 import moment from "moment";
 import { Slide } from "react-reveal";
+import { Element } from "react-scroll";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 class MainPage extends Component {
@@ -132,21 +133,22 @@ class MainPage extends Component {
   render() {
     return (
       <Container fluid>
-        <div>
-          <div className="demo text-center">
-            <Animated
-              animationIn="lightSpeedIn"
-              animationInDelay={1000}
-              animationOut="fadeOut"
-              isVisible={true}
-            >
-              <h1 className="md-8 sm-4 xs-2" id="heading">
-                Welcome to Worktopia
-              </h1>
-            </Animated>
+        <Element name="test" className="element">
+          <div>
+            <div className="demo text-center">
+              <Animated
+                animationIn="lightSpeedIn"
+                animationInDelay={1000}
+                animationOut="fadeOut"
+                isVisible={true}
+              >
+                <h1 className="md-8 sm-4 xs-2" id="heading">
+                  Welcome to Worktopia
+                </h1>
+              </Animated>
+            </div>
           </div>
-        </div>
-
+        </Element>
         <Row>
           <Col size="md-12">
             <div className="borderdisplay">
@@ -170,107 +172,118 @@ class MainPage extends Component {
           <div className="parallaxImg"></div>
         </div>
 
-        <div className="boxShadow">
-          <div class="imgNtext">
-            <h2>Why Worktopia??</h2>
-            <br></br>
-            <Row className="text-center">
-              <Col md={4} id="textimg">
-                {/* <h1>Flexible</h1> */}
-                <Animated
-                  animationIn="rotateIn"
-                  animationInDelay={1000}
-                  animationOut="fadeOut"
-                  isVisible={true}
-                >
-                  <img
-                    src="images/Flexible.png"
-                    width={90}
-                    height={120}
-                    alt="flexibility"
-                  ></img>
-                </Animated>
-                <br></br>
-                <h1>Flexible</h1>
-                <h5>Any dates you can choose</h5>
-              </Col>
-              <Col md={4} id="textimg">
-                {/* <h1>Convenient</h1> */}
-                <Animated
-                  animationIn="rotateIn"
-                  animationInDelay={1000}
-                  animationOut="fadeOut"
-                  isVisible={true}
-                >
-                  <img
-                    src="images/Convenient.png"
-                    width={90}
-                    height={120}
-                    alt="flexibility"
-                  ></img>
-                </Animated>
-                <br></br>
-                <h1>Convenient</h1>
-                <h5>Anywhere you can choose</h5>
-              </Col>
-              <Col md={4} id="textimg">
-                {/* <h1>Comfortable</h1> */}
-                <Animated
-                  animationIn="rotateIn"
-                  animationInDelay={1000}
-                  animationOut="fadeOut"
-                  isVisible={true}
-                >
-                  <img
-                    src="images/Comfortable.png"
-                    width={80}
-                    height={120}
-                    alt="flexibility"
-                  ></img>
-                </Animated>
-                <br></br>
-                <h1>Comfortable</h1>
-                <h5>Any styles you can choose</h5>
-              </Col>
-            </Row>
+        <Element name="test1" className="element">
+          <div className="boxShadow">
+            <div class="imgNtext">
+              <Container>
+                <Row style={{ margin: "100px;" }}>
+                  <Col md="12" sm="4" style={{ "text-align": "center" }}>
+                    <h3>WHY WORKTOPIA ?</h3>
+                  </Col>
+                </Row>
+                <Row className="text-center imageRow">
+                  <Col md={4} id="textimg">
+                    {/* <h1>Flexible</h1> */}
+                    <Animated
+                      animationIn="rotateIn"
+                      animationInDelay={1000}
+                      animationOut="fadeOut"
+                      isVisible={true}
+                    >
+                      <img
+                        src="images/Flexible.png"
+                        width={90}
+                        height={120}
+                        alt="flexibility"
+                      ></img>
+                    </Animated>
+                    <br></br>
+                    <h1>Flexible</h1>
+                    <h5>Any dates you can choose</h5>
+                  </Col>
+                  <Col md={4} id="textimg">
+                    {/* <h1>Convenient</h1> */}
+                    <Animated
+                      animationIn="rotateIn"
+                      animationInDelay={1000}
+                      animationOut="fadeOut"
+                      isVisible={true}
+                    >
+                      <img
+                        src="images/Convenient.png"
+                        width={90}
+                        height={120}
+                        alt="flexibility"
+                      ></img>
+                    </Animated>
+                    <br></br>
+                    <h1>Convenient</h1>
+                    <h5>Anywhere you can choose</h5>
+                  </Col>
+                  <Col md={4} id="textimg">
+                    {/* <h1>Comfortable</h1> */}
+                    <Animated
+                      animationIn="rotateIn"
+                      animationInDelay={1000}
+                      animationOut="fadeOut"
+                      isVisible={true}
+                    >
+                      <img
+                        src="images/Comfortable.png"
+                        width={80}
+                        height={120}
+                        alt="flexibility"
+                      ></img>
+                    </Animated>
+                    <br></br>
+                    <h1>Comfortable</h1>
+                    <h5>Any styles you can choose</h5>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
           </div>
-        </div>
+        </Element>
 
         <div className="boxShadow">
           <div className="parallaxImg"></div>
         </div>
 
-        <div className="testflex ">
-          <Container>
-            <Row style={{ margin: "100px;" }}>
-              <Col md="12" sm="4" style={{ "text-align": "center" }}>
-                <Slide>
-                  <h3>OUR SERVICES</h3>
-                </Slide>
-              </Col>
-            </Row>
-            <Row>
-              <OfferCard></OfferCard>
-            </Row>
-          </Container>
-        </div>
+        <Element name="test2" className="element">
+          <div className="testflex ">
+            <Container>
+              <Row style={{ margin: "100px;" }}>
+                <Col md="12" sm="4" style={{ "text-align": "center" }}>
+                  <Slide>
+                    <h3 id="headcolor">OUR SERVICES</h3>
+                  </Slide>
+                </Col>
+              </Row>
+              <Row>
+                <OfferCard></OfferCard>
+              </Row>
+            </Container>
+          </div>
+        </Element>
 
         <div className="boxShadow">
           <div className="parallaxImg"></div>
         </div>
 
-        <div className="testflex">
-          <Container>
-            <Row style={{ margin: "100px;" }}>
-              <Col md="12" sm="4" style={{ "text-align": "center" }}>
-                <h3>TESTIMONIALS</h3>
-              </Col>
-            </Row>
-            <Row>
-              <Testimonials></Testimonials>
-            </Row>
-          </Container>
-        </div>
+        <Element name="test3" className="element">
+          <div className="testflex">
+            <Container>
+              <Row style={{ margin: "100px;" }}>
+                <Col md="12" sm="4" style={{ "text-align": "center" }}>
+                  <h3 id="headcolor">TESTIMONIALS</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Testimonials></Testimonials>
+              </Row>
+            </Container>
+          </div>
+        </Element>
 
         <div className="boxShadow">
           <div className="parallaxImg"></div>
