@@ -7,7 +7,6 @@ import {
   CardBody,
   CardDeck,
   CardTitle,
-  CardSubtitle,
   Button
 } from "reactstrap";
 
@@ -16,12 +15,12 @@ class OfferCard extends Component {
     return (
       <>
         <div>
-          <CardDeck>
+          <CardDeck className="mr-auto " style={{ "margin-top": "50px" }}>
             <Card className="col-md-3 text-center ">
               <CardImg
                 top
                 width="100%"
-                src="/images/readyrent.jpg"
+                src="/images/privateoffice.jpeg"
                 alt="Card image cap"
               />
               <CardBody>
@@ -42,10 +41,10 @@ class OfferCard extends Component {
                 alt="Card image cap"
               />
               <CardBody>
-                <CardTitle>Private Offices</CardTitle>
+                <CardTitle>READY RENT OFFICES</CardTitle>
                 <CardText>
-                  Great privacy and secure storage for small teams and
-                  individuals Options available for 1 to 10 people
+                  Ready-to-Rent offices are ideal for your growing businesses
+                  Options available for 5-30 people
                 </CardText>
                 <Button>Learn More...</Button>
               </CardBody>
@@ -54,14 +53,14 @@ class OfferCard extends Component {
               <CardImg
                 top
                 width="100%"
-                src="/images/readyrent.jpg"
+                src="/images/dedicateddesks.jpg"
                 alt="Card image cap"
               />
               <CardBody>
-                <CardTitle>Private Offices</CardTitle>
+                <CardTitle>DEDICATED DESKS</CardTitle>
                 <CardText>
-                  Great privacy and secure storage for small teams and
-                  individuals Options available for 1 to 10 people
+                  Personalized desks located in an open environment Set up your
+                  computer, phone and storage
                 </CardText>
                 <Button>Learn More...</Button>
               </CardBody>
@@ -77,14 +76,14 @@ class OfferCard extends Component {
               <CardImg
                 top
                 width="100%"
-                src="/images/readyrent.jpg"
+                src="/images/meetingrooms.jpg"
                 alt="Card image cap"
               />
               <CardBody>
-                <CardTitle>Private Offices</CardTitle>
+                <CardTitle>MEETING ROOMS</CardTitle>
                 <CardText>
-                  Great privacy and secure storage for small teams and
-                  individuals Options available for 1 to 10 people
+                  Perfect for when you need a professional location to meet
+                  Available by the hour, day or monthly
                 </CardText>
                 <Button>Learn More...</Button>
               </CardBody>
@@ -94,14 +93,14 @@ class OfferCard extends Component {
               <CardImg
                 top
                 width="100%"
-                src="/images/readyrent.jpg"
+                src="/images/coworkingspace.jpg"
                 alt="Card image cap"
               />
               <CardBody>
-                <CardTitle>Private Offices</CardTitle>
+                <CardTitle>COWORKING SPACE</CardTitle>
                 <CardText>
-                  Great privacy and secure storage for small teams and
-                  individuals Options available for 1 to 10 people
+                  Desk space in a shared environment 24/7 access to meeting
+                  rooms, amenities, connectivity and support services
                 </CardText>
                 <Button>Learn More...</Button>
               </CardBody>
@@ -110,14 +109,14 @@ class OfferCard extends Component {
               <CardImg
                 top
                 width="100%"
-                src="/images/readyrent.jpg"
+                src="/images/virtualoffices.jpg"
                 alt="Card image cap"
               />
               <CardBody>
-                <CardTitle>Private Offices</CardTitle>
+                <CardTitle>VIRTUAL OFFICES</CardTitle>
                 <CardText>
-                  Great privacy and secure storage for small teams and
-                  individuals Options available for 1 to 10 people
+                  Get access to our space, conference rooms, events, and
+                  receptionist services Set up mail and a local phone number
                 </CardText>
                 <Button>Learn More...</Button>
               </CardBody>
