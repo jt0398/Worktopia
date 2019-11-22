@@ -17,8 +17,7 @@ class userBooking extends Component {
   }
 
   loadWorkspaces = () => {
-    Bookingapi.getUserData("2").then(res => {
-      console.log(res.data);
+    Bookingapi.getUserData(localStorage.getItem("UserId")).then(res => {
       this.setState({
         workspaces: res.data
       });
