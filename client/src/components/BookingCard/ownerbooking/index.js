@@ -1,8 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Label } from "../../Form/index";
 import Card from "react-bootstrap/Card";
-import { Row } from "react-bootstrap";
 import moment from "moment";
 
 function Ownerbooking({
@@ -18,8 +15,6 @@ function Ownerbooking({
   dimension,
   email,
   phone_no,
-  userContact,
-
   end_date,
   rental_price
 }) {

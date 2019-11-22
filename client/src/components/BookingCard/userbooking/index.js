@@ -1,8 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Label } from "../../Form/index";
 import Card from "react-bootstrap/Card";
-import { Row } from "react-bootstrap";
 import moment from "moment";
 function UserBooking({
   rowStyle,
@@ -13,7 +10,6 @@ function UserBooking({
   image_path,
   id,
   name,
-  location,
   description,
   dimension,
   addr1,
@@ -102,8 +98,9 @@ function UserBooking({
           <Card.Body className="cardBody">
             <Card.Header className="cardHeader bg-warning">CAD</Card.Header>
             <br></br>
-            <Card.Text><strong>
-              {rental_price} </strong><br />
+            <Card.Text>
+              <strong>{rental_price} </strong>
+              <br />
             </Card.Text>
           </Card.Body>
         </div>

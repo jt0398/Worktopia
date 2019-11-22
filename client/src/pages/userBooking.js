@@ -1,14 +1,9 @@
 import React, { Component } from "react";
-import API from "../utils/API";
 import Bookingapi from "../utils/BookingAPI";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import CardDeck from "react-bootstrap/CardDeck";
-import FeatureList from "../components/FeatureList";
 import UserBooking from "../components/BookingCard/userbooking";
-import Search from "../components/Search";
 import Footer from "../components/Footer";
 import "./css/UserBkgPage.css";
 
@@ -47,7 +42,8 @@ class userBooking extends Component {
           <Col md="12" sm="12">
             {this.state.workspaces.map(workspace => {
               return (
-                <UserBooking className="text-center"
+                <UserBooking
+                  className="text-center"
                   rowStyle="row no-gutters"
                   idStyle="col-md-0.8"
                   imgStyle="col-md-3"

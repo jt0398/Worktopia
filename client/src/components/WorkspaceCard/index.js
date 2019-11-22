@@ -1,10 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
 
 function WorkspaceCard({
   rowStyle,
@@ -36,13 +32,15 @@ function WorkspaceCard({
               <br />
               {description && (
                 <>
-                  <strong>Description: </strong>{description} <br />
+                  <strong>Description: </strong>
+                  {description} <br />
                 </>
               )}
               <br />
               {dimension && (
                 <>
-                  <strong>Dimensions: </strong>{dimension} <br />
+                  <strong>Dimensions: </strong>
+                  {dimension} <br />
                 </>
               )}
               {features && (
