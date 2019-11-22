@@ -13,10 +13,6 @@ html {
     height: 15vw;
     object-fit: cover;
 }
-
-.my-3 {
-    height: 100%;
-}
  
 .ownerBg { 
   background-image: url("/images/pic6.png");
@@ -56,3 +52,4 @@ html {
   background-color: white;
   
 }
+
