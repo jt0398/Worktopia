@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import API from "../utils/API";
+import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
+import Modal from "react-bootstrap/Modal";
 import Footer from "../components/Footer";
 import "./css/AddLocation.css";
 
@@ -20,7 +22,10 @@ class AddLocation extends Component {
       province: "",
       postal_code: "",
       userId: null,
-      validated: false
+      validated: false,
+      modalShow: false,
+      linkShow: false,
+      display: null
     };
 
     componentDidMount = () => {
@@ -37,6 +42,7 @@ class AddLocation extends Component {
             city: fetchedLocationDetail.city,
             province: fetchedLocationDetail.province,
             postal_code: fetchedLocationDetail.postal_code,
+            country: fetchedLocationDetail.country,
             userId: parseInt(fetchedLocationDetail.UserId)
           });
         });
@@ -50,6 +56,7 @@ class AddLocation extends Component {
           country: "Canada",
           userId: null
         });
+        this.handleDisplay();
       }
     };
 
@@ -104,44 +111,44 @@ class AddLocation extends Component {
       if (form.checkValidity() === false) {
         form.classList.add("was-validated");
         this.setState({ validated: true });
-      } else {
-        this.setState( { validated: true });
-        if (this.props.match.params.id) {
-          API.updateLocation(this.props.match.params.id, {
-            addr1: this.state.addr1,
-            addr2: this.state.addr2,
-            city: this.state.city,
-            province: this.state.province,
-            country: this.state.country,
-            postal_code: this.state.postal_code,
-            UserId: parseInt(localStorage.getItem("UserId"))
-          })
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-        } else {
-          API.saveLocation({
-
-            addr1: this.state.addr1,
-            addr2: this.state.addr2,
-            city: this.state.city,
-            province: this.state.province,
-            postal_code: this.state.postal_code,
-            country: this.state.country,
-            UserId: parseInt(localStorage.getItem("UserId"))
-          })
-            .then(res => {
-              this.setState({
-                addr1: "",
-                addr2: "",
-                city: "",
-                province: "",
-                postal_code: "",
-                country: "Canada"
-              });
-            })
-            .catch(err => console.log(err));
-        }
       }
+
+      if (this.props.match.params.id) {
+        API.updateLocation(this.props.match.params.id, {
+          addr1: this.state.addr1,
+          addr2: this.state.addr2,
+          city: this.state.city,
+          province: this.state.province,
+          country: this.state.country,
+          postal_code: this.state.postal_code,
+          UserId: parseInt(localStorage.getItem("UserId"))
+        })
+          .catch(err => console.log(err));
+      } else {
+        API.saveLocation({
+
+          addr1: this.state.addr1,
+          addr2: this.state.addr2,
+          city: this.state.city,
+          province: this.state.province,
+          postal_code: this.state.postal_code,
+          country: this.state.country,
+          UserId: parseInt(localStorage.getItem("UserId"))
+        })
+          .then(res => {
+            this.setState({
+              addr1: "",
+              addr2: "",
+              city: "",
+              province: "",
+              postal_code: "",
+              country: "Canada"
+            });
+          })
+          .catch(err => console.log(err));
+      }
+
+      this.handleShow();
 
     };
 
@@ -157,11 +164,30 @@ class AddLocation extends Component {
       });
     };
 
+    handleShow = () => {
+      this.setState({ modalShow: true });
+    };
+
+    handleClose = () => {
+      this.setState({ modalShow: false });
+    };
+
+    handleDisplay = () => {
+      this.setState({display: "none"});
+    }
+
     render() {
       return (
         <Container fluid>
           <div className="locationBg">
             <div className="locheader">Add Location</div>
+            <br />
+            {/* <Row>
+              <Col size="md-2">
+              &nbsp;&nbsp;&nbsp;
+                <Link style={{display: this.state.display}} to="/owner">← Back to Dashboard</Link>
+              </Col>
+            </Row> */}
             <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
               <div className="formAddress">
                 <Form.Group>
@@ -276,10 +302,10 @@ class AddLocation extends Component {
                     className="btn btn-dark"
 
                   >
-                    Save
+                                    Save
                   </Button>
                   {/* </div> */}
-                    &nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;
                   <Button
                     id="locationBtn"
                     variant="secondary"
@@ -290,12 +316,29 @@ class AddLocation extends Component {
                     Cancel
                   </Button>
                   {/* </div> */}
+
                 </Col>
                 <div className="locationFooter">
                   <Footer />
                 </div>
               </div>
             </Form>
+            <Modal
+              show={this.state.modalShow}
+              onHide={this.handleClose}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Location succesfully updated!
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Footer>
+                <Button onClick={this.handleClose}>OK</Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </Container>
       );

@@ -3,3 +3,7 @@
     height: 15vw;
     object-fit: cover;
 }
+
+.my-3 {
+    height: 100%;
+}

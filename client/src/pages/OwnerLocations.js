@@ -64,7 +64,7 @@ class OwnerLocations extends Component {
                           <Col md={4} className="p-3">
                             <Link to={`/workspacedetail/${element.id}`}>
                               <WorkspaceCard key={element.id} name={element.name} description={element.description}
-                                dimension={element.dimension} rental_price={element.rental_price} src={element.WorkspacePics[0].image_path} cardStyle="my-3 h-100" imgClass="card-img-top" variant="top"/>
+                                dimension={element.dimension} rental_price={element.rental_price} src={element.WorkspacePics[0].image_path} imgClass="card-img-top" variant="top"/>
                             </Link>
                           </Col>
                         )}
