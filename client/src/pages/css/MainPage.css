@@ -15,7 +15,21 @@ html {
 }
 
 .searchSection {
+  margin: 20px 0px;
   padding: 30px;
+}
+
+.borderdisplay {
+  box-shadow: 3px 2px 5px 5px lightgray;
+  /* border: 1px solid black; */
+  margin: 10px 0px;
+}
+.container-fluid {
+  width: 100%;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
 }
 
 @media (min-width: 576px) {
@@ -27,6 +41,10 @@ html {
 
 #heading {
   padding-top: 100px;
+}
+
+#headcolor {
+  color: darkorange;
 }
 
 .boxShadow {
@@ -63,19 +81,17 @@ h2 {
 }
 
 .demo {
-  margin-top: 20px;
-  /* border: 2px solid red; */
-  height: 55vh;
+  height: 45.5vh;
   width: 100%;
-  background-image: url("/images/pic2.png");
+  background-image: url("/images/image.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
-/* #textimg {
-  margin-top: 60px;
-} */
+.imageRow {
+  margin: 50px 0px;
+}
 
 .parallaxImg {
   /* The image used */
