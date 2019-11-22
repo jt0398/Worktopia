@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Navbar, Nav } from "react-bootstrap";
-import Modal from "../Modal";
 import { Link } from "react-scroll";
 
 const noLOGIN = [
@@ -71,13 +70,10 @@ export class Header extends Component {
             <Nav
               defaultActiveKey="/main"
               as="ul"
-              class="nav ml-auto"
+              className="nav ml-auto"
               onSelect={linktopage}
             >
               {this.state.navItems.map(items => {
-                {
-                  console.log(items);
-                }
                 return (
                   <Nav.Item
                     id="n"
