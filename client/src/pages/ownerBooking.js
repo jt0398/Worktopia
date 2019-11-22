@@ -3,11 +3,7 @@ import Bookingapi from "../utils/BookingAPI";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import CardDeck from "react-bootstrap/CardDeck";
-import FeatureList from "../components/FeatureList";
 import Ownerbooking from "../components/BookingCard/ownerbooking";
-import Search from "../components/Search";
 
 class OwnerBooking extends Component {
   state = {

@@ -8,7 +8,9 @@ import Map from "../components/Map";
 import moment from "moment";
 import workspaceAPI from "../utils/workspaceAPI";
 import PriceCard from "../components/PriceCard";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+// import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import Footer from "../components/Footer";
+import "./css/BkgWorkSpace.css";
 
 class BookWorkspace extends Component {
   state = {
@@ -172,52 +174,62 @@ class BookWorkspace extends Component {
 
   render() {
     return (
-      <Container>
-        <Row>
-          <Col>
-            {/*Search Box*/}
-            <Search
-              {...this.state.searchParams}
-              validated={this.state.validated}
-              onChange={this.handleSearchInputChange}
-              onSubmit={this.handleFormSearch}
-              onCheckInChange={this.handleCheckInChange}
-              onCheckOutChange={this.handleCheckOutChange}
-              onLocationChange={this.handleLocationChange}
-              onSelectLocation={this.handleLocationSelect}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col md="8" sm="12">
-            {this.state.workspaces.map((workspace, index) => {
-              return (
-                <WorkspaceCard
-                  key={index}
-                  rowStyle=""
-                  imgStyle=""
-                  bodyStyle=""
-                  {...workspace}
-                  src={
-                    workspace.WorkspacePics &&
-                    workspace.WorkspacePics[0].image_path
-                  }
-                  fulladdress={workspace.WorkspaceLocation.full_address}
+      <Container fluid>
+        <div className="bkgWsBg">
+          <div className="bkgWSheader">Booking Review</div>
+          <div className="wholePagePadding">
+            <Row>
+              <Col>
+                {/*Search Box*/}
+                <Search
+                  {...this.state.searchParams}
+                  validated={this.state.validated}
+                  onChange={this.handleSearchInputChange}
+                  onSubmit={this.handleFormSearch}
+                  onCheckInChange={this.handleCheckInChange}
+                  onCheckOutChange={this.handleCheckOutChange}
+                  onLocationChange={this.handleLocationChange}
+                  onSelectLocation={this.handleLocationSelect}
                 />
-              );
-            })}
-          </Col>
-          <Col md="3">
-            <PriceCard {...this.state.workspaces[0]} />
-            {/*Map*/}
-            {this.state.locations.length > 0 && (
-              <Map
-                locations={this.state.locations}
-                centerGeoLoc={this.state.centerGeoLoc}
-              />
-            )}
-          </Col>
-        </Row>
+              </Col>
+            </Row>
+            <Row>
+              <Col md="8" sm="12">
+                {this.state.workspaces.map((workspace, index) => {
+                  return (
+                    <WorkspaceCard
+                      key={index}
+                      rowStyle=""
+                      imgStyle=""
+                      bodyStyle=""
+                      {...workspace}
+                      src={
+                        workspace.WorkspacePics &&
+                        workspace.WorkspacePics[0].image_path
+                      }
+                      fulladdress={workspace.WorkspaceLocation.full_address}
+                    />
+                  );
+                })}
+              </Col>
+              <Col md="4">
+                <div className="pricebreakdown">
+                  <PriceCard {...this.state.workspaces[0]} />
+                </div>
+                {/*Map*/}
+                {this.state.locations.length > 0 && (
+                  <Map
+                    locations={this.state.locations}
+                    centerGeoLoc={this.state.centerGeoLoc}
+                  />
+                )}
+              </Col>
+            </Row>
+          </div>
+        </div>
+        <div className="bkgSpFooter">
+          <Footer />
+        </div>
       </Container>
     );
   }

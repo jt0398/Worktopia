@@ -11,7 +11,7 @@ import Testimonials from "../components/Testimonails";
 import moment from "moment";
 import { Slide } from "react-reveal";
 import { Element } from "react-scroll";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+// import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 class MainPage extends Component {
   state = {
@@ -174,10 +174,10 @@ class MainPage extends Component {
 
         <Element name="test1" className="element">
           <div className="boxShadow">
-            <div class="imgNtext">
+            <div className="imgNtext">
               <Container>
-                <Row style={{ margin: "100px;" }}>
-                  <Col md="12" sm="4" style={{ "text-align": "center" }}>
+                <Row style={{ margin: "20px" }}>
+                  <Col md="12" sm="4" style={{ textAlign: "center" }}>
                     <h3>WHY WORKTOPIA ?</h3>
                   </Col>
                 </Row>
@@ -252,8 +252,8 @@ class MainPage extends Component {
         <Element name="test2" className="element">
           <div className="testflex ">
             <Container>
-              <Row style={{ margin: "100px;" }}>
-                <Col md="12" sm="4" style={{ "text-align": "center" }}>
+              <Row style={{ margin: "100px" }}>
+                <Col md="12" sm="4" style={{ textAlign: "center" }}>
                   <Slide>
                     <h3 id="headcolor">FEATURED WORKSPACES</h3>
                   </Slide>
@@ -273,8 +273,8 @@ class MainPage extends Component {
         <Element name="test3" className="element">
           <div className="testflex">
             <Container>
-              <Row style={{ margin: "100px;" }}>
-                <Col md="12" sm="4" style={{ "text-align": "center" }}>
+              <Row style={{ margin: "100px" }}>
+                <Col md="12" sm="4" style={{ textAlign: "center" }}>
                   <h3 id="headcolor">TESTIMONIALS</h3>
                 </Col>
               </Row>

@@ -52,7 +52,7 @@ class Search extends Component {
             <Form.Group as={Col}>
               <Form.Label>
                 <strong>
-                  <i class="fas fa-thumbtack"></i> Locations
+                  <i className="fas fa-thumbtack"></i> Locations
                 </strong>
               </Form.Label>
               <PlacesAutocomplete
@@ -109,7 +109,7 @@ class Search extends Component {
             <Form.Group as={Col}>
               <Form.Label>
                 <strong>
-                  <i class="fas fa-calendar-alt"></i> Check-In Date
+                  <i className="fas fa-calendar-alt"></i> Check-In Date
                 </strong>
               </Form.Label>
               <SingleDatePicker
@@ -130,7 +130,7 @@ class Search extends Component {
             <Form.Group as={Col}>
               <Form.Label>
                 <strong>
-                  <i class="far fa-calendar-alt"></i> Check-Out Date
+                  <i className="far fa-calendar-alt"></i> Check-Out Date
                 </strong>
               </Form.Label>
               <SingleDatePicker
@@ -151,7 +151,7 @@ class Search extends Component {
             <Form.Group as={Col}>
               <Form.Label>
                 <strong>
-                  <i class="fas fa-user-friends"></i> People
+                  <i className="fas fa-user-friends"></i> People
                 </strong>
               </Form.Label>
               <Form.Control
@@ -173,7 +173,7 @@ class Search extends Component {
             <Form.Group as={Col}>
               <Form.Label>
                 <strong>
-                  <i class="fas fa-search-plus"></i> Rooms
+                  <i className="fas fa-search-plus"></i> Rooms
                 </strong>
               </Form.Label>
               <Form.Control
