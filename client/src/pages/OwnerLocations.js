@@ -42,7 +42,6 @@ class OwnerLocations extends Component {
         .catch(err => console.log(err));
     }
 
-
     render() {
       return (
         <>
@@ -55,48 +54,47 @@ class OwnerLocations extends Component {
                     <div className="borderForAddress">
                       <div className="detailNedit">Details and Edit</div>
                       <AddressNav>
-                        {this.state.ownerAddress.map(element =>
+                        {this.state.ownerAddress.map(element => (
                           <AddressNavItem
                             key={element.id}
                             id={element.id}
                             address={element.full_address}
                             loadCards={this.loadWorkspaces}
                           />
-                        )}
+                        ))}
                       </AddressNav>
                     </div>
                   </Col>
+
                   <Col md={9}>
                     <Row>
-
                       {!this.state.workspaceInfo.length ? (
-                        <h5 className="text-center">Add workspace for this location <Link to="/workspacedetail">here</Link></h5>
-                      ) :
-                        (
-                          <CardDeck>
-                            {this.state.workspaceInfo.map(element =>
-                              <Col md={4} className="p-3">
-                                <Link to={`/workspacedetail/${element.id}`}>
-                                  <div className="cardDeck">
-                                    <WorkspaceCard
-                                      key={element.id}
-                                      name={element.name}
-                                      description={element.description}
-                                      dimension={element.dimension}
-                                      rental_price={element.rental_price}
-                                      src={element.WorkspacePics[0].image_path}
-                                      imgClass="card-img-top"
-                                      variant="top"
-                                    />
-                                  </div>
-                                </Link>
-                              </Col>
-                            )}
-                          </CardDeck>
-                        )
-                      }
-
-
+                        <h5 className="text-center">
+                        Add workspace for this location{" "}
+                          <Link to="/workspacedetail">here</Link>
+                        </h5>
+                      ) : (
+                        <CardDeck>
+                          {this.state.workspaceInfo.map(element => (
+                            <Col md={4} className="p-3">
+                              <Link to={`/workspacedetail/${element.id}`}>
+                                <div className="cardDeck">
+                                  <WorkspaceCard
+                                    key={element.id}
+                                    name={element.name}
+                                    description={element.description}
+                                    dimension={element.dimension}
+                                    rental_price={element.rental_price}
+                                    src={element.WorkspacePics[0].image_path}
+                                    imgClass="card-img-top"
+                                    variant="top"
+                                  />
+                                </div>
+                              </Link>
+                            </Col>
+                          ))}
+                        </CardDeck>
+                      )}
                     </Row>
                   </Col>
                 </Row>
@@ -105,7 +103,6 @@ class OwnerLocations extends Component {
             <br></br>
             <Footer />
           </Container>
-
         </>
       );
     }

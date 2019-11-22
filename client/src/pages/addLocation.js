@@ -11,7 +11,6 @@ import Modal from "react-bootstrap/Modal";
 import Footer from "../components/Footer";
 import "./css/AddLocation.css";
 
-
 const provinceList = [
   ["Alberta", "AB"],
   ["British Columbia", "BC"],
@@ -359,6 +358,5 @@ class AddLocation extends Component {
     }
 
 }
-
 
 export default AddLocation;
