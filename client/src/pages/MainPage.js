@@ -252,7 +252,11 @@ class MainPage extends Component {
         <Element name="test2" className="element">
           <div className="testflex ">
             <Container>
+<<<<<<< HEAD
               <Row>
+=======
+              <Row style={{ margin: "100px" }}>
+>>>>>>> 8fc52bc7a4ac5b05e8d03d67dd97d52a198db094
                 <Col md="12" sm="4" style={{ textAlign: "center" }}>
                   <Slide>
                     <h3 id="headcolor">OUR SERVICES</h3>
@@ -273,7 +277,11 @@ class MainPage extends Component {
         <Element name="test3" className="element">
           <div className="testflex">
             <Container>
+<<<<<<< HEAD
               <Row>
+=======
+              <Row style={{ margin: "100px" }}>
+>>>>>>> 8fc52bc7a4ac5b05e8d03d67dd97d52a198db094
                 <Col md="12" sm="4" style={{ textAlign: "center" }}>
                   <h3 id="headcolor">TESTIMONIALS</h3>
                 </Col>

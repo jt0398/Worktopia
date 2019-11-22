@@ -14,7 +14,11 @@ class OfferCard extends Component {
     return (
       <>
         <div>
+<<<<<<< HEAD
           <CardDeck className="mr-auto ">
+=======
+          <CardDeck className="mr-auto " style={{ marginTop: "50px" }}>
+>>>>>>> 8fc52bc7a4ac5b05e8d03d67dd97d52a198db094
             <Card className="col-md-3 text-center ">
               <CardImg
                 top
@@ -67,7 +71,14 @@ class OfferCard extends Component {
           </CardDeck>
         </div>
         <div>
+<<<<<<< HEAD
           <CardDeck className="mr-auto " style={{ marginTop: "50px" }}>
+=======
+          <CardDeck
+            className="mt-3 "
+            style={{ width: "10rem", align: "center" }}
+          >
+>>>>>>> 8fc52bc7a4ac5b05e8d03d67dd97d52a198db094
             <Card className="col-md-3 text-center">
               <CardImg
                 top
