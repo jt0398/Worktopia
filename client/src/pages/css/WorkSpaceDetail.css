@@ -17,9 +17,9 @@ html {
 
 .header {
     background-color: rgb(198, 227, 225);
-    padding: 20px;
-    text-align: center;
-    font-size: 30px;
+    padding: 10px;
+    text-align: right;
+    font-size: 25px;
     font-weight: bolder;
     border: 10px double;
     box-shadow: 2px 2px 2px 2px grey;
