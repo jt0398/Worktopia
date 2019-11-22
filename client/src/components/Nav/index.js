@@ -27,8 +27,8 @@ export class Header extends Component {
   };
 
   componentDidMount() {
-    localStorage.setItem("UserId", 2);
-    localStorage.setItem("UserRole", 2);
+    localStorage.setItem("UserId", 1);
+    localStorage.setItem("UserRole", 1);
 
     //1 Owner, 2 Customer
 
@@ -54,38 +54,40 @@ export class Header extends Component {
 
   render() {
     const linktopage = link => {
-      alert("Will go to  " + link);
       window.location.pathname = link;
     };
     return (
       <>
-        <Navbar bg="dark" expand="lg">
+        <Navbar bg="dark" expand="lg" collapseOnSelect>
           <Navbar.Brand className="text-warning" href="/main">
             Worktopia
           </Navbar.Brand>
-          <Nav
-            defaultActiveKey="/main"
-            as="ul"
-            class="nav ml-auto"
-            onSelect={linktopage}
-          >
-            {this.state.navItems.map(items => {
-              return (
-                <Nav.Item
-                  id="n"
-                  as="li"
-                  href={items[1]}
-                  className="mr-3"
-                  style={{ color: "white" }}
-                >
-                  {console.log(window.location)}
-                  <Nav.Link className="text-light" eventKey={items[1]}>
-                    {items[0]}
-                  </Nav.Link>
-                </Nav.Item>
-              );
-            })}
-          </Nav>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav mr-auto">
+            <Nav
+              defaultActiveKey="/main"
+              as="ul"
+              class="nav ml-auto"
+              onSelect={linktopage}
+            >
+              {this.state.navItems.map(items => {
+                return (
+                  <Nav.Item
+                    id="n"
+                    as="li"
+                    href={items[1]}
+                    className="mr-3"
+                    style={{ color: "white" }}
+                  >
+                    {console.log(window.location)}
+                    <Nav.Link className="text-light" eventKey={items[1]}>
+                      {items[0]}
+                    </Nav.Link>
+                  </Nav.Item>
+                );
+              })}
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
       </>
     );

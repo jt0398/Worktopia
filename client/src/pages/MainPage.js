@@ -9,6 +9,7 @@ import "./css/MainPage.css";
 import OfferCard from "../components/Offer";
 import Testimonials from "../components/Testimonails";
 import moment from "moment";
+import { Slide } from "react-reveal";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 class MainPage extends Component {
@@ -139,7 +140,9 @@ class MainPage extends Component {
               animationOut="fadeOut"
               isVisible={true}
             >
-              <h1 className="intro">Welcome to Worktopia</h1>
+              <h1 className="md-8 sm-4 xs-2" id="heading">
+                Welcome to Worktopia
+              </h1>
             </Animated>
           </div>
         </div>
@@ -176,7 +179,7 @@ class MainPage extends Component {
                 {/* <h1>Flexible</h1> */}
                 <Animated
                   animationIn="rotateIn"
-                  animationInDelay={3000}
+                  animationInDelay={1000}
                   animationOut="fadeOut"
                   isVisible={true}
                 >
@@ -195,7 +198,7 @@ class MainPage extends Component {
                 {/* <h1>Convenient</h1> */}
                 <Animated
                   animationIn="rotateIn"
-                  animationInDelay={4000}
+                  animationInDelay={1000}
                   animationOut="fadeOut"
                   isVisible={true}
                 >
@@ -214,7 +217,7 @@ class MainPage extends Component {
                 {/* <h1>Comfortable</h1> */}
                 <Animated
                   animationIn="rotateIn"
-                  animationInDelay={5000}
+                  animationInDelay={1000}
                   animationOut="fadeOut"
                   isVisible={true}
                 >
@@ -238,9 +241,18 @@ class MainPage extends Component {
         </div>
 
         <div className="testflex ">
-          <Row>
-            <OfferCard></OfferCard>
-          </Row>
+          <Container>
+            <Row style={{ margin: "100px;" }}>
+              <Col md="12" sm="4" style={{ "text-align": "center" }}>
+                <Slide>
+                  <h3>OUR SERVICES</h3>
+                </Slide>
+              </Col>
+            </Row>
+            <Row>
+              <OfferCard></OfferCard>
+            </Row>
+          </Container>
         </div>
 
         <div className="boxShadow">
@@ -248,7 +260,16 @@ class MainPage extends Component {
         </div>
 
         <div className="testflex">
-          <Testimonials></Testimonials>
+          <Container>
+            <Row style={{ margin: "100px;" }}>
+              <Col md="12" sm="4" style={{ "text-align": "center" }}>
+                <h3>TESTIMONIALS</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Testimonials></Testimonials>
+            </Row>
+          </Container>
         </div>
 
         <div className="boxShadow">

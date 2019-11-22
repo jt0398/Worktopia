@@ -18,6 +18,17 @@ html {
   padding: 30px;
 }
 
+@media (min-width: 576px) {
+  .card-deck {
+    margin-left: 8.5% !important;
+    width: 100%;
+  }
+}
+
+#heading {
+  padding-top: 100px;
+}
+
 .boxShadow {
   box-shadow: 3px 2px 10px 18px lightgray;
 }
