@@ -32,8 +32,8 @@ export default {
   getWorkspaceByLocation(locationId) {
     return axios.get("/api/workspace/location/" + locationId);
   },
-  getLocationByOwner() {
-    return axios.get("/api/location/owner/2");
+  getLocationByOwner(ownerId) {
+    return axios.get("/api/location/owner/"+ ownerId);
   },
   getLocationById(locationId) {
     return axios.get("/api/location/" + locationId);
