@@ -157,11 +157,10 @@ class AddLocation extends Component {
               postal_code: "",
               country: "Canada"
             });
+            this.handleShow();
           })
           .catch(err => console.log(err));
       }
-
-      this.handleShow();
 
     };
 
