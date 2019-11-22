@@ -12,7 +12,21 @@ import Footer from "../components/Footer";
 import "./css/AddLocation.css";
 
 
-const provinceList = [["Alberta", "AB"], ["British Columbia", "BC"], ["Manitoba", "MB"], ["New Brunswick", "NB"], ["Newfoundland and Labrador", "NL"], ["Northwest Territories", "NT"], ["Nova Scotia", "NS"], ["Nunavut", "NU"], ["Ontario", "ON"], ["Prince Edward Island", "PE"], ["Quebec", "QC"], ["Saskatchewan", "SK"], ["Yukon Territory", "YT"]];
+const provinceList = [
+  ["Alberta", "AB"],
+  ["British Columbia", "BC"],
+  ["Manitoba", "MB"],
+  ["New Brunswick", "NB"],
+  ["Newfoundland and Labrador", "NL"],
+  ["Northwest Territories", "NT"],
+  ["Nova Scotia", "NS"],
+  ["Nunavut", "NU"],
+  ["Ontario", "ON"],
+  ["Prince Edward Island", "PE"],
+  ["Quebec", "QC"],
+  ["Saskatchewan", "SK"],
+  ["Yukon Territory", "YT"]
+];
 
 class AddLocation extends Component {
     state = {
@@ -182,12 +196,12 @@ class AddLocation extends Component {
           <div className="locationBg">
             <div className="locheader">Add Location</div>
             <br />
-            {/* <Row>
+            <Row>
               <Col size="md-2">
               &nbsp;&nbsp;&nbsp;
                 <Link style={{display: this.state.display}} to="/owner">← Back to Dashboard</Link>
               </Col>
-            </Row> */}
+            </Row>
             <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
               <div className="formAddress">
                 <Form.Group>
