@@ -131,7 +131,7 @@ class MainPage extends Component {
   render() {
     return (
       <Container fluid>
-        <div className="boxShadow">
+        <div>
           <div className="demo text-center">
             <Animated
               animationIn="lightSpeedIn"
@@ -146,7 +146,7 @@ class MainPage extends Component {
 
         <Row>
           <Col size="md-12">
-            <div className="boxShadow">
+            <div className="borderdisplay">
               <div className="searchSection">
                 <Search
                   {...this.state.searchParams}
