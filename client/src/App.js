@@ -42,8 +42,8 @@ function App() {
           <Route exact path="/owner/:id" component={OwnerLocations} />
           <Route exact path="/location" component={AddLocation} />
           <Route exact path="/owner/editlocation/:id" component={AddLocation} />
-          <Route exact path="/owner/booking" component={OwnerBooking} />
-          <Route exact path="/user/booking" component={UserBooking} />
+          <Route exact path="/booking/owner" component={OwnerBooking} />
+          <Route exact path="/booking/user" component={UserBooking} />
           <Route exact path="/payments" component={Payments} />
           <Route exact path="/signup" component={Signup} />
 
