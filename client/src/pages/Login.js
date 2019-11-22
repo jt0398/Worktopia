@@ -11,7 +11,8 @@ import { GoogleLogin } from "react-google-login";
 class Login extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    loggedInUser: ""
   };
 
   validateFormCompletion = () => {
@@ -34,11 +35,13 @@ class Login extends Component {
           localStorage.setItem("UserId", res.data.id);
           localStorage.setItem("UserRole", res.data.UserRoleId);
           if (res.data.UserRoleId === 1) {
-            console.log("Owner logged in");
-            return <Redirect to="/owner/{res.data.id}" />;
+            this.setState({
+              loggedInUser: "owner"
+            });
           } else {
-            console.log("User logged in");
-            return <Redirect to="/" />;
+            this.setState({
+              loggedInUser: "user"
+            });
           }
         })
         .catch(err => console.log(err));
@@ -49,6 +52,12 @@ class Login extends Component {
     console.log(response);
   };
   render() {
+    if (this.state.loggedInUser === "owner") {
+      return <Redirect to="/owner" />;
+    } else if (this.state.loggedInUser === "user") {
+      return <Redirect to="/" />;
+    }
+
     return (
       <Container fluid>
         <br></br>
@@ -86,7 +95,6 @@ class Login extends Component {
         <br></br>
         <br></br>
         <GoogleLogin
-          // clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
           clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
           buttonText="Login"
           onSuccess={this.responseGoogle}
