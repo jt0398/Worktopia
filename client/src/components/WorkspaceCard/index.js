@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
+
 function WorkspaceCard({
   rowStyle,
   imgStyle,
@@ -27,17 +30,19 @@ function WorkspaceCard({
         <div className={bodyStyle}>
           <Card.Body>
             <Card.Title>{name}</Card.Title>
+
             <Card.Text>
               {fulladdress}
               <br />
               {description && (
                 <>
-                  Description: {description} <br />
+                  <strong>Description: </strong>{description} <br />
                 </>
               )}
+              <br />
               {dimension && (
                 <>
-                  Dimensions: {dimension} <br />
+                  <strong>Dimensions: </strong>{dimension} <br />
                 </>
               )}
               {features && (
@@ -51,7 +56,8 @@ function WorkspaceCard({
                   <br />
                 </>
               )}
-              {!imgStyle && `Price: $${rental_price}`}
+              <br></br>
+              <strong>{!imgStyle && `CAD $${rental_price}`}</strong>
             </Card.Text>
           </Card.Body>
         </div>
