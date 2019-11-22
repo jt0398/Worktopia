@@ -123,7 +123,7 @@ class AddLocation extends Component {
 
       if (form.checkValidity() === false) {
         form.classList.add("was-validated");
-        this.setState({ validated: true });
+        this.setState({ validated: true});
       }
 
       if (this.props.match.params.id) {
@@ -136,6 +136,9 @@ class AddLocation extends Component {
           postal_code: this.state.postal_code,
           UserId: parseInt(localStorage.getItem("UserId"))
         })
+          .then(res => {
+            this.handleShow();
+          })
           .catch(err => console.log(err));
       } else {
         API.saveLocation({
