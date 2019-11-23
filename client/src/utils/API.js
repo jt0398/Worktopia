@@ -6,8 +6,6 @@ export default {
     return axios.post("/api/login", userLoginData);
   },
   logout: function(){
-    localStorage.removeItem("UserId");
-    localStorage.removeItem("UserRole");
     return axios.get("/api/logout");
   },
   fileUpload: function(data) {

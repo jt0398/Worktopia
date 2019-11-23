@@ -4,10 +4,11 @@ const passport = require("../../config/passport");
 // Requiring our custom middleware for checking if a user is logged in
 var isAuthenticated = require("../../config/middleware/isAuthenticated");
 
-// Matches with "/api/login"
-router.get("/logout", passport.authenticate("local"), function(req, res) {
-  req.logout();
-  res.redirect("/");
+// Matches with "/api/logout"
+router.get("/", function(req, res) {
+  console.log("Back end logout");
+  // req.logout();
+  res.sendStatus(200)
 });
 
 module.exports = router;
