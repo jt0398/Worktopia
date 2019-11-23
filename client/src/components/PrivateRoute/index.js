@@ -4,6 +4,7 @@ import {
   Redirect,
   withRouter // ** important so that history is availabe
 } from "react-router-dom";
+import API from "../../utils/API";
 
 class PrivateRoute extends React.Component {
   constructor(props) {
@@ -20,16 +21,9 @@ class PrivateRoute extends React.Component {
   }
 
   checkIsLogged = () => {
-    /* queries the server for user status, ie, logged in or not*/
+    API.isUserLoggedIn().then(response => {
+      console.log(response.data);
 
-    let check = new Promise(resolve => {
-      const last_active_client = localStorage.getItem("last_active")
-        ? localStorage.getItem("last_active")
-        : 0;
-      const data = { payload: last_active_client };
-      resolve(axios.post("/api-session", data));
-    });
-    check.then(response => {
       this.setState({
         isLoggedIn: response.data.is_logged,
         isOwner: response.data.is_owner,

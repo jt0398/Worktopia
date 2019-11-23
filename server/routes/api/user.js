@@ -17,15 +17,4 @@ router
   .put(userController.update)
   .delete(isAuthenticated, userController.remove);
 
-router.route("/checksession", function(req, res) {
-  if (req.User) {
-    let data = {
-      is_logged: true,
-      is_owner: req.User.UserRoleId === 2
-    };
-
-    res.json(data);
-  }
-});
-
 module.exports = router;

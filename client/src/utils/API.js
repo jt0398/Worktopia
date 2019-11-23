@@ -57,6 +57,6 @@ export default {
     return axios.post("/api/user", user);
   },
   isUserLoggedIn: function() {
-    return axios.get("/api/user/checksession");
+    return axios.get("/api/login/checksession");
   }
 };

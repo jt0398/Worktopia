@@ -14,6 +14,8 @@ import UserBooking from "./pages/userBooking";
 import NoMatch from "./pages/NoMatch";
 import Payments from "./pages/Payments";
 import Signup from "./pages/SignUp";
+import PrivateRoute from "./components/PrivateRoute";
+
 import "./pages/css/MainPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -41,7 +43,8 @@ function App() {
             path="/booking/workspace/:id"
             component={BookWorkspace}
           />
-          <Route exact path="/owner" component={OwnerLocations} />
+          <PrivateRoute path="/owner" component={OwnerLocations} />
+          {/*<Route exact path="/owner" component={OwnerLocations} />*/}
           <Route exact path="/owner/:id" component={OwnerLocations} />
           <Route exact path="/location" component={AddLocation} />
           <Route exact path="/owner/editlocation/:id" component={AddLocation} />
