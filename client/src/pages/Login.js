@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,8 +13,7 @@ import Card from "react-bootstrap/Card";
 class Login extends Component {
   state = {
     username: "",
-    password: "",
-    loggedInUser: ""
+    password: ""
   };
 
   validateFormCompletion = () => {
@@ -29,6 +28,7 @@ class Login extends Component {
   };
 
   handleFormSubmit = event => {
+    console.log("Cliecked Submit")
     event.preventDefault();
     if (this.state.username && this.state.password) {
       API.checkLogin(this.state)
@@ -36,13 +36,9 @@ class Login extends Component {
           localStorage.setItem("UserId", res.data.id);
           localStorage.setItem("UserRole", res.data.UserRoleId);
           if (res.data.UserRoleId === 1) {
-            this.setState({
-              loggedInUser: "owner"
-            });
+            this.props.history.push("/owner");
           } else {
-            this.setState({
-              loggedInUser: "user"
-            });
+            this.props.history.push("/");
           }
         })
         .catch(err => console.log(err));
@@ -50,12 +46,6 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.loggedInUser === "owner") {
-      return <Redirect to="/owner" />;
-    } else if (this.state.loggedInUser === "user") {
-      return <Redirect to="/" />;
-    }
-
     return (
       <Container fluid style={{ height: "100vh" }}>
         <br></br>
@@ -80,7 +70,7 @@ class Login extends Component {
           <Card.Body>
             <Row>
               <Col md={12} sm={6}>
-                <form>
+                <Form>
                   <Form.Control
                     value={this.state.username}
                     onChange={this.handleInputChange}
@@ -96,7 +86,7 @@ class Login extends Component {
                     placeholder="Enter your password"
                   />
                   <br></br>
-                </form>
+                </Form>
               </Col>
             </Row>
 
@@ -126,4 +116,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
