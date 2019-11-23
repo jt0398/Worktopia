@@ -311,6 +311,7 @@ class SearchResults extends Component {
                   return (
                     <WorkspaceCard
                       key={workspace.id}
+                      cardStyle="my-3"
                       rowStyle="row no-gutters"
                       imgStyle="col-md-4"
                       bodyStyle="col-md-6"

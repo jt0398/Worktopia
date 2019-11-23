@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 
 function WorkspaceCard({
+  cardStyle,
   rowStyle,
   imgStyle,
   bodyStyle,
@@ -19,7 +20,7 @@ function WorkspaceCard({
   occuppants
 }) {
   return (
-    <Card className="my-3">
+    <Card className={cardStyle}>
       <div className={rowStyle}>
         <div className={imgStyle}>
           <Card.Img className={imgClass} variant={variant} src={src} />

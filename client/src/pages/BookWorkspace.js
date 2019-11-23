@@ -199,6 +199,7 @@ class BookWorkspace extends Component {
                   return (
                     <WorkspaceCard
                       key={index}
+                      cardStyle="my-3"
                       rowStyle=""
                       imgStyle=""
                       bodyStyle=""
