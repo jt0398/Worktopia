@@ -56,13 +56,6 @@ class PriceCard extends Component {
         };
 
         bookingAPI.bookWorkspace(booking).then(respsonse => {
-          console.log(
-            "Create booking response = " +
-              response.status +
-              " " +
-              response.statusText
-          );
-
           //Remove search params
           localStorage.removeItem("location");
           localStorage.removeItem("checkinDate");
@@ -74,7 +67,6 @@ class PriceCard extends Component {
         });
       })
       .catch(err => {
-        console.log("Error");
         console.error(err);
       });
   };

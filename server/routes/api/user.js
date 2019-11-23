@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const userController = require("../../controllers/userController");
 
+// Requiring our custom middleware for checking if a user is logged in
+const isAuthenticated = require("../../config/middleware/isAuthenticated");
+
 // Matches with "/api/user"
 router
   .route("/")
@@ -12,6 +15,6 @@ router
   .route("/:id")
   .get(userController.findById)
   .put(userController.update)
-  .delete(userController.remove);
+  .delete(isAuthenticated, userController.remove);
 
 module.exports = router;

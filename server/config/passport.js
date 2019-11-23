@@ -28,6 +28,7 @@ passport.use(
           });
         }
         // If none of the above, return the user
+        console.log("-------Found User " + dbUser);
         return done(null, dbUser);
       });
     }

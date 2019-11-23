@@ -24,21 +24,22 @@ class OwnerLocations extends Component {
     API.getLocationByOwner(ownerId)
       .then(res => {
         this.setState({ ownerAddress: res.data });
+
+        let id = this.props.match.params.id;
+
+        if (!id) {
+          id = this.state.ownerAddress[0].id;
+        }
+
+        this.loadWorkspaces(id);
       })
       .catch(err => console.log(err));
-    this.loadWorkspaces(this.props.match.params.id);
   };
 
   loadWorkspaces = id => {
     API.getWorkspaceByLocation(id)
       .then(res => {
-        if (id) {
-          this.setState({ workspaceInfo: res.data });
-        } else {
-          window.location.replace(
-            window.location.origin + `/owner/${this.state.ownerAddress[0].id}`
-          );
-        }
+        this.setState({ workspaceInfo: res.data });
       })
       .catch(err => console.log(err));
   };
@@ -73,7 +74,7 @@ class OwnerLocations extends Component {
                       {this.state.workspaceInfo.map(element => (
                         <Col md={4} className="p-3" key={element.id}>
                           <Link to={`/workspacedetail/${element.id}`}>
-                            <div className="cardDeck">
+                            <div class="cardDeck h-100">
                               <WorkspaceCard
                                 key={element.id}
                                 name={element.name}
@@ -83,13 +84,13 @@ class OwnerLocations extends Component {
                                 src={element.WorkspacePics[0].image_path}
                                 imgClass="card-img-top"
                                 variant="top"
+                                cardStyle="my-3 h-100"
                               />
                             </div>
                           </Link>
                         </Col>
                       ))}
                     </CardDeck>
-
                   </Row>
                 </Col>
               </Row>

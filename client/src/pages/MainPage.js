@@ -101,7 +101,7 @@ class MainPage extends Component {
     const peopleField = document.getElementsByName("people")[0];
     const roomField = document.getElementsByName("room")[0];
 
-    if (locationField.value === "") {
+    if (locationField.value.trim() === "") {
       locationField.setCustomValidity("Invalid field.");
     } else {
       locationField.setCustomValidity("");

@@ -144,7 +144,7 @@ class BookWorkspace extends Component {
     const peopleField = document.getElementsByName("people")[0];
     const roomField = document.getElementsByName("room")[0];
 
-    if (locationField.value === "") {
+    if (locationField.value.trim() === "") {
       locationField.setCustomValidity("Invalid field.");
     } else {
       locationField.setCustomValidity("");
@@ -199,6 +199,7 @@ class BookWorkspace extends Component {
                   return (
                     <WorkspaceCard
                       key={index}
+                      cardStyle="my-3"
                       rowStyle=""
                       imgStyle=""
                       bodyStyle=""
@@ -208,6 +209,7 @@ class BookWorkspace extends Component {
                         workspace.WorkspacePics[0].image_path
                       }
                       fulladdress={workspace.WorkspaceLocation.full_address}
+                      occuppants={workspace.no_occupants}
                     />
                   );
                 })}
