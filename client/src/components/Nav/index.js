@@ -1,51 +1,70 @@
 import React, { Component } from "react";
+import { Redirect, withRouter } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-scroll";
+import Button from "react-bootstrap/Button";
+import API from "../../utils/API";
 
 const noLOGIN = [
   ["HOME", , "test"],
-  ["ABOUT", , "test1"],
-  ["SERVICES", , "test2"],
-  ["TESTIMONIAL", , "test3"],
+  // ["ABOUT", , "test1"],
+  // ["SERVICES", , "test2"],
+  // ["TESTIMONIAL", , "test3"],
   ["LOGIN", "/login"]
 ];
 
 const userLOGIN = [
   ["HOME", "/"],
-  ["MY BOOKINGS", "/booking/user"],
-  ["SIGN OUT", "/logout"]
+  ["MY BOOKINGS", "/booking/user"]
 ];
 
 const ownerLOGIN = [
   ["HOME", "/"],
   ["ADD WORKSPACE", "/"],
   ["ADD LOCATION", "/location"],
-  ["MY BOOKINGS", "/booking/owner"],
-  ["SIGN OUT", "/logout"]
+  ["MY BOOKINGS", "/booking/owner"]
 ];
 
 export class Header extends Component {
   state = {
-    navItems: []
+    navItems: [],
+    userLoggedIn: false
   };
 
+  handleLogout = event => {
+    event.preventDefault();
+    API.logout()
+      .then(response => {
+        localStorage.removeItem("UserId");
+        localStorage.removeItem("UserRole");
+        this.setState({
+          navItems: noLOGIN,
+          userLoggedIn: false
+        });
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
   componentDidMount() {
+    console.log("Component Did Mount - NAV BAR");
     //1 Owner, 2 Customer
 
     //Owner
     if (parseInt(localStorage.getItem("UserRole")) === 1) {
       this.setState({
-        navItems: ownerLOGIN
+        navItems: ownerLOGIN,
+        userLoggedIn: true
       });
-    }
-    //Customer
-    else if (parseInt(localStorage.getItem("UserRole")) === 2) {
+    } else if (parseInt(localStorage.getItem("UserRole")) === 2) {
+      //Customer
       this.setState({
-        navItems: userLOGIN
+        navItems: userLOGIN,
+        userLoggedIn: true
       });
-    }
-    //Anonymous
-    else if (!parseInt(localStorage.getItem("UserRole"))) {
+    } else if (!parseInt(localStorage.getItem("UserRole"))) {
+      //Anonymous
       this.setState({
         navItems: noLOGIN
       });
@@ -56,6 +75,7 @@ export class Header extends Component {
     const linktopage = link => {
       window.location.pathname = link;
     };
+    const isLoggedIn = this.state.userLoggedIn;
     return (
       <>
         <Navbar bg="dark" expand="lg" collapseOnSelect sticky="top">
@@ -95,6 +115,18 @@ export class Header extends Component {
                   </Nav.Item>
                 );
               })}
+              {isLoggedIn ? (
+                <Button
+                  type="submit"
+                  className="btn btn-info"
+                  type="submit"
+                  onClick={this.handleLogout}
+                >
+                  LOGOUT
+                </Button>
+              ) : (
+                ""
+              )}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -103,4 +135,4 @@ export class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

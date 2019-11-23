@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,8 +11,7 @@ import { GoogleLogin } from "react-google-login";
 class Login extends Component {
   state = {
     username: "",
-    password: "",
-    loggedInUser: ""
+    password: ""
   };
 
   validateFormCompletion = () => {
@@ -34,29 +33,16 @@ class Login extends Component {
           localStorage.setItem("UserId", res.data.id);
           localStorage.setItem("UserRole", res.data.UserRoleId);
           if (res.data.UserRoleId === 1) {
-            this.setState({
-              loggedInUser: "owner"
-            });
+            this.props.history.push("/owner");
           } else {
-            this.setState({
-              loggedInUser: "user"
-            });
+            this.props.history.push("/");
           }
         })
         .catch(err => console.log(err));
     }
   };
 
-  responseGoogle = response => {
-    console.log(response);
-  };
   render() {
-    if (this.state.loggedInUser === "owner") {
-      return <Redirect to="/owner" />;
-    } else if (this.state.loggedInUser === "user") {
-      return <Redirect to="/" />;
-    }
-
     return (
       <Container fluid>
         <br></br>
@@ -106,4 +92,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
