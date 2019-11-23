@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 
 function WorkspaceCard({
+  cardStyle,
   rowStyle,
   imgStyle,
   bodyStyle,
@@ -15,10 +16,11 @@ function WorkspaceCard({
   rental_price,
   fulladdress,
   features,
-  workspaceID
+  workspaceID,
+  occuppants
 }) {
   return (
-    <Card className="my-3">
+    <Card className={cardStyle}>
       <div className={rowStyle}>
         <div className={imgStyle}>
           <Card.Img className={imgClass} variant={variant} src={src} />
@@ -28,24 +30,34 @@ function WorkspaceCard({
             <Card.Title>{name}</Card.Title>
 
             <Card.Text>
-              {fulladdress}
-              <br />
+              {fulladdress && (
+                <>
+                  {fulladdress} <br /> <br />
+                </>
+              )}
               {description && (
                 <>
                   <strong>Description: </strong>
-                  {description} <br />
+                  {description} <br /> <br />
                 </>
               )}
-              <br />
               {dimension && (
                 <>
                   <strong>Dimensions: </strong>
                   {dimension} <br />
+                  <br />
+                </>
+              )}
+              {occuppants && (
+                <>
+                  <strong>No. of Occupants: </strong>
+                  {occuppants} <br />
+                  <br />
                 </>
               )}
               {features && (
                 <>
-                  Features:{" "}
+                  <strong>Features: </strong>
                   {features.map((feature, index) => {
                     return index !== features.length - 1
                       ? feature.name + ", "

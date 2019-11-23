@@ -12,8 +12,9 @@ import BookWorkspace from "./pages/BookWorkspace";
 import OwnerBooking from "./pages/ownerBooking";
 import UserBooking from "./pages/userBooking";
 import NoMatch from "./pages/NoMatch";
-import Payments from "./pages/Payments";
 import Signup from "./pages/SignUp";
+import PrivateRoute from "./components/PrivateRoute";
+
 import "./pages/css/MainPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -29,25 +30,51 @@ function App() {
           {/* To render a component depending on the URL exact path hit in the browser*/}
           <Route exact path="/" component={MainPage} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/workspacedetail" component={WorkSpaceDetail} />
-          <Route
+
+          {/*Add workspace*/}
+          <PrivateRoute
+            exact
+            path="/workspacedetail"
+            component={WorkSpaceDetail}
+          />
+
+          {/*Edit workspace*/}
+          <PrivateRoute
             exact
             path="/workspacedetail/:id"
             component={WorkSpaceDetail}
           />
+
           <Route exact path="/searchresults" component={SearchResults} />
-          <Route
+
+          {/*Book workspace*/}
+          <PrivateRoute
             exact
             path="/booking/workspace/:id"
             component={BookWorkspace}
           />
-          <Route exact path="/owner" component={OwnerLocations} />
-          <Route exact path="/owner/:id" component={OwnerLocations} />
-          <Route exact path="/location" component={AddLocation} />
-          <Route exact path="/owner/editlocation/:id" component={AddLocation} />
-          <Route exact path="/booking/owner" component={OwnerBooking} />
-          <Route exact path="/booking/user" component={UserBooking} />
-          <Route exact path="/payments" component={Payments} />
+
+          {/*Owner Dashboard - Default */}
+          <PrivateRoute exact path="/owner" component={OwnerLocations} />
+
+          <PrivateRoute exact path="/owner/:id" component={OwnerLocations} />
+
+          {/*Add location*/}
+          <PrivateRoute exact path="/location" component={AddLocation} />
+
+          {/*Edit location*/}
+          <PrivateRoute
+            exact
+            path="/owner/editlocation/:id"
+            component={AddLocation}
+          />
+
+          {/*My Booking - User*/}
+          <PrivateRoute exact path="/booking/owner" component={OwnerBooking} />
+
+          {/*My Booking - Owner*/}
+          <PrivateRoute exact path="/booking/user" component={UserBooking} />
+
           <Route exact path="/signup" component={Signup} />
 
           <Route component={NoMatch} />

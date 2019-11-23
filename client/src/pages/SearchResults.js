@@ -200,7 +200,7 @@ class SearchResults extends Component {
     const peopleField = document.getElementsByName("people")[0];
     const roomField = document.getElementsByName("room")[0];
 
-    if (locationField.value === "") {
+    if (locationField.value.trim() === "") {
       locationField.setCustomValidity("Invalid field.");
     } else {
       locationField.setCustomValidity("");
@@ -311,6 +311,7 @@ class SearchResults extends Component {
                   return (
                     <WorkspaceCard
                       key={workspace.id}
+                      cardStyle="my-3"
                       rowStyle="row no-gutters"
                       imgStyle="col-md-4"
                       bodyStyle="col-md-6"
@@ -323,6 +324,7 @@ class SearchResults extends Component {
                       fulladdress={workspace.WorkspaceLocation.full_address}
                       features={workspace.Features}
                       workspaceID={workspace.id}
+                      occuppants={workspace.no_occupants}
                     />
                   );
                 })}

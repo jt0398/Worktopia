@@ -20,7 +20,6 @@ class OfferCard extends Component {
 
   componentDidMount() {
     API.getWorkspaces().then(response => {
-      console.log(response.data);
       this.setState({
         workspaces: response.data
       });
