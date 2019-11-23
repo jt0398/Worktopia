@@ -10,11 +10,12 @@ module.exports = {
       if (err) {
         throw err;
       }
+      let body= fs.createReadStream(uploadFile.tempFilePath);
 
       const s3PutParams = {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: uploadFile.name,
-        Body: uploadedData,
+        Body: body,
         ACL: "public-read"
       };
 

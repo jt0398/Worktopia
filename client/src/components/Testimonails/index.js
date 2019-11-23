@@ -1,3 +1,4 @@
+// Import required Components
 import React from "react";
 import { Slide } from "react-reveal";
 import StarRatingComponent from "react-star-rating-component";

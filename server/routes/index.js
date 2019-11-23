@@ -5,14 +5,6 @@ const apiRoutes = require("./api");
 // API Routes
 router.use("/api", apiRoutes);
 
-// Route for logging user out
-router.get("/logout", function(req, res) {
-  localStorage.removeItem("UserId");
-  localStorage.removeItem("UserRole");
-  req.logout();
-  res.redirect("/");
-});
-
 // If no API routes are hit, send the React app
 router.use(function(req, res) {
   res.sendFile(path.join(__dirname, "../../client/build/index.html"));
