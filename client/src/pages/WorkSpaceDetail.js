@@ -286,7 +286,7 @@ class WorkSpaceDetail extends Component {
     return (
       <Container fluid>
         <div className="bg">
-          <div className="header">WorkSpace</div>
+          <div className="WSheader">WorkSpace</div>
           <div className="paddingWD">
             <Row>
               <Col size="md-6">

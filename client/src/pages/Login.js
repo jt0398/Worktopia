@@ -49,9 +49,6 @@ class Login extends Component {
     }
   };
 
-  responseGoogle = response => {
-    console.log(response);
-  };
   render() {
     if (this.state.loggedInUser === "owner") {
       return <Redirect to="/owner" />;
