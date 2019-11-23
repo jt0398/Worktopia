@@ -40,51 +40,23 @@ class PrivateRoute extends React.Component {
       return null;
     }
 
-    if (this.props.path.includes("/owner")) {
-      // handles access to owner
-      if (!this.state.isLoggedIn) {
-        return (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: currentLocation }
-            }}
-          />
-        );
-      } else {
-        return (
-          <Route
-            {...rest}
-            render={props => {
-              return this.state.isOwner === true ? (
-                <Component {...props} />
-              ) : (
-                <Redirect to="/" />
-              );
-            }}
-          />
-        );
-      }
-    } else {
-      // access to non admin pages
-      return (
-        <Route
-          {...rest}
-          render={props => {
-            return this.state.isLoggedIn === true ? (
-              <Component {...props} />
-            ) : (
-              <Redirect
-                to={{
-                  pathname: "/login",
-                  state: { from: currentLocation }
-                }}
-              />
-            );
-          }}
-        />
-      );
-    }
+    return (
+      <Route
+        {...rest}
+        render={props => {
+          return this.state.isLoggedIn === true ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: currentLocation }
+              }}
+            />
+          );
+        }}
+      />
+    );
   }
 }
 
