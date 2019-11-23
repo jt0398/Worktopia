@@ -6,7 +6,7 @@ function WorkspaceCard({
   rowStyle,
   imgStyle,
   bodyStyle,
-  src,
+  src = "https://placehold.it/300x300",
   variant,
   imgClass,
   name,

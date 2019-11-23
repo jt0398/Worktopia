@@ -11,6 +11,7 @@ import Modal from "react-bootstrap/Modal";
 import Footer from "../components/Footer";
 import "./css/AddLocation.css";
 
+//array of provinces in Canada
 const provinceList = [
   ["Alberta", "AB"],
   ["British Columbia", "BC"],
@@ -40,11 +41,11 @@ class AddLocation extends Component {
       linkShow: false,
       display: null
     };
-
+    //If URL includes locationId, pre-populates the fields on mounting
     componentDidMount = () => {
       this.updateLocation(this.props.match.params.id);
     };
-
+    //function to get location details for edit location page
     updateLocation = id => {
       if (id) {
         API.getLocationById(id).then(res => {
@@ -72,20 +73,20 @@ class AddLocation extends Component {
         this.handleDisplay();
       }
     };
-
+    // function to handle input change for textboxes
     handleInputChange = event => {
       const { name, value } = event.target;
       this.setState({
         [name]: value
       });
     };
-
+    //function to handle dropdown menu selection
     handleProvinceSelection = (eventKey, event) => {
       this.setState({
         province: eventKey
       });
     };
-
+    // function invoked on form submit, included validations
     handleSubmit = event => {
       event.preventDefault();
       event.stopPropagation();
@@ -125,7 +126,7 @@ class AddLocation extends Component {
         form.classList.add("was-validated");
         this.setState({ validated: true });
       }
-
+      //if URL contains location ID i.e edit location, update the DB, else insert new address into DB
       if (this.props.match.params.id) {
         API.updateLocation(this.props.match.params.id, {
           addr1: this.state.addr1,
@@ -164,6 +165,7 @@ class AddLocation extends Component {
       this.handleShow();
 
     };
+    //reset state on cancel, clears all fields
 
     handleCancel = event => {
       event.preventDefault();
@@ -176,15 +178,15 @@ class AddLocation extends Component {
         country: "Canada"
       });
     };
-
+    //sets modal
     handleShow = () => {
       this.setState({ modalShow: true });
     };
-
+    //handles modal close
     handleClose = () => {
       this.setState({ modalShow: false });
     };
-
+    //handles link
     handleDisplay = () => {
       this.setState({display: "none"});
     }
