@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -17,7 +19,9 @@ class UserRegistration extends Component {
     province: "ON",
     postalcode: "L",
     phoneno: "1",
-    userrole: 2
+    userrole: 2,
+    signedUp: null,
+    modalStatus: false
   };
   // Handles updating component state when the user types into the input field
   handleInputChange = event => {
@@ -55,15 +59,30 @@ class UserRegistration extends Component {
 
     API.createUser(user)
       .then(response => {
-        console.log(response);
+        console.log("Succesfully SignedUp");
+        this.setState({
+          signedUp: true
+        });
       })
       .catch(err => {
+        console.log("Error");
+        this.setState({
+          signedUp: false,
+          modalStatus: true
+        });
+
         console.error(err);
       });
 
-    this.setState = {
+    this.setState({
       validated: true
-    };
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      modalStatus: false
+    });
   };
 
   render() {
@@ -83,6 +102,9 @@ class UserRegistration extends Component {
       ["Yukon Territory", "YT"]
     ];
 
+    if (this.state.signedUp) {
+      return <Redirect to="/login" />;
+    }
     return (
       <Container>
         <Row>
@@ -268,6 +290,22 @@ class UserRegistration extends Component {
             </Form>
           </Col>
         </Row>
+        <Modal
+          show={this.state.modalStatus}
+          onHide={this.handleClose}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Something went wrong!!!
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <Button onClick={this.handleClose}>OK</Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     );
   }
