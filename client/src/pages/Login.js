@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -63,7 +63,7 @@ class Login extends Component {
             <Card.ImgOverlay>
               <Card.Text>
                 <Col className="text-center">
-                  <h3 style={{ "lineHeight": "100px", color: "#7fff00" }}>
+                  <h3 style={{ "line-height": "100px", color: "#7fff00" }}>
                     LOGIN
                   </h3>
                 </Col>
@@ -88,19 +88,18 @@ class Login extends Component {
                       placeholder="Enter your password"
                     />
                     <br></br>
+                    <div className="text-center">
+                      <Button
+                        className="btn btn-info "
+                        disabled={this.validateFormCompletion()}
+                        onClick={this.handleFormSubmit}
+                      >
+                        Log In
+                      </Button>
+                    </div>
                   </Form>
                 </Col>
               </Row>
-
-              <div className="text-center">
-                <Button
-                  className="btn btn-info "
-                  disabled={this.validateFormCompletion()}
-                  onClick={this.handleFormSubmit}
-                >
-                  Log In
-                </Button>
-              </div>
 
               <Row>
                 <Col className="text-center" md={12} sm={6}>
