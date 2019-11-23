@@ -25,6 +25,10 @@ html {
     box-shadow: 2px 2px 2px 2px grey;
 }
 
+.paddingWD {
+    padding: 20px;
+}
+
 .titleText{
     font-weight: bold;
     font-size: 20px;
