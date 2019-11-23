@@ -89,7 +89,6 @@ class OwnerLocations extends Component {
                         </Col>
                       ))}
                     </CardDeck>
-
                   </Row>
                 </Col>
               </Row>

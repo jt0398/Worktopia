@@ -44,22 +44,19 @@ function WorkspaceCard({
                 <>
                   <strong>Dimensions: </strong>
                   {dimension} <br />
+                  <br />
                 </>
               )}
-              {!imgStyle && occuppants && (
+              {occuppants && (
                 <>
                   <strong>No. of Occupants: </strong>
                   {occuppants} <br />
-                </>
-              )}
-              {imgStyle && occuppants && (
-                <>
-                  {occuppants} Occupants <br />
+                  <br />
                 </>
               )}
               {features && (
                 <>
-                  Features:{" "}
+                  <strong>Features: </strong>
                   {features.map((feature, index) => {
                     return index !== features.length - 1
                       ? feature.name + ", "
