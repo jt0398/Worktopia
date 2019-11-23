@@ -1,0 +1,12 @@
+.card-img-top {
+  width: 100%;
+  height: 10vw;
+  object-fit: cover;
+}
+.row {
+  display: flex;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
