@@ -47,11 +47,11 @@ class Login extends Component {
   };
 
   render() {
-    /* if (this.state.loggedInUser === "owner") {
+    if (this.state.loggedInUser === "owner") {
       return <Redirect to="/owner" />;
     } else if (this.state.loggedInUser === "user") {
       return <Redirect to="/" />;
-    } */
+    }
 
     return (
       <Container fluid>
