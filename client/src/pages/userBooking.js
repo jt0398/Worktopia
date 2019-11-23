@@ -1,3 +1,4 @@
+// Importing all required Components.
 import React, { Component } from "react";
 import Bookingapi from "../utils/BookingAPI";
 import Container from "react-bootstrap/Container";
@@ -8,41 +9,27 @@ import Footer from "../components/Footer";
 import "./css/UserBkgPage.css";
 
 class userBooking extends Component {
+  // Declaring state of the class.
   state = {
-    workspaces: [],
-    hasError: false,
-    error: ""
+    workspaces: []
   };
 
+  // Funtion ComponentDidMount.
   componentDidMount() {
-    localStorage.setItem("UserId", 1);
     this.loadWorkspaces();
   }
 
+  // Funtion to get all the workspaces booked by an Indiviual.
   loadWorkspaces = () => {
     Bookingapi.getUserData(localStorage.getItem("UserId")).then(res => {
-      {
-        console.log(res.data.length);
-      }
-      if (res.data.length != 0) {
-        this.setState({
-          workspaces: res.data
-        });
-      } else {
-        // window.location.pathname = "/booking/user";
-        this.componentDidCatch("error", "No user data Found");
-      }
+      // Set the state of worspace to the response recieved.
+      this.setState({
+        workspaces: res.data
+      });
     });
   };
 
-  //Catch error if no data found
-  componentDidCatch(error, info) {
-    this.setState({
-      hasError: true,
-      error: info
-    });
-  }
-
+  // Handle Form submit event , prevent default behaviour
   handleFormSearch = event => {
     event.preventDefault();
   };
@@ -50,20 +37,23 @@ class userBooking extends Component {
   handleFeatureSelect = event => {};
 
   render() {
-    if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
-      //  window.location.pathname =
-      //   "/booking/user";
-    } else {
-      return (
-        <Container fluid>
-          <div className="pbg">
-            <h5 className="yourBooking text-center">Your Booking</h5>
-          </div>
-          <Row text-center>
-            <Col md="12" sm="12">
-              {this.state.workspaces.map(workspace => {
+    return (
+      <Container fluid>
+        {/* Header */}
+        <div className="pbg">
+          <h5 className="yourBooking text-center">Your Booking</h5>
+        </div>
+
+        {/* Div Row to Display Output */}
+
+        <Row className="text-center">
+          <Col md="12" sm="12">
+            {/* Check whether there is any workspace for the user and if there use map function to get each workspaces */}
+
+            {this.state.workspaces.length > 0 &&
+              this.state.workspaces.map(workspace => {
                 return (
+                  // Display each workspaces in the UserBooking Component by passing required props
                   <UserBooking
                     className="text-center"
                     rowStyle="row no-gutters"
@@ -75,20 +65,31 @@ class userBooking extends Component {
                     {...workspace.Workspace}
                     {...workspace.Workspace.WorkspaceLocation}
                     {...workspace.Workspace.WorkspacePics[0]}
-                    // errorStatus={this.state.hasError}
-                    // error={this.state.error}
                   />
                 );
               })}
-            </Col>
-          </Row>
-          <div className="pbg"></div>
-          <br></br>
-          <Footer />
-        </Container>
-      );
-    }
-    // }
+            {/* If there are no results found for the workspaces then display proper Output */}
+            {this.state.workspaces.length === 0 && (
+              <div style={{ height: "50vh" }}>
+                <Row className="text-center" style={{ "margin-top": "200px" }}>
+                  <Col>
+                    <h3 style={{ color: "red" }}>You have no bookings.</h3>
+                  </Col>
+                </Row>
+              </div>
+            )}
+          </Col>
+        </Row>
+
+        {/* Parallex div  */}
+        <div className="pbg"></div>
+        <br></br>
+
+        {/* Footer */}
+        <Footer />
+      </Container>
+    );
   }
 }
+
 export default userBooking;
