@@ -6,7 +6,6 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { GoogleLogin } from "react-google-login";
 
 class Login extends Component {
   state = {
@@ -47,9 +46,6 @@ class Login extends Component {
     }
   };
 
-  responseGoogle = response => {
-    console.log(response);
-  };
   render() {
     if (this.state.loggedInUser === "owner") {
       return <Redirect to="/owner" />;
@@ -91,16 +87,6 @@ class Login extends Component {
             </form>
           </Col>
         </Row>
-        <br></br>
-        <br></br>
-        <GoogleLogin
-          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-          buttonText="Login"
-          onSuccess={this.responseGoogle}
-          onFailure={this.responseGoogle}
-          cookiePolicy={"single_host_origin"}
-        />
-        ,
       </Container>
     );
   }
