@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect, withRouter } from "react-router-dom";
+import {withRouter } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-scroll";
 import Button from "react-bootstrap/Button";
@@ -48,7 +48,6 @@ export class Header extends Component {
       });
   };
   componentDidMount() {
-    console.log("Component Did Mount - NAV BAR");
     //1 Owner, 2 Customer
 
     //Owner
@@ -119,7 +118,6 @@ export class Header extends Component {
                 <Button
                   type="submit"
                   className="btn btn-info"
-                  type="submit"
                   onClick={this.handleLogout}
                 >
                   LOGOUT

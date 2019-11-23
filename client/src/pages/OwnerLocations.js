@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import CardDeck from "react-bootstrap/CardDeck";
 import API from "../utils/API";
-import Nav from "../components/API";
+import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
 import "./css/ownerDashboard.css";
@@ -47,6 +47,7 @@ class OwnerLocations extends Component {
   render() {
     return (
       <>
+      <Nav></Nav>
         <Container fluid>
           <div className="ownerBg">
             <div className="DBheader">Locations Dashboard</div>
