@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import OwnerLocations from "./pages/OwnerLocations";
 import AddLocation from "./pages/addLocation";
 import Login from "./pages/Login";
-import Nav from "./components/Nav";
 import MainPage from "./pages/MainPage";
 import WorkSpaceDetail from "./pages/WorkSpaceDetail";
 import SearchResults from "./pages/SearchResults";
@@ -23,8 +22,6 @@ function App() {
     // React router Component
     <Router>
       <div>
-        {/* Imported Nav Component */}
-        <Nav />
         {/* Used to select which routes to take */}
         <Switch>
           {/* To render a component depending on the URL exact path hit in the browser*/}

@@ -51,7 +51,7 @@ class PriceCard extends Component {
             parseInt(localStorage.getItem("room")) *
             1.1
           ).toFixed(2),
-          UserId: 2,
+          UserId: localStorage.getItem("UserId"),
           WorkspaceId: this.props.id
         };
 

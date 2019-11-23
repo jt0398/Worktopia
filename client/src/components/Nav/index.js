@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import { Redirect, withRouter } from "react-router-dom";
+import {withRouter, Link} from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
-import { Link } from "react-scroll";
 import Button from "react-bootstrap/Button";
 import API from "../../utils/API";
 
 const noLOGIN = [
-  ["HOME", , "test"],
-  // ["ABOUT", , "test1"],
-  // ["SERVICES", , "test2"],
-  // ["TESTIMONIAL", , "test3"],
+  ["HOME", "/"],
   ["LOGIN", "/login"]
 ];
 
@@ -19,8 +15,8 @@ const userLOGIN = [
 ];
 
 const ownerLOGIN = [
-  ["HOME", "/"],
-  ["ADD WORKSPACE", "/"],
+  ["HOME", "/owner"],
+  ["ADD WORKSPACE", "/workspacedetail"],
   ["ADD LOCATION", "/location"],
   ["MY BOOKINGS", "/booking/owner"]
 ];
@@ -48,7 +44,6 @@ export class Header extends Component {
       });
   };
   componentDidMount() {
-    console.log("Component Did Mount - NAV BAR");
     //1 Owner, 2 Customer
 
     //Owner
@@ -102,15 +97,13 @@ export class Header extends Component {
                     <Link
                       activeClass="active"
                       className="test1"
-                      to={items[2]}
+                      to={items[1]}
                       spy={true}
                       smooth={true}
                       duration={1200}
                       offset={-60}
                     >
-                      <Nav.Link className="text-light" eventKey={items[1]}>
-                        {items[0]}
-                      </Nav.Link>
+                      {items[0]}
                     </Link>
                   </Nav.Item>
                 );
@@ -119,7 +112,6 @@ export class Header extends Component {
                 <Button
                   type="submit"
                   className="btn btn-info"
-                  type="submit"
                   onClick={this.handleLogout}
                 >
                   LOGOUT
