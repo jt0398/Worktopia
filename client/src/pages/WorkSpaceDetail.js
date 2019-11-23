@@ -19,7 +19,7 @@ import { RemainingChar } from "../components/Form";
 import "./css/WorkSpaceDetail.css";
 var moment = require("moment");
 
-const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
+const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 const OWNER_ID = localStorage.getItem("UserId");
 
 class WorkSpaceDetail extends Component {
@@ -48,12 +48,14 @@ class WorkSpaceDetail extends Component {
     validated: false
   };
 
+  //Function that gets invoked when calendar component is clicked and date range is chosen
   handleDateSelection = ({ startDate, endDate }) => {
     this.setState({ startDate, endDate });
   };
 
   handleFocusChange = focusedInput => this.setState({ focusedInput });
 
+  //Common function to handle input changes on the form
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -61,11 +63,13 @@ class WorkSpaceDetail extends Component {
     });
   };
 
+  //Common function to handle dropdown selections - Occupancy and Locations
   handleDropDownSelection = (eventKey, event) => {
     const { name, id } = event.target;
     this.setState({
       [name]: parseInt(id)
     });
+    //Exception handling for Location dropdown. The common part sets the IDs, we also need to visually display the full address
     if (name === "workSpaceLocation") {
       this.setState({
         workSpaceLocationName: eventKey
@@ -73,9 +77,11 @@ class WorkSpaceDetail extends Component {
     }
   };
 
+  //Form submit
   handleFormSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
+    //Validation checks
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -83,12 +89,13 @@ class WorkSpaceDetail extends Component {
     } else {
       this.setState({ validated: true });
       let workSpaceDetailObject = this.state;
+      //Removing states that are not necessary for creating/updating the object
       delete workSpaceDetailObject.selectedFile;
       delete workSpaceDetailObject.message;
       delete workSpaceDetailObject.defaultmessage;
       delete workSpaceDetailObject.uploading;
       delete workSpaceDetailObject.focusedInput;
-      // delete workSpaceDetailObject.LOCATION_LIST;
+      //Call API to create or update workspace. If WorkspaceId exists, its an update, else insert
       if (workSpaceDetailObject.workSpaceId) {
         API.updateWorkSpaceObject(workSpaceDetailObject)
           .then(res => {
@@ -105,6 +112,7 @@ class WorkSpaceDetail extends Component {
     }
   };
 
+  //Handling file selection in the file upload components
   handleFileChange = event => {
     this.setState({
       selectedFile: event.target.files[0],
@@ -114,6 +122,7 @@ class WorkSpaceDetail extends Component {
     });
   };
 
+  //Performing the actual upload
   handleUpload = event => {
     event.preventDefault();
     if (this.state.uploading) {
@@ -145,6 +154,7 @@ class WorkSpaceDetail extends Component {
       });
   };
 
+  //Handling selection of features
   handleFeatureSelection = event => {
     let featureIdToBeUpated = event.target.id;
     let tempArray = this.state.FEATURE_LIST;
@@ -159,12 +169,14 @@ class WorkSpaceDetail extends Component {
     });
   };
 
+  //Handling the activate workspace switch
   handleSwitchChange = event => {
     this.setState({
       [event.target.id]: !this.state[event.target.id]
     });
   };
 
+  //Get the ownerID from local storage and load the distinct locations for that owner to be shown in the dropdown
   loadLocationsByOwner = ownerId => {
     API.getDistinctLocationsForOwner(ownerId)
       .then(res => {
@@ -180,6 +192,7 @@ class WorkSpaceDetail extends Component {
       .catch(err => console.error(err));
   };
 
+  //When a existing workspace is loaded, the active features should be fetched from DB and marked as checked on the page
   loadFeaturesForWorkSpace = async currentFeatures => {
     var tempFeatureList = [];
     const res = await API.getFeatureList();
@@ -212,6 +225,7 @@ class WorkSpaceDetail extends Component {
     }
   };
 
+  //When a existing workspace is loaded, the active features should be fetched from DB and marked as checked on the page
   loadWorkSpaceDetails = () => {
     API.getWorkSpaceById(this.props.match.params.id)
       .then(res => {
@@ -238,6 +252,9 @@ class WorkSpaceDetail extends Component {
       .catch(err => console.error(err));
   };
 
+  //Handling the component mount. If the request URL has an ID passed, then it means that its an existing workspace.
+  //Will fetch corresponding data from DB and populate the screen.
+  //If no ID is passed in URL, then its to create a workspace. All distinct locations for the owner, and all possible features are loaded
   componentDidMount = () => {
     API.getBookingByWorkspace(this.props.match.params.id).then(res => {
       var tempBookingList = [];
@@ -262,6 +279,8 @@ class WorkSpaceDetail extends Component {
     }
   };
 
+  //When owner chooses his data availability in calendar, he should get a visual indication on already booked dates.
+  //This function checks Bookings table to get booked dates for that workspace and shows it on the calendar
   checkIfDayIsBlocked = momentDate => {
     let dateBeingChecked = momentDate.format("MM/DD/YYYY");
     if (this.state.BOOKED_DATES.indexOf(dateBeingChecked) === -1) {
@@ -271,12 +290,14 @@ class WorkSpaceDetail extends Component {
     }
   };
 
+  //Handles Modal that indicates succesfully updated
   handleShow = () => {
     this.setState({
       modalStatus: true
     });
   };
 
+  //Handles closing the Modal
   handleClose = () => {
     this.setState({
       modalStatus: false

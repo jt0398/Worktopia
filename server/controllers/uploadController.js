@@ -1,4 +1,3 @@
-const db = require("../models");
 const aws = require("aws-sdk");
 const s3 = new aws.S3();
 const fs = require("fs");
