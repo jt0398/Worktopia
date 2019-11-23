@@ -18,7 +18,7 @@ module.exports = {
   },
   create: function(req, res) {
     db.WorkspaceLocation.create(req.body)
-      .then(dbModel => res.status(200))
+      .then(dbModel => res.sendStatus(200))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {

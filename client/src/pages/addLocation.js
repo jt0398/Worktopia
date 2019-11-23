@@ -126,31 +126,30 @@ class AddLocation extends Component {
       if (form.checkValidity() === false) {
         form.classList.add("was-validated");
         this.setState({ validated: true });
-      }
-      //if URL contains location ID i.e edit location, update the DB, else insert new address into DB
-      if (this.props.match.params.id) {
-        API.updateLocation(this.props.match.params.id, {
-          addr1: this.state.addr1,
-          addr2: this.state.addr2,
-          city: this.state.city,
-          province: this.state.province,
-          country: this.state.country,
-          postal_code: this.state.postal_code,
-          UserId: parseInt(localStorage.getItem("UserId"))
-        })
-          .then(res => this.handleShow())
-          .catch(err => console.log(err));
       } else {
-        API.saveLocation({
-          addr1: this.state.addr1,
-          addr2: this.state.addr2,
-          city: this.state.city,
-          province: this.state.province,
-          postal_code: this.state.postal_code,
-          country: this.state.country,
-          UserId: parseInt(localStorage.getItem("UserId"))
-        })
-          .then(res => {
+      //if URL contains location ID i.e edit location, update the DB, else insert new address into DB
+        if (this.props.match.params.id) {
+          API.updateLocation(this.props.match.params.id, {
+            addr1: this.state.addr1,
+            addr2: this.state.addr2,
+            city: this.state.city,
+            province: this.state.province,
+            country: this.state.country,
+            postal_code: this.state.postal_code,
+            UserId: parseInt(localStorage.getItem("UserId"))
+          })
+            .then(res => this.handleShow())
+            .catch(err => console.log(err));
+        } else {
+          API.saveLocation({
+            addr1: this.state.addr1,
+            addr2: this.state.addr2,
+            city: this.state.city,
+            province: this.state.province,
+            postal_code: this.state.postal_code,
+            country: this.state.country,
+            UserId: parseInt(localStorage.getItem("UserId"))
+          }).then(res => {
             this.setState({
               addr1: "",
               addr2: "",
@@ -161,7 +160,8 @@ class AddLocation extends Component {
             });
             this.handleShow();
           })
-          .catch(err => console.log(err));
+            .catch(err => console.log(err));
+        }
       }
 
     };
