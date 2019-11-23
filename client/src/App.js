@@ -24,7 +24,7 @@ function App() {
     <Router>
       <div>
         {/* Imported Nav Component */}
-        <Nav />
+        {/* <Nav /> */}
         {/* Used to select which routes to take */}
         <Switch>
           {/* To render a component depending on the URL exact path hit in the browser*/}

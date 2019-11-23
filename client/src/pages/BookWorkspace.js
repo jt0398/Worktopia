@@ -11,6 +11,7 @@ import PriceCard from "../components/PriceCard";
 // import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Footer from "../components/Footer";
 import "./css/BkgWorkSpace.css";
+import Nav from "../components/API";
 
 class BookWorkspace extends Component {
   state = {

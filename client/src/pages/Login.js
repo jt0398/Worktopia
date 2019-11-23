@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import { GoogleLogin } from "react-google-login";
 import "./css/login.css";
 import Card from "react-bootstrap/Card";
+import Nav from "../components/API";
 
 class Login extends Component {
   state = {

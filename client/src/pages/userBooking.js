@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import UserBooking from "../components/BookingCard/userbooking";
 import Footer from "../components/Footer";
 import "./css/UserBkgPage.css";
+import Nav from "../components/API";
 
 class userBooking extends Component {
   // Declaring state of the class.

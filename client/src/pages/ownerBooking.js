@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Ownerbooking from "../components/BookingCard/ownerbooking";
+import Nav from "../components/API";
 
 class OwnerBooking extends Component {
   // Declaring state of the class.

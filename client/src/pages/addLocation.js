@@ -10,6 +10,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Modal from "react-bootstrap/Modal";
 import Footer from "../components/Footer";
 import "./css/AddLocation.css";
+import Nav from "../components/API";
 
 //array of provinces in Canada
 const provinceList = [

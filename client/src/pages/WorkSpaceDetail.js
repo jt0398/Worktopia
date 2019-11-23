@@ -17,6 +17,7 @@ import Footer from "../components/Footer";
 import { RemainingChar } from "../components/Form";
 import "./css/WorkSpaceDetail.css";
 var moment = require("moment");
+import Nav from "../components/API";
 
 const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5];
 const OWNER_ID = localStorage.getItem("UserId");

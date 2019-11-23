@@ -14,6 +14,8 @@ import HashMap from "hashmap";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Footer from "../components/Footer";
 import "./css/SearchResult.css";
+import Nav from "../components/API";
+
 class SearchResults extends Component {
   state = {
     addresses: new HashMap(), //Keeps address unique to avoid rendering in map multiple times

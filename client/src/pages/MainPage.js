@@ -11,6 +11,7 @@ import Testimonials from "../components/Testimonails";
 import moment from "moment";
 import { Slide } from "react-reveal";
 import { Element } from "react-scroll";
+import Nav from "../components/API";
 
 class MainPage extends Component {
   state = {
