@@ -34,29 +34,6 @@ export function Label(props) {
   );
 }
 
-export function DropBox({ children }) {
-  return (
-    <>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Select Value
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          {children}
-        </div>
-      </div>
-    </>
-  )
-}
-
-export function DropBoxItem(props) {
-  return (
-    <a class="dropdown-item" href="#">Ontario </a>
-  );
-
-
-};
-
 export function RemainingChar(props) {
   return (
     <div className="text-muted" style={{ fontStyle: "italic" }}>

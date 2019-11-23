@@ -35,9 +35,10 @@ class AddLocation extends Component {
       city: "",
       province: "",
       postal_code: "",
+      country: "Canada",
       userId: null,
       validated: false,
-      modalShow: false,
+      modalStatus: false,
       linkShow: false,
       display: null
     };
@@ -125,31 +126,30 @@ class AddLocation extends Component {
       if (form.checkValidity() === false) {
         form.classList.add("was-validated");
         this.setState({ validated: true });
-      }
-      //if URL contains location ID i.e edit location, update the DB, else insert new address into DB
-      if (this.props.match.params.id) {
-        API.updateLocation(this.props.match.params.id, {
-          addr1: this.state.addr1,
-          addr2: this.state.addr2,
-          city: this.state.city,
-          province: this.state.province,
-          country: this.state.country,
-          postal_code: this.state.postal_code,
-          UserId: parseInt(localStorage.getItem("UserId"))
-        })
-          .catch(err => console.log(err));
       } else {
-        API.saveLocation({
-
-          addr1: this.state.addr1,
-          addr2: this.state.addr2,
-          city: this.state.city,
-          province: this.state.province,
-          postal_code: this.state.postal_code,
-          country: this.state.country,
-          UserId: parseInt(localStorage.getItem("UserId"))
-        })
-          .then(res => {
+      //if URL contains location ID i.e edit location, update the DB, else insert new address into DB
+        if (this.props.match.params.id) {
+          API.updateLocation(this.props.match.params.id, {
+            addr1: this.state.addr1,
+            addr2: this.state.addr2,
+            city: this.state.city,
+            province: this.state.province,
+            country: this.state.country,
+            postal_code: this.state.postal_code,
+            UserId: parseInt(localStorage.getItem("UserId"))
+          })
+            .then(res => this.handleShow())
+            .catch(err => console.log(err));
+        } else {
+          API.saveLocation({
+            addr1: this.state.addr1,
+            addr2: this.state.addr2,
+            city: this.state.city,
+            province: this.state.province,
+            postal_code: this.state.postal_code,
+            country: this.state.country,
+            UserId: parseInt(localStorage.getItem("UserId"))
+          }).then(res => {
             this.setState({
               addr1: "",
               addr2: "",
@@ -158,11 +158,11 @@ class AddLocation extends Component {
               postal_code: "",
               country: "Canada"
             });
+            this.handleShow();
           })
-          .catch(err => console.log(err));
+            .catch(err => console.log(err));
+        }
       }
-
-      this.handleShow();
 
     };
     //reset state on cancel, clears all fields
@@ -180,15 +180,17 @@ class AddLocation extends Component {
     };
     //sets modal
     handleShow = () => {
-      this.setState({ modalShow: true });
+      this.setState({
+        modalStatus: true
+      });
     };
     //handles modal close
     handleClose = () => {
-      this.setState({ modalShow: false });
+      this.setState({ modalStatus: false });
     };
     //handles link
     handleDisplay = () => {
-      this.setState({display: "none"});
+      this.setState({ display: "none" });
     }
 
     render() {
@@ -199,147 +201,147 @@ class AddLocation extends Component {
             <br />
             <Row>
               <Col size="md-2">
-              &nbsp;&nbsp;&nbsp;
-                <Link style={{display: this.state.display}} to="/owner">← Back to Dashboard</Link>
+                            &nbsp;&nbsp;&nbsp;
+                <Link style={{ display: this.state.display }} to="/owner">← Back to Dashboard</Link>
               </Col>
             </Row>
             <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-              <div className="formAddress">
-                <Form.Group>
-                  <Col md={12}>
-                    <div className="formLabel">
-                      <Form.Label>Address</Form.Label>
-                    </div>
-                    <Form.Control
-                      required
-                      type="text"
-                      placeholder="Enter address"
-                      value={this.state.addr1}
-                      onChange={this.handleInputChange}
-                      name="addr1"
-                    />
-                    <Form.Control.Feedback type="invalid">Please enter an address</Form.Control.Feedback>
-                  </Col>
-                  <br></br>
-                  <Col md={12}>
-                    <div className="formLabel">
-                      <Form.Label>Address 2</Form.Label>
-                    </div>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter address"
-                      value={this.state.addr2}
-                      onChange={this.handleInputChange}
-                      name="addr2"
-                    />
-                  </Col>
-                  <br></br>
-                  <Col md={6}>
-                    <div className="formLabel">
-                      <Form.Label>City</Form.Label>
-                    </div>
-                    <Form.Control
-                      required
-                      type="text"
-                      placeholder="Enter city"
-                      value={this.state.city}
-                      onChange={this.handleInputChange}
-                      name="city"
-                    />
-                    <Form.Control.Feedback type="invalid">Please provide a valid city</Form.Control.Feedback>
-                  </Col>
-                  <br></br>
-                  <Col md={4}>
-                    <div className="formLabel">
-                      <Form.Label>Province</Form.Label>
-                    </div>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        variant="dark"
-                        className="dropdown-basic"
-                        id="dropdownBasic"
-                        name="province"
-                      >
-                        {this.state.province || "Choose Province"}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        {provinceList.map((province, index) => (
-                          <Dropdown.Item
-                            key={province[1]}
-                            eventKey={province[1]}
-                            onSelect={this.handleProvinceSelection}
-                            name="province"
-                          >
-                            {province[0]}
-                          </Dropdown.Item>
-                        ))}
-
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </Col>
-                  <br></br>
-                  <Col md={4}>
-                    <div className="formLabel">
-                      <Form.Label>Postal Code</Form.Label>
-                    </div>
-                    <Form.Control
-                      required
-                      type="text"
-                      placeholder="Enter postal code"
-                      value={this.state.postal_code}
-                      onChange={this.handleInputChange}
-                      name="postal_code"
-                    />
-                    <Form.Control.Feedback type="invalid">Please provide a valid postal code</Form.Control.Feedback>
-                  </Col>
-                  <br></br>
-                  <Col md={6}>
-                    <div className="formLabel">
-                      <Form.Label>Country</Form.Label>
-                    </div>
-                    <Form.Control
-                      type="text"
-                      placeholder={this.state.country}
-                      value={this.state.country}
-                      disabled="disabled"
-                      onChange={this.handleInputChange}
-                      name="country"
-                    />
-                  </Col>
-                  <br></br>
-                </Form.Group>
-                <Col md={6}>
-                  {/* <div id="locationBtn1"> */}
-                  <Button
-                    id="locationBtn"
-                    variant="primary"
-                    type="submit"
-                    className="btn btn-dark"
-
-                  >
-                                    Save
-                  </Button>
+              {/* <div className="formAddress"> */}
+              <Form.Group className="formAddress">
+                <Col md={12}>
+                  {/* <div className="formLabel"> */}
+                  <Form.Label className="formLabel">Address</Form.Label>
                   {/* </div> */}
-                                &nbsp;&nbsp;&nbsp;
-                  <Button
-                    id="locationBtn"
-                    variant="secondary"
-                    type="button"
-                    className="btn btn-dark"
-                    onClick={this.handleCancel}
-                  >
-                    Cancel
-                  </Button>
-                  {/* </div> */}
-
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Enter address"
+                    value={this.state.addr1}
+                    onChange={this.handleInputChange}
+                    name="addr1"
+                  />
+                  <Form.Control.Feedback type="invalid">Please enter an address</Form.Control.Feedback>
                 </Col>
-                <div className="locationFooter">
-                  <Footer />
-                </div>
-              </div>
+                <br></br>
+                <Col md={12}>
+                  {/* <div className="formLabel"> */}
+                  <Form.Label className="formLabel">Address 2</Form.Label>
+                  {/* </div> */}
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter address"
+                    value={this.state.addr2}
+                    onChange={this.handleInputChange}
+                    name="addr2"
+                  />
+                </Col>
+                <br></br>
+                <Col md={6}>
+                  {/* <div className="formLabel"> */}
+                  <Form.Label className="formLabel">City</Form.Label>
+                  {/* </div> */}
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Enter city"
+                    value={this.state.city}
+                    onChange={this.handleInputChange}
+                    name="city"
+                  />
+                  <Form.Control.Feedback type="invalid">Please provide a valid city</Form.Control.Feedback>
+                </Col>
+                <br></br>
+                <Col md={4}>
+                  {/* <div className="formLabel"> */}
+                  <Form.Label className="formLabel">Province</Form.Label>
+                  {/* </div> */}
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="dark"
+                      className="dropdown-basic"
+                      id="dropdownBasic"
+                      name="province"
+                    >
+                      {this.state.province || "Choose Province"}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      {provinceList.map((province, index) => (
+                        <Dropdown.Item
+                          key={province[1]}
+                          eventKey={province[1]}
+                          onSelect={this.handleProvinceSelection}
+                          name="province"
+                        >
+                          {province[0]}
+                        </Dropdown.Item>
+                      ))}
+
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Col>
+                <br></br>
+                <Col md={4}>
+                  {/* <div className="formLabel"> */}
+                  <Form.Label className="formLabel">Postal Code</Form.Label>
+                  {/* </div> */}
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Enter postal code"
+                    value={this.state.postal_code}
+                    onChange={this.handleInputChange}
+                    name="postal_code"
+                  />
+                  <Form.Control.Feedback type="invalid">Please provide a valid postal code</Form.Control.Feedback>
+                </Col>
+                <br></br>
+                <Col md={6}>
+                  {/* <div className="formLabel"> */}
+                  <Form.Label className="formLabel">Country</Form.Label>
+                  {/* </div> */}
+                  <Form.Control
+                    type="text"
+                    placeholder={this.state.country}
+                    value={this.state.country}
+                    disabled="disabled"
+                    onChange={this.handleInputChange}
+                    name="country"
+                  />
+                </Col>
+                <br></br>
+              </Form.Group>
+              <Col md={6}>
+                {/* <div id="locationBtn1"> */}
+                <Button
+                  id="locationBtn"
+                  variant="primary"
+                  type="submit"
+                  className="btn btn-dark"
+
+                >
+                                Save
+                </Button>
+                {/* </div> */}
+                            &nbsp;&nbsp;&nbsp;
+                <Button
+                  id="locationBtn"
+                  variant="secondary"
+                  type="button"
+                  className="btn btn-dark"
+                  onClick={this.handleCancel}
+                >
+                                Cancel
+                </Button>
+                {/* </div> */}
+
+              </Col>
+              {/* <div className="locationFooter"> */}
+              <Footer className="locationFooter" />
+              {/* </div> */}
+              {/* </div> */}
             </Form>
             <Modal
-              show={this.state.modalShow}
+              show={this.state.modalStatus}
               onHide={this.handleClose}
               size="lg"
               aria-labelledby="contained-modal-title-vcenter"
@@ -347,7 +349,7 @@ class AddLocation extends Component {
             >
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Location succesfully updated!
+                                Location succesfully updated!
                 </Modal.Title>
               </Modal.Header>
               <Modal.Footer>
