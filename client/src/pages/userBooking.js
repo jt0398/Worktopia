@@ -21,6 +21,7 @@ class userBooking extends Component {
 
   // Funtion to get all the workspaces booked by an Indiviual.
   loadWorkspaces = () => {
+    // localStorage.setItem("UserId", 2);
     Bookingapi.getUserData(localStorage.getItem("UserId")).then(res => {
       // Set the state of worspace to the response recieved.
       this.setState({
@@ -54,18 +55,20 @@ class userBooking extends Component {
               this.state.workspaces.map(workspace => {
                 return (
                   // Display each workspaces in the UserBooking Component by passing required props
-                  <UserBooking
-                    className="text-center"
-                    rowStyle="row no-gutters"
-                    idStyle="col-md-0.8"
-                    imgStyle="col-md-3"
-                    desStyle="col-md-2"
-                    chkinoutStyle="col-md-1.5"
-                    {...workspace}
-                    {...workspace.Workspace}
-                    {...workspace.Workspace.WorkspaceLocation}
-                    {...workspace.Workspace.WorkspacePics[0]}
-                  />
+                  <div className="userBookingTextCenter">
+                    <UserBooking
+                      className="text-center"
+                      rowStyle="row no-gutters"
+                      idStyle="col-md-1"
+                      imgStyle="col-md-4"
+                      desStyle="col-md-3"
+                      chkinoutStyle="col-md-1.5"
+                      {...workspace}
+                      {...workspace.Workspace}
+                      {...workspace.Workspace.WorkspaceLocation}
+                      {...workspace.Workspace.WorkspacePics[0]}
+                    />
+                  </div>
                 );
               })}
             {/* If there are no results found for the workspaces then display proper Output */}
