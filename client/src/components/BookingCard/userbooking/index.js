@@ -19,8 +19,8 @@ function UserBooking({
   rental_price
 }) {
   return (
-    <Card className="card border-info mb-4">
-      <div className={rowStyle}>
+    <Card className="card border-info">
+      <div className={rowStyle} style={{"margin-left":"50px"}}>
         <div className={idStyle}>
           <Card.Body className="cardBody">
             <Card.Header className="cardHeader">ID</Card.Header>
@@ -46,13 +46,19 @@ function UserBooking({
 
         <div className={desStyle}>
           <Card.Body className="cardBody">
-            <Card.Header className="cardHeader">{name}</Card.Header>
+            <Card.Header className="cardHeader">Info</Card.Header>
+            {/* <Card.Header className="cardHeader">{name}</Card.Header> */}
             <br></br>
             <Card.Text>
-              Description: {description}
+              <strong>Descriptions: </strong>{description}
               <br />
               <br />
-              Dimensions: {dimension} <br />
+              <strong>Dimensions: </strong>{dimension} <br></br>
+              <br></br>
+              <strong>Address:</strong> <br></br>
+              {addr1}
+              City: <br></br>
+              {city} <br />
               {!imgStyle && `Price: ${rental_price}`}
             </Card.Text>
           </Card.Body>
@@ -61,15 +67,15 @@ function UserBooking({
         {/* Workspace Description */}
         <div className={chkinoutStyle}>
           <Card.Body className="cardBody">
-            <Card.Header className="cardHeader">Location</Card.Header>
+            {/* <Card.Header className="cardHeader">Location</Card.Header> */}
             <br></br>
             <Card.Text>
-              Address: <br></br>
-              {addr1}
+              {/* Address: <br></br> */}
+              {/* {addr1} */}
               <br />
               <br />
-              City: <br></br>
-              {city} <br />
+              {/* City: <br></br>
+              {city} <br /> */}
             </Card.Text>
           </Card.Body>
         </div>
