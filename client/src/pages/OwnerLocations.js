@@ -17,22 +17,20 @@ class OwnerLocations extends Component {
       workspaceInfo: [],
       ownerAddress: []
     };
-
+    //get ownerID from localStorage, make API request to get owner's locations
     componentDidMount = () => {
       const ownerId = parseInt(localStorage.getItem("UserId"));
       API.getLocationByOwner(ownerId)
         .then(res => {
           this.setState({ ownerAddress: res.data });
-          console.log(this.state.ownerAddress);
         })
         .catch(err => console.log(err));
       this.loadWorkspaces(this.props.match.params.id);
     }
-
+    //grab workspaces based on locationID, by default, show first location's workspaces
     loadWorkspaces = id => {
       API.getWorkspaceByLocation(id)
         .then(res => {
-          console.log(res.data);
           if (id) {
             this.setState({ workspaceInfo: res.data });
           } else {
