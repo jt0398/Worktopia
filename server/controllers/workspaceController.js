@@ -236,8 +236,9 @@ module.exports = {
     db.Workspace.findAll({
       include: [
         { model: db.WorkspaceLocation, include: [db.User] },
-        { model: db.WorkspacePic }
-      ]
+        { model: db.WorkspacePic, limit: 1 }
+      ],
+      limit: 6
     })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
@@ -287,20 +288,12 @@ module.exports = {
     const room = parseInt(req.body.room);
     const occupancy = Math.floor(people / room);
 
-    let featureTableName = "workspacefeatures";
-    let bookingTableName = "bookings";
-
-    if (process.env.NODE_ENV === "production") {
-      featureTableName = "WorkspaceFeatures";
-      bookingTableName = "Bookings";
-    }
-
-    let featureWhere = `(SELECT DISTINCT WorkspaceId FROM ${featureTableName})`;
+    let featureWhere = "(SELECT DISTINCT WorkspaceId FROM WorkspaceFeatures)";
 
     if (req.body.selectedFeatures.length > 0) {
       featureWhere =
         "(SELECT WorkspaceId " +
-        ` FROM ${featureTableName} ` +
+        " FROM WorkspaceFeatures " +
         " WHERE FeatureId IN (" +
         req.body.selectedFeatures.join(",") +
         "))";
@@ -315,7 +308,7 @@ module.exports = {
             id: {
               [Op.notIn]: Sequelize.literal(
                 "(SELECT DISTINCT WorkspaceId " +
-                  ` FROM ${bookingTableName} ` +
+                  " FROM Bookings " +
                   " WHERE start_date BETWEEN '" +
                   checkindate +
                   "' AND '" +
