@@ -251,7 +251,7 @@ class MainPage extends Component {
               <Row>
                 <Col md="12" sm="4" style={{ textAlign: "center" }}>
                   <Slide>
-                    <h3 id="headcolor">OUR SERVICES</h3>
+                    <h3 id="headcolor">FEATURED WORKSPACES</h3>
                   </Slide>
                 </Col>
               </Row>
