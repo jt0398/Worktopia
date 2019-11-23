@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import API from "../../utils/API";
+import Card from "react-bootstrap/Card";
 
 class UserRegistration extends Component {
   state = {
@@ -100,7 +101,23 @@ class UserRegistration extends Component {
     return (
       <Container>
         <Row>
-          <Col>
+          <Col className="text-center">
+            <h3 style={{ color: "darkorange" }}>SIGNUP FORM</h3>
+          </Col>
+        </Row>
+        <Row
+          style={{
+            width: "32rem",
+            margin: "auto"
+          }}
+        >
+          <Col
+            style={{
+              padding: "25px",
+              backgroundColor: "#F7F7F7",
+              border: "1px solid black"
+            }}
+          >
             <Form
               noValidate
               validated={this.state.validated}
@@ -139,8 +156,6 @@ class UserRegistration extends Component {
                     Please provide a valid email.
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Form.Row>
-              <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
                     <strong>Password</strong>
@@ -190,8 +205,6 @@ class UserRegistration extends Component {
                     Please provide a valid city.
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Form.Row>
-              <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
                     <strong>Province</strong>
@@ -233,8 +246,6 @@ class UserRegistration extends Component {
                     Please provide a valid postal code.
                   </Form.Control.Feedback>
                 </Form.Group>
-              </Form.Row>
-              <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
                     <strong>Phone No</strong>
