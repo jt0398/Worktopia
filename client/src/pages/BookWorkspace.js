@@ -208,6 +208,7 @@ class BookWorkspace extends Component {
                         workspace.WorkspacePics[0].image_path
                       }
                       fulladdress={workspace.WorkspaceLocation.full_address}
+                      occuppants={workspace.no_occupants}
                     />
                   );
                 })}

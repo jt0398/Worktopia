@@ -22,8 +22,6 @@ class PrivateRoute extends React.Component {
 
   checkIsLogged = () => {
     API.isUserLoggedIn().then(response => {
-      console.log(response.data);
-
       this.setState({
         isLoggedIn: response.data.is_logged,
         isOwner: response.data.is_owner,

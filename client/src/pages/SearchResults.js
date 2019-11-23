@@ -323,6 +323,7 @@ class SearchResults extends Component {
                       fulladdress={workspace.WorkspaceLocation.full_address}
                       features={workspace.Features}
                       workspaceID={workspace.id}
+                      occuppants={workspace.no_occupants}
                     />
                   );
                 })}

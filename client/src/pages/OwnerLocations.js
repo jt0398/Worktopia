@@ -23,21 +23,22 @@ class OwnerLocations extends Component {
     API.getLocationByOwner(ownerId)
       .then(res => {
         this.setState({ ownerAddress: res.data });
+
+        let id = this.props.match.params.id;
+
+        if (!id) {
+          id = this.state.ownerAddress[0].id;
+        }
+
+        this.loadWorkspaces(id);
       })
       .catch(err => console.log(err));
-    this.loadWorkspaces(this.props.match.params.id);
   };
 
   loadWorkspaces = id => {
     API.getWorkspaceByLocation(id)
       .then(res => {
-        if (id) {
-          this.setState({ workspaceInfo: res.data });
-        } else {
-          window.location.replace(
-            window.location.origin + `/owner/${this.state.ownerAddress[0].id}`
-          );
-        }
+        this.setState({ workspaceInfo: res.data });
       })
       .catch(err => console.log(err));
   };

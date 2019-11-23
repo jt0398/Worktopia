@@ -15,7 +15,8 @@ function WorkspaceCard({
   rental_price,
   fulladdress,
   features,
-  workspaceID
+  workspaceID,
+  occuppants
 }) {
   return (
     <Card className="my-3">
@@ -28,19 +29,32 @@ function WorkspaceCard({
             <Card.Title>{name}</Card.Title>
 
             <Card.Text>
-              {fulladdress}
-              <br />
+              {fulladdress && (
+                <>
+                  {fulladdress} <br /> <br />
+                </>
+              )}
               {description && (
                 <>
                   <strong>Description: </strong>
-                  {description} <br />
+                  {description} <br /> <br />
                 </>
               )}
-              <br />
               {dimension && (
                 <>
                   <strong>Dimensions: </strong>
                   {dimension} <br />
+                </>
+              )}
+              {!imgStyle && occuppants && (
+                <>
+                  <strong>No. of Occupants: </strong>
+                  {occuppants} <br />
+                </>
+              )}
+              {imgStyle && occuppants && (
+                <>
+                  {occuppants} Occupants <br />
                 </>
               )}
               {features && (

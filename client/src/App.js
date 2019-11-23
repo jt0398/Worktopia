@@ -12,7 +12,6 @@ import BookWorkspace from "./pages/BookWorkspace";
 import OwnerBooking from "./pages/ownerBooking";
 import UserBooking from "./pages/userBooking";
 import NoMatch from "./pages/NoMatch";
-import Payments from "./pages/Payments";
 import Signup from "./pages/SignUp";
 import PrivateRoute from "./components/PrivateRoute";
 
