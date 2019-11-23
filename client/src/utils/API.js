@@ -5,6 +5,11 @@ export default {
   checkLogin: function(userLoginData) {
     return axios.post("/api/login", userLoginData);
   },
+  logout: function(){
+    localStorage.removeItem("UserId");
+    localStorage.removeItem("UserRole");
+    return axios.get("/api/logout");
+  },
   fileUpload: function(data) {
     return axios.post("/api/upload", data);
   },
