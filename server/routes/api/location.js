@@ -1,17 +1,22 @@
 const router = require("express").Router();
 const locationController = require("../../controllers/locationController");
 
+// Requiring our custom middleware for checking if a user is logged in
+const isAuthenticated = require("../../config/middleware/isAuthenticated");
+
 // Matches with "/api/location"
-router.route("/add")
-  .post(locationController.create);
-router.route("/")
-  .get(locationController.findAll);
+router.route("/add", isAuthenticated).post(locationController.create);
+router.route("/", isAuthenticated).get(locationController.findAll);
+
 // Matches with "/api/location/:id"
-router.route("/:id").get(locationController.findById)
+router
+  .route("/:id", isAuthenticated)
+  .get(locationController.findById)
   .put(locationController.update);
-// .delete(locationController.remove);
 
 // Matches with "/api/location/owner/:id"
-router.route("/owner/:id").get(locationController.findAllByOwner);
+router
+  .route("/owner/:id", isAuthenticated)
+  .get(locationController.findAllByOwner);
 
 module.exports = router;

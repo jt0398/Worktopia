@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const stripeController = require("../../controllers/stripeController");
 
-console.log("In Stripe Routes");
-// Matches with "/api/workspace"
-router.route("/").post(stripeController.makePayment);
+// Requiring our custom middleware for checking if a user is logged in
+const isAuthenticated = require("../../config/middleware/isAuthenticated");
+
+router.route("/", isAuthenticated).post(stripeController.makePayment);
 
 module.exports = router;
