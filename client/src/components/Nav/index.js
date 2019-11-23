@@ -29,7 +29,7 @@ export class Header extends Component {
     navItems: []
   };
 
-  componentDidMount() {
+  componentWillMount() {
     //1 Owner, 2 Customer
 
     //Owner
