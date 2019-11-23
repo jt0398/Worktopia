@@ -17,7 +17,8 @@ class OwnerLocations extends Component {
     workspaceInfo: [],
     ownerAddress: []
   };
-
+  //get ownerId from local storage and make an API call to populate all of owner's locations,
+  //select first location by default and display all workspaces for that location
   componentDidMount = () => {
     const ownerId = parseInt(localStorage.getItem("UserId"));
     API.getLocationByOwner(ownerId)
