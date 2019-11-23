@@ -50,7 +50,6 @@ async function createWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
       WorkspaceId: workSpaceId,
       FeatureId: feature.label
     };
-    console.log(workSpaceFeature);
     workSpaceFeaturePromises.push(
       db.WorkspaceFeature.create(workSpaceFeature, { transaction })
     );
@@ -77,7 +76,6 @@ async function createWorkSpacePic(workSpacePic, transaction) {
   return db.WorkspacePic.create(workSpacePic, { transaction });
 }
 async function deleteWorkSpaceAvailability(WorkspaceId, transaction) {
-  console.log("delete11", WorkspaceId);
   return db.WorkspaceAvailability.destroy(
     {
       where: {
@@ -395,13 +393,11 @@ module.exports = {
     updateWorkSpaceDetail(workSpaceDetailObject).then(data =>
       res.json("Success OK")
     );
-    console.log("567");
   },
   createWorkSpaceDetail: function(req, res) {
     var workSpaceDetailObject = req.body;
     createWorkSpaceDetail(workSpaceDetailObject).then(data =>
       res.json("Success OK")
     );
-    console.log("999");
   }
 };

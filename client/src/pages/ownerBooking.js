@@ -16,11 +16,9 @@ class OwnerBooking extends Component {
 
   loadWorkspaces = () => {
     Bookingapi.getUserDetails(localStorage.getItem("UserId")).then(res => {
-      console.log(res.data);
       this.setState({
         workspaces: res.data
       });
-      console.log(this.state);
     });
   };
 
@@ -36,7 +34,6 @@ class OwnerBooking extends Component {
         <Row>
           <Col md="12" sm="12">
             {this.state.workspaces.map(workspace => {
-              console.log(workspace);
               return (
                 <Ownerbooking
                   rowStyle="row no-gutters"

@@ -5,7 +5,6 @@ const fs = require("fs");
 
 module.exports = {
   upload: function(req, res, next) {
-    console.log("Going to upload");
     let uploadFile = req.files.file;
     fs.readFile(uploadFile.tempFilePath, (err, uploadedData) => {
       if (err) {

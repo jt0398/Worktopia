@@ -153,7 +153,6 @@ class WorkSpaceDetail extends Component {
         break; //Stop this loop, we found it!
       }
     }
-    console.log(tempArray);
     this.setState({
       FEATURE_LIST: tempArray
     });
@@ -239,8 +238,6 @@ class WorkSpaceDetail extends Component {
   };
 
   componentDidMount = () => {
-    console.log("Component Did mount");
-
     API.getBookingByWorkspace(this.props.match.params.id).then(res => {
       var tempBookingList = [];
       res.data.forEach(booking => {
@@ -290,193 +287,195 @@ class WorkSpaceDetail extends Component {
       <Container fluid>
         <div className="bg">
           <div className="header">WorkSpace</div>
-          <Row>
-            <Col size="md-6">
-              <Form
-                noValidate
-                validated={this.state.validated}
-                onSubmit={this.handleFormSubmit}
-              >
-                <Form.Group>
-                  <div className="titleText">
-                    <Form.Label>Work Space Name</Form.Label>
-                  </div>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your workspace name..."
-                    value={this.state.workSpaceName}
-                    onChange={this.handleInputChange}
-                    name="workSpaceName"
-                    maxLength={50}
-                    required
-                  />
-                  <RemainingChar
-                    remainingCharCount={50 - this.state.workSpaceName.length}
-                  ></RemainingChar>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-
-                  <br></br>
-                  <div className="titleText">
-                    <Form.Label>Workspace Description</Form.Label>
-                  </div>
-                  <Form.Control
-                    as="textarea"
-                    rows="3"
-                    value={this.state.workspaceDescription}
-                    onChange={this.handleInputChange}
-                    name="workspaceDescription"
-                    placeholder="Describe your workspace"
-                    maxLength={250}
-                    required
-                  />
-                  <RemainingChar
-                    remainingCharCount={
-                      250 - this.state.workspaceDescription.length
-                    }
-                  ></RemainingChar>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-
-                  <br></br>
-                  <div className="titleText">
-                    <Form.Label>Workspace Location</Form.Label>
-                  </div>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="info" id="dropdown-basic">
-                      {this.state.workSpaceLocationName ||
-                        "Choose from your locations..."}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      {this.state.LOCATION_LIST.map(location => (
-                        <Dropdown.Item
-                          eventKey={location.fullAdress}
-                          key={location.locationId}
-                          id={location.locationId}
-                          onSelect={this.handleDropDownSelection}
-                          name="workSpaceLocation"
-                        >
-                          {location.fullAdress}
-                        </Dropdown.Item>
-                      ))}
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <br></br>
-                  <div className="titleText">
-                    <Form.Label>Workspace Occupancy</Form.Label>
-                  </div>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="info" id="dropdown-basic">
-                      {this.state.workSpaceOccupancy ||
-                        "How many people can occupy the workspace?"}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      {NUMBER_OF_PEOPLE.map(number => (
-                        <Dropdown.Item
-                          eventKey={number}
-                          key={number}
-                          id={number}
-                          onSelect={this.handleDropDownSelection}
-                          name="workSpaceOccupancy"
-                        >
-                          {number}
-                        </Dropdown.Item>
-                      ))}
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <br></br>
-                  <div className="titleText">
-                    <Form.Label>Work Space dimensions</Form.Label>
-                  </div>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your workspace dimensions..."
-                    value={this.state.workSpaceDimensions}
-                    onChange={this.handleInputChange}
-                    name="workSpaceDimensions"
-                    required
-                  />
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-
-                  <br></br>
-                  <div className="titleText">
-                    <Form.Label>Work Space rates</Form.Label>
-                  </div>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter the daily rate for the workspace.."
-                    value={this.state.workSpaceDailyRate}
-                    onChange={this.handleInputChange}
-                    name="workSpaceDailyRate"
-                    required
-                  />
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-
-                  <br></br>
-                  <Form.Check
-                    type="switch"
-                    id="activateWorkSpace"
-                    label="Activate Workspace"
-                    checked={this.state.activateWorkSpace}
-                    onChange={this.handleSwitchChange}
-                  />
-                </Form.Group>
-
-                <Button
-                  id="subBtn"
-                  variant="info"
-                  type="submit"
-                  className="btn btn-success"
+          <div className="paddingWD">
+            <Row>
+              <Col size="md-6">
+                <Form
+                  noValidate
+                  validated={this.state.validated}
+                  onSubmit={this.handleFormSubmit}
                 >
-                  Submit
-                </Button>
-              </Form>
-            </Col>
+                  <Form.Group>
+                    <div className="titleText">
+                      <Form.Label>Work Space Name</Form.Label>
+                    </div>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your workspace name..."
+                      value={this.state.workSpaceName}
+                      onChange={this.handleInputChange}
+                      name="workSpaceName"
+                      maxLength={50}
+                      required
+                    />
+                    <RemainingChar
+                      remainingCharCount={50 - this.state.workSpaceName.length}
+                    ></RemainingChar>
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
 
-            <Col size="md-6">
-              <Jumbotron className="bg-white">
-                <FileUpload
-                  handleUpload={this.handleUpload.bind(this)}
-                  handleFileChange={this.handleFileChange.bind(this)}
-                  message={this.state.message}
-                ></FileUpload>
-                <br></br>
-                <DateRangePicker
-                  startDate={this.state.startDate}
-                  startDateId="startDate"
-                  endDate={this.state.endDate}
-                  endDateId="endDate"
-                  onDatesChange={this.handleDateSelection}
-                  focusedInput={this.state.focusedInput}
-                  onFocusChange={this.handleFocusChange}
-                  isDayBlocked={this.checkIfDayIsBlocked}
-                ></DateRangePicker>
-                <br></br>
-                <br></br>
+                    <br></br>
+                    <div className="titleText">
+                      <Form.Label>Workspace Description</Form.Label>
+                    </div>
+                    <Form.Control
+                      as="textarea"
+                      rows="3"
+                      value={this.state.workspaceDescription}
+                      onChange={this.handleInputChange}
+                      name="workspaceDescription"
+                      placeholder="Describe your workspace"
+                      maxLength={250}
+                      required
+                    />
+                    <RemainingChar
+                      remainingCharCount={
+                        250 - this.state.workspaceDescription.length
+                      }
+                    ></RemainingChar>
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
 
-                <FeatureList
-                  handleFeatureSelection={this.handleFeatureSelection.bind(
-                    this
-                  )}
-                  features={this.state.FEATURE_LIST}
-                ></FeatureList>
-              </Jumbotron>
-            </Col>
-          </Row>
-          <Modal
-            show={this.state.modalStatus}
-            onHide={this.handleClose}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          >
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
-                Workspace has been succesfully updated!!!
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Footer>
-              <Button onClick={this.handleClose}>OK</Button>
-            </Modal.Footer>
-          </Modal>
+                    <br></br>
+                    <div className="titleText">
+                      <Form.Label>Workspace Location</Form.Label>
+                    </div>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="info" id="dropdown-basic">
+                        {this.state.workSpaceLocationName ||
+                          "Choose from your locations..."}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        {this.state.LOCATION_LIST.map(location => (
+                          <Dropdown.Item
+                            eventKey={location.fullAdress}
+                            key={location.locationId}
+                            id={location.locationId}
+                            onSelect={this.handleDropDownSelection}
+                            name="workSpaceLocation"
+                          >
+                            {location.fullAdress}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                    <br></br>
+                    <div className="titleText">
+                      <Form.Label>Workspace Occupancy</Form.Label>
+                    </div>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="info" id="dropdown-basic">
+                        {this.state.workSpaceOccupancy ||
+                          "How many people can occupy the workspace?"}
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        {NUMBER_OF_PEOPLE.map(number => (
+                          <Dropdown.Item
+                            eventKey={number}
+                            key={number}
+                            id={number}
+                            onSelect={this.handleDropDownSelection}
+                            name="workSpaceOccupancy"
+                          >
+                            {number}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                    <br></br>
+                    <div className="titleText">
+                      <Form.Label>Work Space dimensions</Form.Label>
+                    </div>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your workspace dimensions..."
+                      value={this.state.workSpaceDimensions}
+                      onChange={this.handleInputChange}
+                      name="workSpaceDimensions"
+                      required
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+
+                    <br></br>
+                    <div className="titleText">
+                      <Form.Label>Work Space rates</Form.Label>
+                    </div>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter the daily rate for the workspace.."
+                      value={this.state.workSpaceDailyRate}
+                      onChange={this.handleInputChange}
+                      name="workSpaceDailyRate"
+                      required
+                    />
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+
+                    <br></br>
+                    <Form.Check
+                      type="switch"
+                      id="activateWorkSpace"
+                      label="Activate Workspace"
+                      checked={this.state.activateWorkSpace}
+                      onChange={this.handleSwitchChange}
+                    />
+                  </Form.Group>
+
+                  <Button
+                    id="subBtn"
+                    variant="info"
+                    type="submit"
+                    className="btn btn-success"
+                  >
+                    Submit
+                  </Button>
+                </Form>
+              </Col>
+
+              <Col size="md-6">
+                <Jumbotron className="bg-white">
+                  <FileUpload
+                    handleUpload={this.handleUpload.bind(this)}
+                    handleFileChange={this.handleFileChange.bind(this)}
+                    message={this.state.message}
+                  ></FileUpload>
+                  <br></br>
+                  <DateRangePicker
+                    startDate={this.state.startDate}
+                    startDateId="startDate"
+                    endDate={this.state.endDate}
+                    endDateId="endDate"
+                    onDatesChange={this.handleDateSelection}
+                    focusedInput={this.state.focusedInput}
+                    onFocusChange={this.handleFocusChange}
+                    isDayBlocked={this.checkIfDayIsBlocked}
+                  ></DateRangePicker>
+                  <br></br>
+                  <br></br>
+
+                  <FeatureList
+                    handleFeatureSelection={this.handleFeatureSelection.bind(
+                      this
+                    )}
+                    features={this.state.FEATURE_LIST}
+                  ></FeatureList>
+                </Jumbotron>
+              </Col>
+            </Row>
+            <Modal
+              show={this.state.modalStatus}
+              onHide={this.handleClose}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Workspace has been succesfully updated!!!
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Footer>
+                <Button onClick={this.handleClose}>OK</Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
         </div>
 
         <div className="footerBorder">
