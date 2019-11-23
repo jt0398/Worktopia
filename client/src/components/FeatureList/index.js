@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import API from "../../utils/API";
 import Form from "react-bootstrap/Form";
 
 class FeatureList extends Component {

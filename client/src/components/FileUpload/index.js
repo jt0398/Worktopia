@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import API from "../../utils/API";
 import "./style.css";
 
 class FileUpload extends Component {
-
   render() {
     return (
       <React.Fragment>

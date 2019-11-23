@@ -8,7 +8,7 @@ import Map from "../components/Map";
 import moment from "moment";
 import workspaceAPI from "../utils/workspaceAPI";
 import PriceCard from "../components/PriceCard";
-import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+// import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Footer from "../components/Footer";
 import "./css/BkgWorkSpace.css";
 

@@ -3,11 +3,7 @@ import Bookingapi from "../utils/BookingAPI";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import CardDeck from "react-bootstrap/CardDeck";
-import FeatureList from "../components/FeatureList";
 import Ownerbooking from "../components/BookingCard/ownerbooking";
-import Search from "../components/Search";
 
 class OwnerBooking extends Component {
   state = {
@@ -19,12 +15,10 @@ class OwnerBooking extends Component {
   }
 
   loadWorkspaces = () => {
-    Bookingapi.getUserDetails("2").then(res => {
-      console.log(res.data);
+    Bookingapi.getUserDetails(localStorage.getItem("UserId")).then(res => {
       this.setState({
         workspaces: res.data
       });
-      console.log(this.state);
     });
   };
 
@@ -40,7 +34,6 @@ class OwnerBooking extends Component {
         <Row>
           <Col md="12" sm="12">
             {this.state.workspaces.map(workspace => {
-              console.log(workspace);
               return (
                 <Ownerbooking
                   rowStyle="row no-gutters"

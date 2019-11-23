@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   Card,
-  Col,
   CardImg,
   CardText,
   CardBody,
@@ -15,7 +14,7 @@ class OfferCard extends Component {
     return (
       <>
         <div>
-          <CardDeck className="mr-auto " style={{ "margin-top": "50px" }}>
+          <CardDeck className="mr-auto ">
             <Card className="col-md-3 text-center ">
               <CardImg
                 top
@@ -68,10 +67,7 @@ class OfferCard extends Component {
           </CardDeck>
         </div>
         <div>
-          <CardDeck
-            className="mt-3 "
-            style={{ width: "10rem;", align: "center" }}
-          >
+          <CardDeck className="mr-auto " style={{ marginTop: "50px" }}>
             <Card className="col-md-3 text-center">
               <CardImg
                 top

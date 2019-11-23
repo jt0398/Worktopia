@@ -153,7 +153,6 @@ class WorkSpaceDetail extends Component {
         break; //Stop this loop, we found it!
       }
     }
-    console.log(tempArray);
     this.setState({
       FEATURE_LIST: tempArray
     });
@@ -239,8 +238,6 @@ class WorkSpaceDetail extends Component {
   };
 
   componentDidMount = () => {
-    console.log("Component Did mount");
-
     API.getBookingByWorkspace(this.props.match.params.id).then(res => {
       var tempBookingList = [];
       res.data.forEach(booking => {
