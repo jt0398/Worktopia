@@ -10,7 +10,13 @@ router.post("/", passport.authenticate("local"), function(req, res) {
   After logging in the user needs to be redirected to 
   the correct or previous page. Should the logic be here or isAuthenticate?
  */
-  res.json(req.user);
+  req.session.save(err => {
+    if (err) {
+      console.log(err);
+      res.json({});
+    }
+    res.json(req.user);
+  });
 });
 
 module.exports = router;

@@ -11,7 +11,6 @@ export default class Payments extends React.Component {
         console.log(response.status, response.statusText);
       })
       .catch(err => {
-        console.log("Error");
         console.error(err);
       });
   };

@@ -33,7 +33,7 @@ export default {
     return axios.get("/api/workspace/location/" + locationId);
   },
   getLocationByOwner(ownerId) {
-    return axios.get("/api/location/owner/"+ ownerId);
+    return axios.get("/api/location/owner/" + ownerId);
   },
   getLocationById(locationId) {
     return axios.get("/api/location/" + locationId);
@@ -55,5 +55,8 @@ export default {
   },
   createUser: function(user) {
     return axios.post("/api/user", user);
+  },
+  isUserLoggedIn: function() {
+    return axios.get("/api/user/checksession");
   }
 };

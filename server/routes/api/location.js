@@ -5,18 +5,18 @@ const locationController = require("../../controllers/locationController");
 const isAuthenticated = require("../../config/middleware/isAuthenticated");
 
 // Matches with "/api/location"
-router.route("/add", isAuthenticated).post(locationController.create);
-router.route("/", isAuthenticated).get(locationController.findAll);
+router.route("/add").post(isAuthenticated, locationController.create);
+router.route("/").get(isAuthenticated, locationController.findAll);
 
 // Matches with "/api/location/:id"
 router
-  .route("/:id", isAuthenticated)
-  .get(locationController.findById)
-  .put(locationController.update);
+  .route("/:id")
+  .get(isAuthenticated, locationController.findById)
+  .put(isAuthenticated, locationController.update);
 
 // Matches with "/api/location/owner/:id"
 router
-  .route("/owner/:id", isAuthenticated)
-  .get(locationController.findAllByOwner);
+  .route("/owner/:id")
+  .get(isAuthenticated, locationController.findAllByOwner);
 
 module.exports = router;

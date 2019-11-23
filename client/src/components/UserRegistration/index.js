@@ -58,7 +58,6 @@ class UserRegistration extends Component {
         console.log(response);
       })
       .catch(err => {
-        console.log("Error");
         console.error(err);
       });
 

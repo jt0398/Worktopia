@@ -20,7 +20,7 @@ router
 router.route("/search/results/").post(workspaceController.findBySearch);
 
 router
-  .route("/location/:id", isAuthenticated)
-  .get(workspaceController.findAllByLocation);
+  .route("/location/:id")
+  .get(isAuthenticated, workspaceController.findAllByLocation);
 
 module.exports = router;

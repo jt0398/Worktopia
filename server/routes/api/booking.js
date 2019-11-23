@@ -5,24 +5,24 @@ const bookingController = require("../../controllers/bookingController");
 const isAuthenticated = require("../../config/middleware/isAuthenticated");
 
 // Matches with "/api/booking"
-router.route("/", isAuthenticated).get(bookingController.findAll);
+router.route("/").get(isAuthenticated, bookingController.findAll);
 
 // Matches with "/api/booking/user/:id"
-router.route("/user/:id", isAuthenticated).get(bookingController.findAllByUser);
+router.route("/user/:id").get(isAuthenticated, bookingController.findAllByUser);
 /* .post(bookingController.create); */
 
 // Matches with "/api/booking/owner/:id"
 router
-  .route("/owner/:id", isAuthenticated)
-  .get(bookingController.findAllByOwner);
+  .route("/owner/:id")
+  .get(isAuthenticated, bookingController.findAllByOwner);
 
 // Matches with "/api/booking/workspace/:id"
 router
-  .route("/workspace/:id", isAuthenticated)
-  .get(bookingController.findAllByWorkSpaceId)
-  .post(bookingController.create);
+  .route("/workspace/:id")
+  .get(isAuthenticated, bookingController.findAllByWorkSpaceId)
+  .post(isAuthenticated, bookingController.create);
 
 // Matches with "/api/booking/workspace
-router.route("/workspace", isAuthenticated).post(bookingController.create);
+router.route("/workspace").post(isAuthenticated, bookingController.create);
 
 module.exports = router;

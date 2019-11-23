@@ -6,7 +6,7 @@ const isAuthenticated = require("../../config/middleware/isAuthenticated");
 
 // Matches with "/api/owner/locations:id"
 router
-  .route("/locations/:id", isAuthenticated)
-  .get(ownerController.findDistinctLocations);
+  .route("/locations/:id")
+  .get(isAuthenticated, ownerController.findDistinctLocations);
 
 module.exports = router;
