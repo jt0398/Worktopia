@@ -19,7 +19,7 @@ html {
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
-  box-shadow: 3px 2px 10px 12px rgb(33, 37, 37);
+  box-shadow: 3px 2px 10px 12px #212525;
 }
 
 .yourBooking {
@@ -27,6 +27,14 @@ html {
   font-size: 40px;
   color: white;
   text-shadow: 3px 3px black;
+}
+
+.userBookingTextCenter {
+  text-align: center;
+  /* padding: 30px; */
+   /* margin-left: 30px;  */
+   margin-bottom: 20px;
+
 }
 
 .cardBody {
