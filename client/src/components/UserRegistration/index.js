@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -20,7 +20,6 @@ class UserRegistration extends Component {
     postalcode: "L",
     phoneno: "1",
     userrole: 2,
-    signedUp: null,
     modalStatus: false
   };
   // Handles updating component state when the user types into the input field
@@ -60,17 +59,13 @@ class UserRegistration extends Component {
     API.createUser(user)
       .then(response => {
         console.log("Succesfully SignedUp");
-        this.setState({
-          signedUp: true
-        });
+        this.props.history.push("/");
       })
       .catch(err => {
         console.log("Error");
         this.setState({
-          signedUp: false,
           modalStatus: true
         });
-
         console.error(err);
       });
 
@@ -102,9 +97,6 @@ class UserRegistration extends Component {
       ["Yukon Territory", "YT"]
     ];
 
-    if (this.state.signedUp) {
-      return <Redirect to="/login" />;
-    }
     return (
       <Container>
         <Row>
@@ -311,4 +303,4 @@ class UserRegistration extends Component {
   }
 }
 
-export default UserRegistration;
+export default withRouter(UserRegistration);

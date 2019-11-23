@@ -28,6 +28,7 @@ class Login extends Component {
   };
 
   handleFormSubmit = event => {
+    console.log("Cliecked Submit")
     event.preventDefault();
     if (this.state.username && this.state.password) {
       API.checkLogin(this.state)
@@ -69,7 +70,7 @@ class Login extends Component {
           <Card.Body>
             <Row>
               <Col md={12} sm={6}>
-                <form>
+                <Form>
                   <Form.Control
                     value={this.state.username}
                     onChange={this.handleInputChange}
@@ -85,7 +86,7 @@ class Login extends Component {
                     placeholder="Enter your password"
                   />
                   <br></br>
-                </form>
+                </Form>
               </Col>
             </Row>
 
