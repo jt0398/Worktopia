@@ -28,7 +28,7 @@ class Login extends Component {
   };
 
   handleFormSubmit = event => {
-    console.log("Cliecked Submit")
+    console.log("Cliecked Submit");
     event.preventDefault();
     if (this.state.username && this.state.password) {
       API.checkLogin(this.state)
@@ -86,19 +86,18 @@ class Login extends Component {
                     placeholder="Enter your password"
                   />
                   <br></br>
+                  <div className="text-center">
+                    <Button
+                      className="btn btn-info "
+                      disabled={this.validateFormCompletion()}
+                      onClick={this.handleFormSubmit}
+                    >
+                      Log In
+                    </Button>
+                  </div>
                 </Form>
               </Col>
             </Row>
-
-            <div className="text-center">
-              <Button
-                className="btn btn-info "
-                disabled={this.validateFormCompletion()}
-                onClick={this.handleFormSubmit}
-              >
-                Log In
-              </Button>
-            </div>
 
             <Row>
               <Col className="text-center" md={12} sm={6}>
