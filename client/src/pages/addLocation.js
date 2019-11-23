@@ -10,6 +10,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Modal from "react-bootstrap/Modal";
 import Footer from "../components/Footer";
 import "./css/AddLocation.css";
+import Nav from "../components/Nav";
 
 //array of provinces in Canada
 const provinceList = [
@@ -29,127 +30,128 @@ const provinceList = [
 ];
 
 class AddLocation extends Component {
-    state = {
-      addr1: "",
-      addr2: "",
-      city: "",
-      province: "",
-      postal_code: "",
-      country: "Canada",
-      userId: null,
-      validated: false,
-      modalStatus: false,
-      linkShow: false,
-      display: null
-    };
-    //If URL includes locationId, pre-populates the fields on mounting
-    componentDidMount = () => {
-      this.updateLocation(this.props.match.params.id);
-    };
-    //function to get location details for edit location page
-    updateLocation = id => {
-      if (id) {
-        API.getLocationById(id).then(res => {
-          let fetchedLocationDetail = res.data[0];
-          this.setState({
-            addr1: fetchedLocationDetail.addr1,
-            addr2: fetchedLocationDetail.addr2,
-            city: fetchedLocationDetail.city,
-            province: fetchedLocationDetail.province,
-            postal_code: fetchedLocationDetail.postal_code,
-            country: fetchedLocationDetail.country,
-            userId: parseInt(fetchedLocationDetail.UserId)
-          });
-        });
-      } else {
+  state = {
+    addr1: "",
+    addr2: "",
+    city: "",
+    province: "",
+    postal_code: "",
+    country: "Canada",
+    userId: null,
+    validated: false,
+    modalStatus: false,
+    linkShow: false,
+    display: null
+  };
+  //If URL includes locationId, pre-populates the fields on mounting
+  componentDidMount = () => {
+    this.updateLocation(this.props.match.params.id);
+  };
+  //function to get location details for edit location page
+  updateLocation = id => {
+    if (id) {
+      API.getLocationById(id).then(res => {
+        let fetchedLocationDetail = res.data[0];
         this.setState({
-          addr1: "",
-          addr2: "",
-          city: "",
-          province: "",
-          postal_code: "",
-          country: "Canada",
-          userId: null
+          addr1: fetchedLocationDetail.addr1,
+          addr2: fetchedLocationDetail.addr2,
+          city: fetchedLocationDetail.city,
+          province: fetchedLocationDetail.province,
+          postal_code: fetchedLocationDetail.postal_code,
+          country: fetchedLocationDetail.country,
+          userId: parseInt(fetchedLocationDetail.UserId)
         });
-        this.handleDisplay();
-      }
-    };
-    // function to handle input change for textboxes
-    handleInputChange = event => {
-      const { name, value } = event.target;
-      this.setState({
-        [name]: value
       });
-    };
-    //function to handle dropdown menu selection
-    handleProvinceSelection = (eventKey, event) => {
+    } else {
       this.setState({
-        province: eventKey
+        addr1: "",
+        addr2: "",
+        city: "",
+        province: "",
+        postal_code: "",
+        country: "Canada",
+        userId: null
       });
-    };
-    // function invoked on form submit, included validations
-    handleSubmit = event => {
-      event.preventDefault();
-      event.stopPropagation();
-      const form = event.currentTarget;
-      form.classList.remove("was-validated");
+      this.handleDisplay();
+    }
+  };
+  // function to handle input change for textboxes
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+  //function to handle dropdown menu selection
+  handleProvinceSelection = (eventKey, event) => {
+    this.setState({
+      province: eventKey
+    });
+  };
+  // function invoked on form submit, included validations
+  handleSubmit = event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const form = event.currentTarget;
+    form.classList.remove("was-validated");
 
-      const addressInput = document.getElementsByName("addr1")[0];
-      const cityInput = document.getElementsByName("city")[0];
-      const provinceInput = document.getElementsByName("province")[0];
-      const postalInput = document.getElementsByName("postal_code")[0];
+    const addressInput = document.getElementsByName("addr1")[0];
+    const cityInput = document.getElementsByName("city")[0];
+    const provinceInput = document.getElementsByName("province")[0];
+    const postalInput = document.getElementsByName("postal_code")[0];
 
-      if (addressInput.value === " " || "") {
-        addressInput.setCustomValidity("Invalid field.");
-      } else {
-        addressInput.setCustomValidity("");
-      }
+    if (addressInput.value === " " || "") {
+      addressInput.setCustomValidity("Invalid field.");
+    } else {
+      addressInput.setCustomValidity("");
+    }
 
-      if (cityInput.value === " " || "") {
-        cityInput.setCustomValidity("Invalid field.");
-      } else {
-        cityInput.setCustomValidity("");
-      }
+    if (cityInput.value === " " || "") {
+      cityInput.setCustomValidity("Invalid field.");
+    } else {
+      cityInput.setCustomValidity("");
+    }
 
-      if (provinceInput.value.includes("Choose")) {
-        provinceInput.setCustomValidity("Invalid field.");
-      } else {
-        provinceInput.setCustomValidity("");
-      }
+    if (provinceInput.value.includes("Choose")) {
+      provinceInput.setCustomValidity("Invalid field.");
+    } else {
+      provinceInput.setCustomValidity("");
+    }
 
-      if ((postalInput.value === " " || "") || (postalInput.value.length > 7)) {
-        postalInput.setCustomValidity("Invalid field.");
-      } else {
-        postalInput.setCustomValidity("");
-      }
+    if (postalInput.value === " " || "" || postalInput.value.length > 7) {
+      postalInput.setCustomValidity("Invalid field.");
+    } else {
+      postalInput.setCustomValidity("");
+    }
 
-      if (form.checkValidity() === false) {
-        form.classList.add("was-validated");
-        this.setState({ validated: true });
-      } else {
+    if (form.checkValidity() === false) {
+      form.classList.add("was-validated");
+      this.setState({ validated: true });
+    } else {
       //if URL contains location ID i.e edit location, update the DB, else insert new address into DB
-        if (this.props.match.params.id) {
-          API.updateLocation(this.props.match.params.id, {
-            addr1: this.state.addr1,
-            addr2: this.state.addr2,
-            city: this.state.city,
-            province: this.state.province,
-            country: this.state.country,
-            postal_code: this.state.postal_code,
-            UserId: parseInt(localStorage.getItem("UserId"))
-          })
-            .then(res => this.handleShow())
-            .catch(err => console.log(err));
-        } else {
-          API.saveLocation({
-            addr1: this.state.addr1,
-            addr2: this.state.addr2,
-            city: this.state.city,
-            province: this.state.province,
-            postal_code: this.state.postal_code,
-            country: this.state.country,
-            UserId: parseInt(localStorage.getItem("UserId"))
-          }).then(res => {
+      if (this.props.match.params.id) {
+        API.updateLocation(this.props.match.params.id, {
+          addr1: this.state.addr1,
+          addr2: this.state.addr2,
+          city: this.state.city,
+          province: this.state.province,
+          country: this.state.country,
+          postal_code: this.state.postal_code,
+          UserId: parseInt(localStorage.getItem("UserId"))
+        })
+          .then(res => this.handleShow())
+          .catch(err => console.log(err));
+      } else {
+        API.saveLocation({
+          addr1: this.state.addr1,
+          addr2: this.state.addr2,
+          city: this.state.city,
+          province: this.state.province,
+          postal_code: this.state.postal_code,
+          country: this.state.country,
+          UserId: parseInt(localStorage.getItem("UserId"))
+        })
+          .then(res => {
             this.setState({
               addr1: "",
               addr2: "",
@@ -160,52 +162,59 @@ class AddLocation extends Component {
             });
             this.handleShow();
           })
-            .catch(err => console.log(err));
-        }
+          .catch(err => console.log(err));
       }
-
-    };
-    //reset state on cancel, clears all fields
-
-    handleCancel = event => {
-      event.preventDefault();
-      this.setState({
-        addr1: "",
-        addr2: "",
-        city: "",
-        province: "",
-        postal_code: "",
-        country: "Canada"
-      });
-    };
-    //sets modal
-    handleShow = () => {
-      this.setState({
-        modalStatus: true
-      });
-    };
-    //handles modal close
-    handleClose = () => {
-      this.setState({ modalStatus: false });
-    };
-    //handles link
-    handleDisplay = () => {
-      this.setState({ display: "none" });
     }
+  };
+  //reset state on cancel, clears all fields
 
-    render() {
-      return (
+  handleCancel = event => {
+    event.preventDefault();
+    this.setState({
+      addr1: "",
+      addr2: "",
+      city: "",
+      province: "",
+      postal_code: "",
+      country: "Canada"
+    });
+  };
+  //sets modal
+  handleShow = () => {
+    this.setState({
+      modalStatus: true
+    });
+  };
+  //handles modal close
+  handleClose = () => {
+    this.setState({ modalStatus: false });
+  };
+  //handles link
+  handleDisplay = () => {
+    this.setState({ display: "none" });
+  };
+
+  render() {
+    return (
+      <>
+        <Nav></Nav>
         <Container fluid>
           <div className="locationBg">
             <div className="locheader">Add Location</div>
             <br />
             <Row>
               <Col size="md-2">
-                            &nbsp;&nbsp;&nbsp;
-                <Link style={{ display: this.state.display }} to="/owner">← Back to Dashboard</Link>
+                &nbsp;&nbsp;&nbsp;
+                <Link style={{ display: this.state.display }} to="/owner">
+                  ← Back to Dashboard
+                </Link>
               </Col>
             </Row>
-            <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
+            <Form
+              noValidate
+              validated={this.state.validated}
+              onSubmit={this.handleSubmit}
+            >
               {/* <div className="formAddress"> */}
               <Form.Group className="formAddress">
                 <Col md={12}>
@@ -220,7 +229,9 @@ class AddLocation extends Component {
                     onChange={this.handleInputChange}
                     name="addr1"
                   />
-                  <Form.Control.Feedback type="invalid">Please enter an address</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please enter an address
+                  </Form.Control.Feedback>
                 </Col>
                 <br></br>
                 <Col md={12}>
@@ -248,7 +259,9 @@ class AddLocation extends Component {
                     onChange={this.handleInputChange}
                     name="city"
                   />
-                  <Form.Control.Feedback type="invalid">Please provide a valid city</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please provide a valid city
+                  </Form.Control.Feedback>
                 </Col>
                 <br></br>
                 <Col md={4}>
@@ -275,7 +288,6 @@ class AddLocation extends Component {
                           {province[0]}
                         </Dropdown.Item>
                       ))}
-
                     </Dropdown.Menu>
                   </Dropdown>
                 </Col>
@@ -292,7 +304,9 @@ class AddLocation extends Component {
                     onChange={this.handleInputChange}
                     name="postal_code"
                   />
-                  <Form.Control.Feedback type="invalid">Please provide a valid postal code</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please provide a valid postal code
+                  </Form.Control.Feedback>
                 </Col>
                 <br></br>
                 <Col md={6}>
@@ -317,12 +331,11 @@ class AddLocation extends Component {
                   variant="primary"
                   type="submit"
                   className="btn btn-dark"
-
                 >
-                                Save
+                  Save
                 </Button>
                 {/* </div> */}
-                            &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;
                 <Button
                   id="locationBtn"
                   variant="secondary"
@@ -330,10 +343,9 @@ class AddLocation extends Component {
                   className="btn btn-dark"
                   onClick={this.handleCancel}
                 >
-                                Cancel
+                  Cancel
                 </Button>
                 {/* </div> */}
-
               </Col>
               {/* <div className="locationFooter"> */}
               <Footer className="locationFooter" />
@@ -349,7 +361,7 @@ class AddLocation extends Component {
             >
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                                Location succesfully updated!
+                  Location succesfully updated!
                 </Modal.Title>
               </Modal.Header>
               <Modal.Footer>
@@ -358,9 +370,9 @@ class AddLocation extends Component {
             </Modal>
           </div>
         </Container>
-      );
-    }
-
+      </>
+    );
+  }
 }
 
 export default AddLocation;
