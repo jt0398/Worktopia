@@ -14,7 +14,10 @@ module.exports = {
       include: [
         {
           model: db.Workspace,
-          include: [{ model: db.WorkspacePic }, { model: db.WorkspaceLocation }]
+          include: [
+            { model: db.WorkspacePic, limit: 1 },
+            { model: db.WorkspaceLocation }
+          ]
         }
       ],
       order: [["createdAt", "DESC"]]
@@ -37,7 +40,7 @@ module.exports = {
                 ]
               }
             },
-            { model: db.WorkspacePic }
+            { model: db.WorkspacePic, limit: 1 }
           ]
         },
         { model: db.User }
@@ -55,7 +58,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log(req.body);
     db.Booking.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

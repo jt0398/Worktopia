@@ -12,7 +12,8 @@ import API from "../utils/workspaceAPI";
 import miscAPI from "../utils/API";
 import HashMap from "hashmap";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-
+import Footer from "../components/Footer";
+import "./css/SearchResult.css";
 class SearchResults extends Component {
   state = {
     addresses: new HashMap(), //Keeps address unique to avoid rendering in map multiple times
@@ -259,65 +260,77 @@ class SearchResults extends Component {
 
   render() {
     return (
-      <Container>
-        <Row>
-          <Col>
-            {/*Search Box*/}
-            <Search
-              {...this.state.searchParams}
-              validated={this.state.validated}
-              onChange={this.handleSearchInputChange}
-              onSubmit={this.handleFormSearch}
-              onCheckInChange={this.handleCheckInChange}
-              onCheckOutChange={this.handleCheckOutChange}
-              onLocationChange={this.handleLocationChange}
-              onSelectLocation={this.handleLocationSelect}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col md="3">
-            {/*Feature List*/}
-            <Form>
-              <FeatureList
-                handleFeatureSelection={this.handleFeatureSelection.bind(this)}
-                features={this.state.FEATURE_LIST}
-              ></FeatureList>
-            </Form>
-            {/*Map*/}
-            <Map
-              locations={this.state.locations}
-              centerGeoLoc={this.state.centerGeoLoc}
-            />
-          </Col>
-          <Col md="9" sm="12">
-            <div className="h6">
-              {this.state.searchComplete && (
-                <>{this.state.workspaces.length} result(s) found.</>
-              )}
-            </div>
-            {/*Search Result*/}
-            {this.state.workspaces.map(workspace => {
-              return (
-                <WorkspaceCard
-                  key={workspace.id}
-                  rowStyle="row no-gutters"
-                  imgStyle="col-md-4"
-                  bodyStyle="col-md-6"
-                  name={workspace.name}
-                  src={
-                    workspace.WorkspacePics &&
-                    workspace.WorkspacePics[0].image_path
-                  }
-                  rental_price={workspace.rental_price}
-                  fulladdress={workspace.WorkspaceLocation.full_address}
-                  features={workspace.Features}
-                  workspaceID={workspace.id}
+      <Container fluid>
+        <div className="SRbg">
+          <div className="SRheader">Your Search Result</div>
+          <div className="SRPadding">
+            <Row>
+              <Col>
+                {/*Search Box*/}
+                <Search
+                  {...this.state.searchParams}
+                  validated={this.state.validated}
+                  onChange={this.handleSearchInputChange}
+                  onSubmit={this.handleFormSearch}
+                  onCheckInChange={this.handleCheckInChange}
+                  onCheckOutChange={this.handleCheckOutChange}
+                  onLocationChange={this.handleLocationChange}
+                  onSelectLocation={this.handleLocationSelect}
                 />
-              );
-            })}
-          </Col>
-        </Row>
+              </Col>
+            </Row>
+            <Row>
+              <Col md="3">
+                {/*Feature List*/}
+                <div className="featureList">
+                  <Form>
+                    <FeatureList
+                      handleFeatureSelection={this.handleFeatureSelection.bind(
+                        this
+                      )}
+                      features={this.state.FEATURE_LIST}
+                    ></FeatureList>
+                  </Form>
+                </div>
+                {/*Map*/}
+                <div className="mapborder">
+                  <Map
+                    locations={this.state.locations}
+                    centerGeoLoc={this.state.centerGeoLoc}
+                  />
+                </div>
+              </Col>
+              <Col md="9" sm="12">
+                <div className="h6">
+                  {this.state.searchComplete && (
+                    <>{this.state.workspaces.length} result(s) found.</>
+                  )}
+                </div>
+                {/*Search Result*/}
+                {this.state.workspaces.map(workspace => {
+                  return (
+                    <WorkspaceCard
+                      key={workspace.id}
+                      rowStyle="row no-gutters"
+                      imgStyle="col-md-4"
+                      bodyStyle="col-md-6"
+                      name={workspace.name}
+                      src={
+                        workspace.WorkspacePics &&
+                        workspace.WorkspacePics[0].image_path
+                      }
+                      rental_price={workspace.rental_price}
+                      fulladdress={workspace.WorkspaceLocation.full_address}
+                      features={workspace.Features}
+                      workspaceID={workspace.id}
+                    />
+                  );
+                })}
+              </Col>
+            </Row>
+          </div>
+        </div>
+        <Footer />
       </Container>
     );
   }

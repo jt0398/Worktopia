@@ -50,7 +50,6 @@ async function createWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
       WorkspaceId: workSpaceId,
       FeatureId: feature.label
     };
-    console.log(workSpaceFeature);
     workSpaceFeaturePromises.push(
       db.WorkspaceFeature.create(workSpaceFeature, { transaction })
     );
@@ -77,7 +76,6 @@ async function createWorkSpacePic(workSpacePic, transaction) {
   return db.WorkspacePic.create(workSpacePic, { transaction });
 }
 async function deleteWorkSpaceAvailability(WorkspaceId, transaction) {
-  console.log("delete11", WorkspaceId);
   return db.WorkspaceAvailability.destroy(
     {
       where: {
@@ -238,8 +236,9 @@ module.exports = {
     db.Workspace.findAll({
       include: [
         { model: db.WorkspaceLocation, include: [db.User] },
-        { model: db.WorkspacePic }
-      ]
+        { model: db.WorkspacePic, limit: 1 }
+      ],
+      limit: 6
     })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
@@ -289,20 +288,12 @@ module.exports = {
     const room = parseInt(req.body.room);
     const occupancy = Math.floor(people / room);
 
-    let featureTableName = "workspacefeatures";
-    let bookingTableName = "bookings";
-
-    if (process.env.NODE_ENV === "production") {
-      featureTableName = "WorkspaceFeatures";
-      bookingTableName = "Bookings";
-    }
-
-    let featureWhere = `(SELECT DISTINCT WorkspaceId FROM ${featureTableName})`;
+    let featureWhere = "(SELECT DISTINCT WorkspaceId FROM WorkspaceFeatures)";
 
     if (req.body.selectedFeatures.length > 0) {
       featureWhere =
         "(SELECT WorkspaceId " +
-        ` FROM ${featureTableName} ` +
+        " FROM WorkspaceFeatures " +
         " WHERE FeatureId IN (" +
         req.body.selectedFeatures.join(",") +
         "))";
@@ -317,7 +308,7 @@ module.exports = {
             id: {
               [Op.notIn]: Sequelize.literal(
                 "(SELECT DISTINCT WorkspaceId " +
-                  ` FROM ${bookingTableName} ` +
+                  " FROM Bookings " +
                   " WHERE start_date BETWEEN '" +
                   checkindate +
                   "' AND '" +
@@ -395,13 +386,11 @@ module.exports = {
     updateWorkSpaceDetail(workSpaceDetailObject).then(data =>
       res.json("Success OK")
     );
-    console.log("567");
   },
   createWorkSpaceDetail: function(req, res) {
     var workSpaceDetailObject = req.body;
     createWorkSpaceDetail(workSpaceDetailObject).then(data =>
       res.json("Success OK")
     );
-    console.log("999");
   }
 };

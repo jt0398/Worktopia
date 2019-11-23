@@ -5,17 +5,17 @@ const fs = require("fs");
 
 module.exports = {
   upload: function(req, res, next) {
-    console.log("Going to upload");
     let uploadFile = req.files.file;
     fs.readFile(uploadFile.tempFilePath, (err, uploadedData) => {
       if (err) {
         throw err;
       }
+      let body= fs.createReadStream(uploadFile.tempFilePath);
 
       const s3PutParams = {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: uploadFile.name,
-        Body: uploadedData,
+        Body: body,
         ACL: "public-read"
       };
 

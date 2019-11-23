@@ -30,9 +30,6 @@ export class Header extends Component {
   };
 
   componentDidMount() {
-    localStorage.setItem("UserId", "");
-    localStorage.setItem("UserRole", "");
-
     //1 Owner, 2 Customer
 
     //Owner
