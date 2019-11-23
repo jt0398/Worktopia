@@ -8,12 +8,13 @@ html {
   box-sizing: border-box;
 }
 
-/* .bg { 
-  background-image: url("/images/pic6.png");
-  background-position: center;
+.bg { 
+  background-image: url("/images/pic11.png");
+  background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
- } */
+  box-shadow: 10px 10px 10px 18px grey;
+ }
 
 .header {
     background-color: rgb(198, 227, 225);
