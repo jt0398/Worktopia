@@ -17,7 +17,6 @@ module.exports = {
         res.json(resp);
       })
       .catch(err => {
-        console.log("Payment Failed for request");
         console.error(err);
         res.status(400);
       });

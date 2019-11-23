@@ -11,7 +11,6 @@ import Testimonials from "../components/Testimonails";
 import moment from "moment";
 import { Slide } from "react-reveal";
 import { Element } from "react-scroll";
-// import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 class MainPage extends Component {
   state = {
@@ -124,9 +123,7 @@ class MainPage extends Component {
       form.classList.add("was-validated");
       return;
     }
-
     this.setState({ validated: true });
-
     window.location.href = "/searchresults";
   };
 
@@ -221,7 +218,6 @@ class MainPage extends Component {
                     <h5>Anywhere you can choose</h5>
                   </Col>
                   <Col md={4} id="textimg">
-                    {/* <h1>Comfortable</h1> */}
                     <Animated
                       animationIn="rotateIn"
                       animationInDelay={1000}
@@ -252,7 +248,7 @@ class MainPage extends Component {
         <Element name="test2" className="element">
           <div className="testflex ">
             <Container>
-              <Row style={{ margin: "100px" }}>
+              <Row>
                 <Col md="12" sm="4" style={{ textAlign: "center" }}>
                   <Slide>
                     <h3 id="headcolor">FEATURED WORKSPACES</h3>
@@ -273,7 +269,7 @@ class MainPage extends Component {
         <Element name="test3" className="element">
           <div className="testflex">
             <Container>
-              <Row style={{ margin: "100px" }}>
+              <Row>
                 <Col md="12" sm="4" style={{ textAlign: "center" }}>
                   <h3 id="headcolor">TESTIMONIALS</h3>
                 </Col>

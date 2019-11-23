@@ -1,7 +1,9 @@
+// Import required Components
 import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import API from "../utils/API";
 
+// export the Payment class
 export default class Payments extends React.Component {
   onToken = token => {
     API.makePayment(token)
@@ -13,11 +15,14 @@ export default class Payments extends React.Component {
         console.error(err);
       });
   };
+
+  // Render the page
   render() {
     return (
       <div>
         <br></br>
         <br></br>
+        {/* Calling the stripeCheckout Component */}
         <StripeCheckout
           name="Worktopia.com"
           description="Payment for booking id"

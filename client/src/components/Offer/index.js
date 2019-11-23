@@ -37,8 +37,8 @@ class OfferCard extends Component {
         <CardDeck>
           {this.state.workspaces.map(workspace => {
             return (
-              <Col md={4}>
-                <Card className="my-3 h-100">
+              <Col md={4} className="my-3">
+                <Card className="h-100">
                   <CardImg
                     top
                     width="100%"
@@ -49,7 +49,9 @@ class OfferCard extends Component {
                     alt={workspace.name}
                   />
                   <CardBody>
-                    <CardTitle>{workspace.name}</CardTitle>
+                    <CardTitle>
+                      <strong>{workspace.name}</strong>
+                    </CardTitle>
                     <CardText>{workspace.description}</CardText>
                     <Button onClick={() => this.handleOnClick(workspace.id)}>
                       Learn More...
