@@ -21,7 +21,7 @@ class userBooking extends Component {
 
   // Funtion to get all the workspaces booked by an Indiviual.
   loadWorkspaces = () => {
-    localStorage.setItem("UserId", 2);
+    // localStorage.setItem("UserId", 2);
     Bookingapi.getUserData(localStorage.getItem("UserId")).then(res => {
       // Set the state of worspace to the response recieved.
       this.setState({
