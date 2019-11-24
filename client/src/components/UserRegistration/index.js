@@ -26,7 +26,8 @@ class UserRegistration extends Component {
     phoneno: "1",
     userrole: 2,
     modalStatus: false,
-    validateformModel: false
+    validateformModel: false,
+    modalMessage: null
   };
 
   // Handles updating component state when the user types into the input field
@@ -69,11 +70,14 @@ class UserRegistration extends Component {
         this.props.history.push("/");
       })
       .catch(err => {
-        console.log("Error");
-        this.setState({
-          modalStatus: true
-        });
         console.error(err);
+        this.setState({
+          modalStatus: true,
+          modalMessage:
+            err.response.data === 1062
+              ? "Sorry, user name is already taken!!"
+              : null
+        });
       });
 
     this.setState({
@@ -367,7 +371,7 @@ class UserRegistration extends Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Something went wrong!!!
+              {this.state.modalMessage || "Something went wrong!!!"}
             </Modal.Title>
           </Modal.Header>
           <Modal.Footer>
