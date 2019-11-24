@@ -90,9 +90,10 @@ export class Header extends Component {
               className="nav ml-auto"
               onSelect={linktopage}
             >
-              {this.state.navItems.map(items => {
+              {this.state.navItems.map((items, index) => {
                 return (
                   <Nav.Item
+                    key={`navItem${index}`}
                     id="n"
                     as="li"
                     href={items[1]}
@@ -100,13 +101,9 @@ export class Header extends Component {
                     style={{ color: "white" }}
                   >
                     <Link
-                      activeClass="active"
+                      activeclass="active"
                       className="test1"
                       to={items[1]}
-                      spy={true}
-                      smooth={true}
-                      duration={1200}
-                      offset={-60}
                       id="NavBar"
                       style={Styles}
                     >
