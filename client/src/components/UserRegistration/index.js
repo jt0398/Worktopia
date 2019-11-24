@@ -8,6 +8,11 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import API from "../../utils/API";
 
+const styles = {
+  border: "none",
+  "border-bottom": "1px solid black"
+};
+
 class UserRegistration extends Component {
   state = {
     validated: false,
@@ -22,6 +27,7 @@ class UserRegistration extends Component {
     userrole: 2,
     modalStatus: false
   };
+
   // Handles updating component state when the user types into the input field
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -112,7 +118,7 @@ class UserRegistration extends Component {
         >
           <Col
             style={{
-              "box-shadow": "0px 0px 15px #b3b3b3",
+              boxShadow: "0px 0px 15px #b3b3b3",
               padding: "25px",
               border: "1px solid black"
             }}
@@ -129,7 +135,7 @@ class UserRegistration extends Component {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    id="noborder"
+                    style={styles}
                     required
                     onChange={this.handleInputChange}
                     value={this.state.username}
@@ -148,7 +154,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="email"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.email}
                     name="email"
@@ -164,7 +170,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="password"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.password}
                     name="password"
@@ -182,7 +188,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="text"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.address}
                     name="address"
@@ -200,7 +206,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="text"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.city}
                     name="city"
@@ -216,7 +222,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     as="select"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.province}
                     name="province"
@@ -243,7 +249,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="text"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.postalcode}
                     name="postalcode"
@@ -259,7 +265,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="text"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.phoneno}
                     name="phoneno"
@@ -277,7 +283,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     as="select"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.userrole}
                     name="userrole"

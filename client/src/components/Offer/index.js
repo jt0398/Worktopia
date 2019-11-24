@@ -36,9 +36,10 @@ class OfferCard extends Component {
         <CardDeck>
           {this.state.workspaces.map(workspace => {
             return (
-              <Col md={4} className="my-3">
+              <Col key={`workspace${workspace["id"]}`} md={4} className="my-3">
                 <Card className="h-100">
                   <CardImg
+                    key={`workspace${workspace["id"]}`}
                     top
                     width="100%"
                     src={
