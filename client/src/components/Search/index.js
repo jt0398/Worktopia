@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { SingleDatePicker } from "react-dates";
 import "./style.css";
 import PlacesAutocomplete from "react-places-autocomplete";
+import moment from "moment";
 
 class Search extends Component {
   constructor(props) {
@@ -39,6 +40,10 @@ class Search extends Component {
     focusedCheckIn: null,
     focusedCheckOut: null
   };
+
+  componentDidMount() {
+    console.log(this.props.checkinDate);
+  }
 
   render() {
     return (
@@ -113,7 +118,7 @@ class Search extends Component {
                 </strong>
               </Form.Label>
               <SingleDatePicker
-                date={this.props.checkinDate} // momentPropTypes.momentObj or null
+                date={moment(this.props.checkinDate)} // momentPropTypes.momentObj or null
                 onDateChange={this.props.onCheckInChange}
                 focused={this.state.focusedCheckIn} // PropTypes.bool
                 onFocusChange={({ focused }) =>
@@ -134,7 +139,7 @@ class Search extends Component {
                 </strong>
               </Form.Label>
               <SingleDatePicker
-                date={this.props.checkoutDate} // momentPropTypes.momentObj or null
+                date={moment(this.props.checkoutDate)} // momentPropTypes.momentObj or null
                 onDateChange={this.props.onCheckOutChange}
                 focused={this.state.focusedCheckOut} // PropTypes.bool
                 onFocusChange={({ focused }) =>

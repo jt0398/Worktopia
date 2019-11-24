@@ -58,8 +58,30 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    db.Booking.create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+    const checkindate = moment(req.body.checkinDate)
+      .subtract(1, "days")
+      .format("YYYY-MM-DD");
+    const checkoutdate = moment(req.body.checkoutDate).format("YYYY-MM-DD");
+    const workspaceId = req.body.WorkspaceId;
+
+    db.Booking.findAll({
+      where: {
+        WorkSpaceId: { [Op.eq]: workspaceId },
+        [Op.or]: [
+          { start_date: { [Op.between]: [checkindate, checkoutdate] } },
+          { end_date: { [Op.between]: [checkindate, checkoutdate] } }
+        ]
+      }
+    }).then(dbWorkspace => {
+      console.log(dbWorkspaces);
+
+      if (dbWorkspaces.length === 0) {
+        db.Booking.create(req.body)
+          .then(dbModel => res.json(dbModel))
+          .catch(err => res.status(422).json(err));
+      } else {
+        done(new Error("Dates are booked"));
+      }
+    });
   }
 };

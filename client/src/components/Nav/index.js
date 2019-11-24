@@ -135,4 +135,4 @@ export class Header extends Component {
   }
 }
 
-export default withRouter(Header);
+export default Header; //withRouter(Header);
