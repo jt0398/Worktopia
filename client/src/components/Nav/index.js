@@ -4,6 +4,11 @@ import { Navbar, Nav } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import API from "../../utils/API";
 
+const Styles = {
+  textDecoration: "none",
+  color: "white"
+};
+
 const noLOGIN = [
   ["HOME", "/"],
   ["LOGIN", "/login"]
@@ -99,7 +104,12 @@ export class Header extends Component {
                     <Link
                       className="test1"
                       to={items[1]}
-                      style={{ color: "white" }}
+                      spy={true}
+                      smooth={true}
+                      duration={1200}
+                      offset={-60}
+                      id="NavBar"
+                      style={Styles}
                     >
                       {items[0]}
                     </Link>

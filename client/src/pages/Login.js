@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -56,21 +56,29 @@ class Login extends Component {
         <Nav></Nav>
         <Container fluid style={{ height: "100vh" }}>
           <br></br>
-          <Card
-            className="mt-5"
+          <div
+            className="col-lg-4 col-md-6 col-sm-4 col-xs-2"
             style={{
-              width: "22rem",
-              height: "70vh",
-              margin: "auto"
+              margin: "auto",
+              "box-shadow": "0px 0px 40px #b3b3b3",
+              marginTop: "5%"
             }}
           >
-            <Card.Img variant="top  " src="/images/loginimg.jpg" />
-            <Card.ImgOverlay>
-              <Card.Title className="text-center h3 pt-5 text-white">
-                LOGIN
-              </Card.Title>
-            </Card.ImgOverlay>
-            <Card.Body>
+            <Card.Text style={{ paddingTop: "20px" }}>
+              <Col className="text-center text ">
+                <h3
+                  style={{
+                    "line-height": "auto",
+                    color: "#7fff00",
+                    "border-bottom-length": "50px",
+                    "border-bottom": "1px solid #222"
+                  }}
+                >
+                  LOGIN
+                </h3>
+              </Col>
+            </Card.Text>
+            <Card.Body style={{ paddingTop: "40px" }}>
               <Row>
                 <Col md={12} sm={6}>
                   <Form>
@@ -78,6 +86,7 @@ class Login extends Component {
                       value={this.state.username}
                       onChange={this.handleInputChange}
                       name="username"
+                      id="uname"
                       placeholder="Enter your username"
                     />
                     <br></br>
@@ -85,6 +94,7 @@ class Login extends Component {
                       value={this.state.password}
                       onChange={this.handleInputChange}
                       name="password"
+                      id="passwd"
                       type="password"
                       placeholder="Enter your password"
                     />
@@ -92,6 +102,7 @@ class Login extends Component {
                     <div className="text-center">
                       <Button
                         className="btn btn-info "
+                        id="buttonSubmit"
                         disabled={this.validateFormCompletion()}
                         onClick={this.handleFormSubmit}
                       >
@@ -106,13 +117,18 @@ class Login extends Component {
                 <Col className="text-center" md={12} sm={6}>
                   <br></br>
                   <h5>
-                    Create an Account...?<br></br>
-                    <br></br> <a href="/signup">SIGN UP </a>
+                    Not Registered Yet ...?<br></br>
+                    <br></br>
                   </h5>
+                  <Link to="/signup">
+                    <Col className="text-center text ">
+                      <button id="signup">SIGN UP</button>
+                    </Col>
+                  </Link>
                 </Col>
               </Row>
             </Card.Body>
-          </Card>
+          </div>
         </Container>
       </>
     );
