@@ -73,8 +73,9 @@ function WorkspaceCard({
         </div>
         {imgStyle && (
           <div className="col-md-2">
-            <span className="align-middle">
-              Price: ${rental_price} <br />
+            <span className="align-middle p-2">
+              Price: CAD ${rental_price} <br />
+              <br />
               <Link
                 to={`/booking/workspace/${workspaceID}`}
                 className="btn btn-primary"

@@ -32,7 +32,10 @@ class SearchResults extends Component {
         moment(new Date(), "yyyy-mm-dd"),
       room: localStorage.getItem("room") || 0,
       people: localStorage.getItem("people") || 0,
-      selectedFeatures: localStorage.getItem("SelectedFeatures") || []
+      selectedFeatures:
+        (localStorage.getItem("features") &&
+          localStorage.getItem("features").split(",")) ||
+        []
     },
     locations: [], //geolocations based on address
     centerGeoLoc: [43.6532, -79.3832],
@@ -127,16 +130,16 @@ class SearchResults extends Component {
   //Loads feature list
   loadFeatures = () => {
     let tempFeatureList = [];
-    const selectedFeatures = this.state.selectedFeatures;
+    const selectedFeatures = this.state.searchParams.selectedFeatures;
 
-    console.log(selectedFeatures, localStorage.getItem("SelectedFeatures"));
+    console.log(selectedFeatures);
 
     miscAPI.getFeatureList().then(res => {
       res.data.forEach(feature => {
         tempFeatureList.push({
           name: feature.name,
           label: feature.id,
-          status: false //selectedFeatures.indexOf(feature.id) !== -1
+          status: selectedFeatures.indexOf(feature.id.toString()) !== -1
         });
       });
 
@@ -262,7 +265,7 @@ class SearchResults extends Component {
       hashFeatures: tmpHash
     });
 
-    localStorage.setItem("SelectedFeatures", this.state.selectedFeatures);
+    localStorage.setItem("features", features);
   };
 
   render() {
