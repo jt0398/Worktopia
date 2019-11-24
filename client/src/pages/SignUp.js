@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import UserRegistration from "../components/UserRegistration";
 
-import "./css/registrationPage.css";
+// import "./css/registrationPage.css";
 
 import Nav from "../components/Nav";
 
