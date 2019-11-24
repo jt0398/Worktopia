@@ -296,16 +296,16 @@ module.exports = {
               [Op.notIn]: Sequelize.literal(
                 "(SELECT DISTINCT WorkspaceId " +
                   " FROM Bookings " +
-                  " WHERE start_date BETWEEN '" +
+                  " WHERE (start_date >= '" +
                   checkindate +
-                  "' AND '" +
+                  "' AND start_date <= '" +
                   checkoutdate +
-                  "' " +
-                  " OR end_date BETWEEN '" +
+                  "') " +
+                  " OR (end_date >= '" +
                   checkindate +
-                  "' AND '" +
+                  "' AND end_date <= '" +
                   checkoutdate +
-                  "')"
+                  "'))"
               )
             }
           },
