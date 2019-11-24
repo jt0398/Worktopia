@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import UserRegistration from "../components/UserRegistration";
 import Nav from "../components/Nav";
+import "./css/registrationPage.css";
 
 function SignUp() {
   return (
