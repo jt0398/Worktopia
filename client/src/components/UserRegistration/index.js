@@ -16,14 +16,14 @@ const styles = {
 class UserRegistration extends Component {
   state = {
     validated: false,
-    username: "alex",
-    password: "abc",
-    email: "alex@gmail.com",
-    address: "address",
-    city: "city",
+    username: null,
+    password: null,
+    email: null,
+    address: null,
+    city: null,
     province: "ON",
-    postalcode: "L",
-    phoneno: "1",
+    postalcode: null,
+    phoneno: null,
     userrole: 2,
     modalStatus: false,
     validateformModel: false,
@@ -40,49 +40,43 @@ class UserRegistration extends Component {
   };
 
   handleOnSubmit = event => {
+    event.preventDefault();
     const form = event.currentTarget;
 
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+      this.setState({ validated: true });
+    } else {
+      this.setState({ validated: true });
+      const user = {
+        username: this.state.username,
+        password: this.state.password,
+        email: this.state.email,
+        addr1: this.state.address,
+        city: this.state.city,
+        province: this.state.province,
+        postal_code: this.state.postalcode,
+        phone_no: this.state.phoneno,
+        UserRoleId: this.state.userrole
+      };
 
-      return;
-    }
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    const user = {
-      username: this.state.username,
-      password: this.state.password,
-      email: this.state.email,
-      addr1: this.state.address,
-      city: this.state.city,
-      province: this.state.province,
-      postal_code: this.state.postalcode,
-      phone_no: this.state.phoneno,
-      UserRoleId: this.state.userrole
-    };
-
-    API.createUser(user)
-      .then(response => {
-        console.log("Succesfully SignedUp");
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        console.error(err);
-        this.setState({
-          modalStatus: true,
-          modalMessage:
-            err.response.data === 1062
-              ? "Sorry, user name is already taken!!"
-              : null
+      API.createUser(user)
+        .then(response => {
+          console.log("Succesfully SignedUp");
+          this.props.history.push("/");
+        })
+        .catch(err => {
+          console.error(err);
+          this.setState({
+            modalStatus: true,
+            modalMessage:
+              err.response.data === 1062
+                ? "Sorry, user name is already taken!!"
+                : null
+          });
         });
-      });
-
-    this.setState({
-      validated: true
-    });
+    }
   };
 
   handleClose = () => {
@@ -95,24 +89,6 @@ class UserRegistration extends Component {
     this.setState({
       validateformModel: false
     });
-  };
-
-  validatefunction = () => {
-    if (
-      this.state.username === "" ||
-      this.state.password === "" ||
-      this.state.email === "" ||
-      this.state.address === "" ||
-      this.state.city === "" ||
-      this.state.province === "" ||
-      this.state.postalcode === "" ||
-      this.state.phoneno === "" ||
-      this.state.userrole === ""
-    ) {
-      this.setState({
-        validateformModel: true
-      });
-    }
   };
 
   render() {
@@ -179,7 +155,7 @@ class UserRegistration extends Component {
                     name="username"
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid username.
+                    We dont want to call you `my_name_is`, so choose yourself!
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form.Row>
@@ -199,7 +175,7 @@ class UserRegistration extends Component {
                     name="email"
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid email.
+                    How can we send you confirmations and recipts?
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col}>
@@ -217,7 +193,7 @@ class UserRegistration extends Component {
                     name="password"
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid password.
+                    Seriously? You don't want to enter this?
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form.Row>
@@ -237,7 +213,7 @@ class UserRegistration extends Component {
                     name="address"
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid address.
+                    Just in case you invite us for dinner? :)
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form.Row>
@@ -302,7 +278,8 @@ class UserRegistration extends Component {
                     name="postalcode"
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid postal code.
+                    We need this too, else Google maps and Canada Post will
+                    sulk!
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col}>
@@ -320,7 +297,7 @@ class UserRegistration extends Component {
                     name="phoneno"
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid phone no.
+                    Trust us, we don't sell data like Google!
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form.Row>
@@ -339,7 +316,6 @@ class UserRegistration extends Component {
                     value={this.state.userrole}
                     name="userrole"
                   >
-                    <option>Choose...</option>
                     <option key="1" value="1">
                       Owner
                     </option>
@@ -355,7 +331,7 @@ class UserRegistration extends Component {
               <Button
                 type="submit"
                 className="btn btn-info"
-                onClick={this.validatefunction}
+                // onClick={this.validatefunction}
               >
                 Submit
               </Button>
