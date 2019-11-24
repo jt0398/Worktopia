@@ -281,7 +281,7 @@ module.exports = {
       featureWhere =
         "(SELECT WorkspaceId " +
         " FROM WorkspaceFeatures " +
-        " WHERE FeatureId IN (" +
+        " WHERE Status = 1 AND FeatureId IN (" +
         req.body.selectedFeatures.join(",") +
         "))";
     }
@@ -359,7 +359,12 @@ module.exports = {
           }
         },
         {
-          model: db.Feature
+          model: db.Feature,
+          required: true,
+          through: {
+            required: true,
+            where: { status: true }
+          }
         }
       ]
     })
