@@ -5,7 +5,7 @@ export default {
   checkLogin: function(userLoginData) {
     return axios.post("/api/login", userLoginData);
   },
-  logout: function(){
+  logout: function() {
     return axios.get("/api/logout");
   },
   fileUpload: function(data) {

@@ -132,8 +132,6 @@ class SearchResults extends Component {
     let tempFeatureList = [];
     const selectedFeatures = this.state.searchParams.selectedFeatures;
 
-    console.log(selectedFeatures);
-
     miscAPI.getFeatureList().then(res => {
       res.data.forEach(feature => {
         tempFeatureList.push({
@@ -271,7 +269,7 @@ class SearchResults extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="SRbg">
             <div className="SRheader">Your Search Result</div>

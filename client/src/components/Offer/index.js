@@ -34,9 +34,9 @@ class OfferCard extends Component {
     return (
       <Row className="mr-auto">
         <CardDeck>
-          {this.state.workspaces.map(workspace => {
+          {this.state.workspaces.map((workspace, index) => {
             return (
-              <Col md={4} className="my-3">
+              <Col md={4} className="my-3" key={index}>
                 <Card className="h-100">
                   <CardImg
                     top

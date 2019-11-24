@@ -197,7 +197,7 @@ class AddLocation extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="locationBg">
             <div className="locheader">Add Location</div>

@@ -30,19 +30,20 @@ class Login extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    let from = this.props.location.state.from;
+    let from =
+      (this.props.location.state && this.props.location.state.from) || "";
 
     if (this.state.username && this.state.password) {
       API.checkLogin(this.state)
         .then(res => {
           localStorage.setItem("UserId", res.data.id);
-          localStorage.setItem("UserRole", res.data.UserRoleId);
+
           if (res.data.UserRoleId === 1) {
             from = from || "/owner";
             this.props.history.push(from);
           } else {
             from = from || "/";
-            this.props.history.push("/");
+            this.props.history.push(from);
           }
         })
         .catch(err => console.log(err));
@@ -65,13 +66,9 @@ class Login extends Component {
           >
             <Card.Img variant="top  " src="/images/loginimg.jpg" />
             <Card.ImgOverlay>
-              <Card.Text>
-                <Col className="text-center">
-                  <h3 style={{ "line-height": "100px", color: "#7fff00" }}>
-                    LOGIN
-                  </h3>
-                </Col>
-              </Card.Text>
+              <Card.Title className="text-center h3 pt-5 text-white">
+                LOGIN
+              </Card.Title>
             </Card.ImgOverlay>
             <Card.Body>
               <Row>

@@ -47,7 +47,7 @@ class OwnerLocations extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="ownerBg">
             <div className="DBheader">Locations Dashboard</div>

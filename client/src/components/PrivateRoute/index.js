@@ -43,7 +43,11 @@ class PrivateRoute extends React.Component {
         {...rest}
         render={props => {
           return this.state.isLoggedIn === true ? (
-            <Component {...props} />
+            <Component
+              {...props}
+              isLoggedIn={this.state.isLoggedIn}
+              isOwner={this.state.isOwner}
+            />
           ) : (
             <Redirect
               to={{

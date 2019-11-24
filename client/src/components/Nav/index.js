@@ -24,7 +24,8 @@ const ownerLOGIN = [
 export class Header extends Component {
   state = {
     navItems: [],
-    userLoggedIn: false
+    userLoggedIn: this.props.isLoggedIn || false,
+    isOwner: this.props.isOwner || false
   };
 
   handleLogout = event => {
@@ -32,33 +33,33 @@ export class Header extends Component {
     API.logout()
       .then(response => {
         localStorage.removeItem("UserId");
-        localStorage.removeItem("UserRole");
+
         this.setState({
           navItems: noLOGIN,
           userLoggedIn: false
         });
+
         this.props.history.push("/");
       })
       .catch(err => {
         console.error(err);
       });
   };
-  componentDidMount() {
-    //1 Owner, 2 Customer
 
+  componentDidMount() {
     //Owner
-    if (parseInt(localStorage.getItem("UserRole")) === 1) {
+    if (this.state.userLoggedIn && this.state.isOwner) {
       this.setState({
         navItems: ownerLOGIN,
         userLoggedIn: true
       });
-    } else if (parseInt(localStorage.getItem("UserRole")) === 2) {
+    } else if (this.state.userLoggedIn) {
       //Customer
       this.setState({
         navItems: userLOGIN,
         userLoggedIn: true
       });
-    } else if (!parseInt(localStorage.getItem("UserRole"))) {
+    } else if (!this.state.userLoggedIn) {
       //Anonymous
       this.setState({
         navItems: noLOGIN
@@ -91,11 +92,15 @@ export class Header extends Component {
                     id="n"
                     as="li"
                     href={items[1]}
-                    className="mr-3"
+                    className="mr-3 pt-2"
                     style={{ color: "white" }}
                     key={index}
                   >
-                    <Link className="test1" to={items[1]}>
+                    <Link
+                      className="test1"
+                      to={items[1]}
+                      style={{ color: "white" }}
+                    >
                       {items[0]}
                     </Link>
                   </Nav.Item>
