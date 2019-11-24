@@ -10,7 +10,7 @@ import API from "../../utils/API";
 
 const styles = {
   border: "none",
-  "border-bottom": "1px solid black"
+  borderBottom: "1px solid black"
 };
 
 class UserRegistration extends Component {
@@ -25,7 +25,8 @@ class UserRegistration extends Component {
     postalcode: "L",
     phoneno: "1",
     userrole: 2,
-    modalStatus: false
+    modalStatus: false,
+    validateformModel: false
   };
 
   // Handles updating component state when the user types into the input field
@@ -86,6 +87,30 @@ class UserRegistration extends Component {
     });
   };
 
+  handleFormClose = () => {
+    this.setState({
+      validateformModel: false
+    });
+  };
+
+  validatefunction = () => {
+    if (
+      this.state.username === "" ||
+      this.state.password === "" ||
+      this.state.email === "" ||
+      this.state.address === "" ||
+      this.state.city === "" ||
+      this.state.province === "" ||
+      this.state.postalcode === "" ||
+      this.state.phoneno === "" ||
+      this.state.userrole === ""
+    ) {
+      this.setState({
+        validateformModel: true
+      });
+    }
+  };
+
   render() {
     const provinceList = [
       ["Alberta", "AB"],
@@ -131,7 +156,15 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Username</strong>
+                    <span style={{ color: "red" }}>
+                      <sup>* &nbsp;</sup>Required Fields
+                    </span>
+                  </Form.Label>
+                  <br></br>
+                  <Form.Label>
+                    <strong>
+                      Username &nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -149,7 +182,9 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Email</strong>
+                    <strong>
+                      Email &nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="email"
@@ -165,7 +200,9 @@ class UserRegistration extends Component {
                 </Form.Group>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Password</strong>
+                    <strong>
+                      Password &nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="password"
@@ -183,7 +220,9 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Address</strong>
+                    <strong>
+                      Address &nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -201,7 +240,9 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>City</strong>
+                    <strong>
+                      City&nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -244,7 +285,9 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Postal Code</strong>
+                    <strong>
+                      Postal Code&nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -260,7 +303,9 @@ class UserRegistration extends Component {
                 </Form.Group>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Phone No</strong>
+                    <strong>
+                      Phone No&nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -278,7 +323,9 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>User Role</strong>
+                    <strong>
+                      User Role&nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     as="select"
@@ -297,11 +344,15 @@ class UserRegistration extends Component {
                     </option>
                   </Form.Control>
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid uesr role.
+                    Please provide a valid user role.
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form.Row>
-              <Button type="submit" className="btn btn-info">
+              <Button
+                type="submit"
+                className="btn btn-info"
+                onClick={this.validatefunction}
+              >
                 Submit
               </Button>
             </Form>
@@ -321,6 +372,23 @@ class UserRegistration extends Component {
           </Modal.Header>
           <Modal.Footer>
             <Button onClick={this.handleClose}>OK</Button>
+          </Modal.Footer>
+        </Modal>
+        {/*  */}
+        <Modal
+          show={this.state.validateformModel}
+          onHide={this.handleFormClose}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Please Enter all required Fields.. !!
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <Button onClick={this.handleFormClose}>OK</Button>
           </Modal.Footer>
         </Modal>
       </Container>
