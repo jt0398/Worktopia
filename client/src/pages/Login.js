@@ -28,16 +28,20 @@ class Login extends Component {
   };
 
   handleFormSubmit = event => {
-    console.log("Cliecked Submit");
     event.preventDefault();
+
+    let from = this.props.location.state.from;
+
     if (this.state.username && this.state.password) {
       API.checkLogin(this.state)
         .then(res => {
           localStorage.setItem("UserId", res.data.id);
           localStorage.setItem("UserRole", res.data.UserRoleId);
           if (res.data.UserRoleId === 1) {
-            this.props.history.push("/owner");
+            from = from || "/owner";
+            this.props.history.push(from);
           } else {
+            from = from || "/";
             this.props.history.push("/");
           }
         })

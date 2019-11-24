@@ -47,7 +47,7 @@ class OwnerLocations extends Component {
   render() {
     return (
       <>
-      <Nav></Nav>
+        <Nav></Nav>
         <Container fluid>
           <div className="ownerBg">
             <div className="DBheader">Locations Dashboard</div>
@@ -75,7 +75,7 @@ class OwnerLocations extends Component {
                       {this.state.workspaceInfo.map(element => (
                         <Col md={4} className="p-3" key={element.id}>
                           <Link to={`/workspacedetail/${element.id}`}>
-                            <div class="cardDeck h-100">
+                            <div className="cardDeck h-100">
                               <WorkspaceCard
                                 key={element.id}
                                 name={element.name}

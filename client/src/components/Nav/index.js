@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {withRouter, Link} from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import API from "../../utils/API";
@@ -85,7 +85,7 @@ export class Header extends Component {
               className="nav ml-auto"
               onSelect={linktopage}
             >
-              {this.state.navItems.map(items => {
+              {this.state.navItems.map((items, index) => {
                 return (
                   <Nav.Item
                     id="n"
@@ -93,16 +93,9 @@ export class Header extends Component {
                     href={items[1]}
                     className="mr-3"
                     style={{ color: "white" }}
+                    key={index}
                   >
-                    <Link
-                      activeClass="active"
-                      className="test1"
-                      to={items[1]}
-                      spy={true}
-                      smooth={true}
-                      duration={1200}
-                      offset={-60}
-                    >
+                    <Link className="test1" to={items[1]}>
                       {items[0]}
                     </Link>
                   </Nav.Item>

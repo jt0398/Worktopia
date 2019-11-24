@@ -43,7 +43,7 @@ class OfferCard extends Component {
                     width="100%"
                     src={
                       workspace.WorkspacePics &&
-                      workspace.WorkspacePics[0].image_path
+                      (workspace.WorkspacePics[0].image_path || " ")
                     }
                     alt={workspace.name}
                   />

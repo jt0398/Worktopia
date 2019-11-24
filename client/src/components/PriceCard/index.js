@@ -83,7 +83,7 @@ class PriceCard extends Component {
     });
 
     //Send user to the My Booking page
-    window.location.href = "/user/booking";
+    window.location.href = "/booking/user";
   };
 
   render() {

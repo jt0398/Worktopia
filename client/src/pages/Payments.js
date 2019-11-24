@@ -28,7 +28,6 @@ export default class Payments extends React.Component {
           amount={100} //cents
           currency="CAD"
           billingAddress
-          // image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png"
           locale="auto"
           stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}
           token={this.onToken}

@@ -19,7 +19,28 @@ import { RemainingChar } from "../components/Form";
 import "./css/WorkSpaceDetail.css";
 var moment = require("moment");
 
-const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+const NUMBER_OF_PEOPLE = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20
+];
 const OWNER_ID = localStorage.getItem("UserId");
 
 class WorkSpaceDetail extends Component {

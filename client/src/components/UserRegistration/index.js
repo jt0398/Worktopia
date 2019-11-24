@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,7 +7,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import API from "../../utils/API";
-import Card from "react-bootstrap/Card";
 
 class UserRegistration extends Component {
   state = {

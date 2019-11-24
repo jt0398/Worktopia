@@ -23,7 +23,7 @@ function WorkspaceCard({
     <Card className={cardStyle}>
       <div className={rowStyle}>
         <div className={imgStyle}>
-          <Card.Img className={imgClass} variant={variant} src={src} />
+          <Card.Img className={imgClass} variant={variant} src={src || " "} />
         </div>
         <div className={bodyStyle}>
           <Card.Body>
@@ -77,7 +77,7 @@ function WorkspaceCard({
               Price: ${rental_price} <br />
               <Link
                 to={`/booking/workspace/${workspaceID}`}
-                class="btn btn-primary"
+                className="btn btn-primary"
               >
                 Book
               </Link>

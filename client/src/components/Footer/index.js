@@ -2,8 +2,8 @@ import React from "react";
 
 function Footer() {
   return (
-    <span className="text-center text-secondary">
-      <p className=" footer">
+    <span className="text-center text-secondary pt-3">
+      <p className="footer">
         <br></br>
         <i className="fab fa-facebook fa-3x"></i>&nbsp;&nbsp;&nbsp;
         <i className="fab fa-twitter fa-3x"></i>&nbsp;&nbsp;&nbsp;

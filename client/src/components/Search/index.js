@@ -78,7 +78,7 @@ class Search extends Component {
                     <Form.Control.Feedback type="invalid">
                       Please provide location.
                     </Form.Control.Feedback>
-                    <div className="autocomplete-dropdown-container">
+                    <div className="autocomplete-dropdown-container pl-2">
                       {loading && <div>Loading...</div>}
                       {suggestions.map(suggestion => {
                         const className = suggestion.active
