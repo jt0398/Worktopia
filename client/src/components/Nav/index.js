@@ -94,6 +94,7 @@ export class Header extends Component {
               {this.state.navItems.map((items, index) => {
                 return (
                   <Nav.Item
+                    key={`navItem${index}`}
                     id="n"
                     as="li"
                     href={items[1]}
@@ -102,12 +103,9 @@ export class Header extends Component {
                     key={index}
                   >
                     <Link
+                      activeclass="active"
                       className="test1"
                       to={items[1]}
-                      spy={true}
-                      smooth={true}
-                      duration={1200}
-                      offset={-60}
                       id="NavBar"
                       style={Styles}
                     >

@@ -8,6 +8,11 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import API from "../../utils/API";
 
+const styles = {
+  border: "none",
+  borderBottom: "1px solid black"
+};
+
 class UserRegistration extends Component {
   state = {
     validated: false,
@@ -20,8 +25,10 @@ class UserRegistration extends Component {
     postalcode: "L",
     phoneno: "1",
     userrole: 2,
-    modalStatus: false
+    modalStatus: false,
+    validateformModel: false
   };
+
   // Handles updating component state when the user types into the input field
   handleInputChange = event => {
     const { name, value } = event.target;
@@ -80,6 +87,30 @@ class UserRegistration extends Component {
     });
   };
 
+  handleFormClose = () => {
+    this.setState({
+      validateformModel: false
+    });
+  };
+
+  validatefunction = () => {
+    if (
+      this.state.username === "" ||
+      this.state.password === "" ||
+      this.state.email === "" ||
+      this.state.address === "" ||
+      this.state.city === "" ||
+      this.state.province === "" ||
+      this.state.postalcode === "" ||
+      this.state.phoneno === "" ||
+      this.state.userrole === ""
+    ) {
+      this.setState({
+        validateformModel: true
+      });
+    }
+  };
+
   render() {
     const provinceList = [
       ["Alberta", "AB"],
@@ -112,7 +143,7 @@ class UserRegistration extends Component {
         >
           <Col
             style={{
-              "box-shadow": "0px 0px 15px #b3b3b3",
+              boxShadow: "0px 0px 15px #b3b3b3",
               padding: "25px",
               border: "1px solid black"
             }}
@@ -125,11 +156,19 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Username</strong>
+                    <span style={{ color: "red" }}>
+                      <sup>* &nbsp;</sup>Required Fields
+                    </span>
+                  </Form.Label>
+                  <br></br>
+                  <Form.Label>
+                    <strong>
+                      Username &nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    id="noborder"
+                    style={styles}
                     required
                     onChange={this.handleInputChange}
                     value={this.state.username}
@@ -143,12 +182,14 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Email</strong>
+                    <strong>
+                      Email &nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="email"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.email}
                     name="email"
@@ -159,12 +200,14 @@ class UserRegistration extends Component {
                 </Form.Group>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Password</strong>
+                    <strong>
+                      Password &nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="password"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.password}
                     name="password"
@@ -177,12 +220,14 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Address</strong>
+                    <strong>
+                      Address &nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.address}
                     name="address"
@@ -195,12 +240,14 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>City</strong>
+                    <strong>
+                      City&nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.city}
                     name="city"
@@ -216,7 +263,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     as="select"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.province}
                     name="province"
@@ -238,12 +285,14 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Postal Code</strong>
+                    <strong>
+                      Postal Code&nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.postalcode}
                     name="postalcode"
@@ -254,12 +303,14 @@ class UserRegistration extends Component {
                 </Form.Group>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>Phone No</strong>
+                    <strong>
+                      Phone No&nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.phoneno}
                     name="phoneno"
@@ -272,12 +323,14 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>User Role</strong>
+                    <strong>
+                      User Role&nbsp;<sup style={{ color: "red" }}>*</sup>
+                    </strong>
                   </Form.Label>
                   <Form.Control
                     as="select"
                     required
-                    id="noborder"
+                    style={styles}
                     onChange={this.handleInputChange}
                     value={this.state.userrole}
                     name="userrole"
@@ -291,11 +344,15 @@ class UserRegistration extends Component {
                     </option>
                   </Form.Control>
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid uesr role.
+                    Please provide a valid user role.
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form.Row>
-              <Button type="submit" className="btn btn-info">
+              <Button
+                type="submit"
+                className="btn btn-info"
+                onClick={this.validatefunction}
+              >
                 Submit
               </Button>
             </Form>
@@ -315,6 +372,23 @@ class UserRegistration extends Component {
           </Modal.Header>
           <Modal.Footer>
             <Button onClick={this.handleClose}>OK</Button>
+          </Modal.Footer>
+        </Modal>
+        {/*  */}
+        <Modal
+          show={this.state.validateformModel}
+          onHide={this.handleFormClose}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Header>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Please Enter all required Fields.. !!
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <Button onClick={this.handleFormClose}>OK</Button>
           </Modal.Footer>
         </Modal>
       </Container>
