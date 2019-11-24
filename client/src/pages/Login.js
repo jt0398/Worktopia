@@ -54,7 +54,7 @@ class Login extends Component {
             className="col-lg-4 col-md-6 col-sm-4 col-xs-2"
             style={{
               margin: "auto",
-              "box-shadow": "0px 0px 40px #b3b3b3",
+              boxShadow: "0px 0px 40px #b3b3b3",
               marginTop: "5%"
             }}
           >
@@ -62,10 +62,10 @@ class Login extends Component {
               <Col className="text-center text ">
                 <h3
                   style={{
-                    "line-height": "auto",
+                    lineHeight: "auto",
                     color: "#7fff00",
-                    "border-bottom-length": "50px",
-                    "border-bottom": "1px solid #222"
+                    borderBottomLength: "50px",
+                    borderBottom: "1px solid #222"
                   }}
                 >
                   LOGIN
