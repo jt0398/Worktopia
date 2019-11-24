@@ -112,6 +112,7 @@ class UserRegistration extends Component {
         >
           <Col
             style={{
+              "box-shadow": "0px 0px 15px #b3b3b3",
               padding: "25px",
               border: "1px solid black"
             }}
