@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,7 +7,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import API from "../../utils/API";
-import Card from "react-bootstrap/Card";
 
 class UserRegistration extends Component {
   state = {
@@ -114,7 +113,6 @@ class UserRegistration extends Component {
           <Col
             style={{
               padding: "25px",
-              backgroundColor: "#F7F7F7",
               border: "1px solid black"
             }}
           >
@@ -130,6 +128,7 @@ class UserRegistration extends Component {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    id="noborder"
                     required
                     onChange={this.handleInputChange}
                     value={this.state.username}
@@ -148,6 +147,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="email"
                     required
+                    id="noborder"
                     onChange={this.handleInputChange}
                     value={this.state.email}
                     name="email"
@@ -163,6 +163,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="password"
                     required
+                    id="noborder"
                     onChange={this.handleInputChange}
                     value={this.state.password}
                     name="password"
@@ -180,6 +181,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="text"
                     required
+                    id="noborder"
                     onChange={this.handleInputChange}
                     value={this.state.address}
                     name="address"
@@ -197,6 +199,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="text"
                     required
+                    id="noborder"
                     onChange={this.handleInputChange}
                     value={this.state.city}
                     name="city"
@@ -212,6 +215,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     as="select"
                     required
+                    id="noborder"
                     onChange={this.handleInputChange}
                     value={this.state.province}
                     name="province"
@@ -238,6 +242,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="text"
                     required
+                    id="noborder"
                     onChange={this.handleInputChange}
                     value={this.state.postalcode}
                     name="postalcode"
@@ -253,6 +258,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     type="text"
                     required
+                    id="noborder"
                     onChange={this.handleInputChange}
                     value={this.state.phoneno}
                     name="phoneno"
@@ -270,6 +276,7 @@ class UserRegistration extends Component {
                   <Form.Control
                     as="select"
                     required
+                    id="noborder"
                     onChange={this.handleInputChange}
                     value={this.state.userrole}
                     name="userrole"
