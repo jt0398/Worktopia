@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
 import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -21,7 +22,8 @@ const loginDivStyle = {
 class Login extends Component {
   state = {
     username: "",
-    password: ""
+    password: "",
+    validateLogin: false
   };
 
   componentDidMount() {
@@ -65,9 +67,22 @@ class Login extends Component {
             this.props.history.push("/");
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.setState({
+            username: "",
+            password: "",
+            validateLogin: true
+          });
+        });
     }
   };
+
+  handleloginclose = () => {
+    this.setState({
+      validateLogin: false
+    });
+  };
+
   render() {
     return (
       <>
@@ -147,6 +162,24 @@ class Login extends Component {
               </Row>
             </Card.Body>
           </div>
+
+          {/* Invalid Login Modal Handler */}
+          <Modal
+            show={this.state.validateLogin}
+            onHide={this.handleloginclose}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <Modal.Title id="contained-modal-title-center">
+                <span style={{ color: "red" }}>Invalid Login</span>
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Footer>
+              <Button onClick={this.handleloginclose}>OK</Button>
+            </Modal.Footer>
+          </Modal>
         </Container>
       </>
     );
