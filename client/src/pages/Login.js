@@ -111,7 +111,7 @@ class Login extends Component {
                 <Col className="text-center" md={12} sm={6}>
                   <br></br>
                   <h5>
-                    Create an Account...?<br></br>
+                    Not Registered Yet ...?<br></br>
                     <br></br>
                   </h5>
                   <Link to="/signup">

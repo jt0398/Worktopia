@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import {withRouter, Link} from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import API from "../../utils/API";
+
+const Styles = {
+  textDecoration: "none",
+  color: "white"
+};
 
 const noLOGIN = [
   ["HOME", "/"],
@@ -102,6 +107,8 @@ export class Header extends Component {
                       smooth={true}
                       duration={1200}
                       offset={-60}
+                      id="NavBar"
+                      style={Styles}
                     >
                       {items[0]}
                     </Link>
