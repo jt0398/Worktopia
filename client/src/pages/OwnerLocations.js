@@ -27,7 +27,7 @@ class OwnerLocations extends Component {
 
         let id = this.props.match.params.id;
 
-        if (!id) {
+        if (!this.props.match.params.id) {
           id = this.state.ownerAddress[0].id;
         }
 
