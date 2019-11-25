@@ -20,7 +20,28 @@ import { RemainingChar } from "../components/Form";
 import "./css/WorkSpaceDetail.css";
 var moment = require("moment");
 
-const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+const NUMBER_OF_PEOPLE = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20
+];
 const OWNER_ID = localStorage.getItem("UserId");
 
 class WorkSpaceDetail extends Component {
@@ -30,7 +51,7 @@ class WorkSpaceDetail extends Component {
     workspaceDescription: "",
     workSpaceLocation: "",
     workSpaceLocationName: "",
-    workSpaceOccupancy: 0,
+    workSpaceOccupancy: 1,
     workSpaceDimensions: "",
     workSpaceDailyRate: "",
     selectedFile: null,
@@ -39,8 +60,8 @@ class WorkSpaceDetail extends Component {
     uploading: false,
     imageFileName: "",
     activateWorkSpace: false,
-    startDate: null,
-    endDate: null,
+    startDate: moment(),
+    endDate: moment(),
     focusedInput: null,
     LOCATION_LIST: [],
     FEATURE_LIST: [],
@@ -188,6 +209,10 @@ class WorkSpaceDetail extends Component {
               { fullAdress: location.full_address, locationId: location.id }
             ]
           });
+        });
+        this.setState({
+          workSpaceLocationName: res.data[0].full_address,
+          workSpaceLocation: res.data[0].id
         });
       })
       .catch(err => console.error(err));
