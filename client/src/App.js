@@ -13,6 +13,7 @@ import UserBooking from "./pages/userBooking";
 import NoMatch from "./pages/NoMatch";
 import Signup from "./pages/SignUp";
 import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute";
 
 import "./pages/css/MainPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,7 +26,7 @@ function App() {
         {/* Used to select which routes to take */}
         <Switch>
           {/* To render a component depending on the URL exact path hit in the browser*/}
-          <Route exact path="/" component={MainPage} />
+          <PublicRoute exact path="/" component={MainPage} />
           <Route exact path="/login" component={Login} />
 
           {/*Add workspace*/}
@@ -42,7 +43,7 @@ function App() {
             component={WorkSpaceDetail}
           />
 
-          <Route exact path="/searchresults" component={SearchResults} />
+          <PublicRoute exact path="/searchresults" component={SearchResults} />
 
           {/*Book workspace*/}
           <PrivateRoute
@@ -74,7 +75,7 @@ function App() {
 
           <Route exact path="/signup" component={Signup} />
 
-          <Route component={NoMatch} />
+          <PublicRoute component={NoMatch} />
         </Switch>
       </div>
     </Router>

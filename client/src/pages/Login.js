@@ -56,15 +56,23 @@ class Login extends Component {
   };
   handleFormSubmit = event => {
     event.preventDefault();
+
+    let from =
+      (this.props.location.state && this.props.location.state.from) || "";
+
+    console.log("FROM " + from);
+
     if (this.state.username && this.state.password) {
       API.checkLogin(this.state)
         .then(res => {
           localStorage.setItem("UserId", res.data.id);
-          localStorage.setItem("UserRole", res.data.UserRoleId);
+
           if (res.data.UserRoleId === 1) {
-            this.props.history.push("/owner");
+            from = from || "/owner";
+            this.props.history.push(from);
           } else {
-            this.props.history.push("/");
+            from = from || "/";
+            this.props.history.push(from);
           }
         })
         .catch(err => {

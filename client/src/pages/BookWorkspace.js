@@ -7,11 +7,12 @@ import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
 import workspaceAPI from "../utils/workspaceAPI";
+import bookingAPI from "../utils/BookingAPI";
 import PriceCard from "../components/PriceCard";
-// import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Footer from "../components/Footer";
 import "./css/BkgWorkSpace.css";
 import Nav from "../components/Nav";
+import { withRouter } from "react-router-dom";
 
 class BookWorkspace extends Component {
   state = {
@@ -19,18 +20,17 @@ class BookWorkspace extends Component {
     searchParams: {
       location: localStorage.getItem("location") || "",
       checkinDate:
-        (localStorage.getItem("checkinDate") &&
-          moment(localStorage.getItem("checkinDate"), "yyyy-mm-dd")) ||
-        moment(new Date(), "yyyy-mm-dd"),
+        localStorage.getItem("checkinDate") ||
+        moment(new Date()).format("MM/DD/YYYY"),
       checkoutDate:
-        (localStorage.getItem("checkoutDate") &&
-          moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
-        moment(new Date(), "yyyy-mm-dd"),
+        localStorage.getItem("checkoutDate") ||
+        moment(new Date()).format("MM/DD/YYYY"),
       room: localStorage.getItem("room") || 0,
       people: localStorage.getItem("people") || 0
     },
     locations: [], //geolocations based on address
-    centerGeoLoc: [43.6532, -79.3832]
+    centerGeoLoc: [43.6532, -79.3832],
+    allowBooking: false
   };
 
   // Handles updating component state when the user types into the input field
@@ -71,7 +71,7 @@ class BookWorkspace extends Component {
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
 
-    localStorage.setItem("checkinDate", date);
+    localStorage.setItem("checkinDate", date.format("MM/DD/YYYY"));
   };
 
   //Update Check Out state
@@ -80,20 +80,28 @@ class BookWorkspace extends Component {
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
 
-    localStorage.setItem("checkoutDate", date);
+    localStorage.setItem("checkoutDate", date.format("MM/DD/YYYY"));
   };
 
   componentDidMount() {
     //If there's no Check-In or Check-Out data, set the same default value as state
     if (!localStorage.getItem("checkinDate")) {
-      localStorage.setItem("checkinDate", moment(new Date(), "yyyy-mm-dd"));
+      localStorage.setItem(
+        "checkinDate",
+        moment(new Date()).format("MM/DD/YYYY")
+      );
     }
 
     if (!localStorage.getItem("checkoutDate")) {
-      localStorage.setItem("checkoutDate", moment(new Date(), "yyyy-mm-dd"));
+      localStorage.setItem(
+        "checkoutDate",
+        moment(new Date()).format("MM/DD/YYYY")
+      );
     }
 
     this.loadWorkspaces();
+
+    this.checkAvailability();
   }
 
   loadWorkspaces = () => {
@@ -110,6 +118,31 @@ class BookWorkspace extends Component {
       })
       .catch(err => console.log(err));
   };
+
+  checkAvailability() {
+    //Create booking in the database
+    const booking = {
+      start_date: moment(localStorage.getItem("checkinDate")).format(
+        "MM/DD/YYYY"
+      ),
+      end_date: moment(localStorage.getItem("checkoutDate")).format(
+        "MM/DD/YYYY"
+      ),
+      room: localStorage.getItem("room"),
+      people: localStorage.getItem("people"),
+      WorkspaceId: this.props.match.params.id
+    };
+
+    bookingAPI
+      .checkAvailability(booking)
+      .then(response => {
+        this.setState({ allowBooking: true });
+      })
+      .catch(err => {
+        this.setState({ allowBooking: false });
+        console.error(err);
+      });
+  }
 
   //Get geolocation from API
   loadLocations = address => {
@@ -170,13 +203,13 @@ class BookWorkspace extends Component {
 
     this.setState({ validated: true });
 
-    window.location.href = "/searchresults";
+    this.props.history.push("/searchresults");
   };
 
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="bkgWsBg">
             <div className="bkgWSheader">Booking Review</div>
@@ -219,7 +252,10 @@ class BookWorkspace extends Component {
                 </Col>
                 <Col md="4">
                   <div className="pricebreakdown">
-                    <PriceCard {...this.state.workspaces[0]} />
+                    <PriceCard
+                      {...this.state.workspaces[0]}
+                      allowBooking={this.state.allowBooking}
+                    />
                   </div>
                   {/*Map*/}
                   {this.state.locations.length > 0 && (
@@ -241,4 +277,4 @@ class BookWorkspace extends Component {
   }
 }
 
-export default BookWorkspace;
+export default withRouter(BookWorkspace);

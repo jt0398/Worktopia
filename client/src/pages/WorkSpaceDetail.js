@@ -309,7 +309,7 @@ class WorkSpaceDetail extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="bg">
             <div className="WSheader">WorkSpace</div>

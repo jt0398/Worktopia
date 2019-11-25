@@ -23,16 +23,17 @@ class SearchResults extends Component {
     searchParams: {
       location: localStorage.getItem("location") || "",
       checkinDate:
-        (localStorage.getItem("checkinDate") &&
-          moment(localStorage.getItem("checkinDate"), "yyyy-mm-dd")) ||
-        moment(new Date(), "yyyy-mm-dd"),
+        localStorage.getItem("checkinDate") ||
+        moment(new Date()).format("MM/DD/YYYY"),
       checkoutDate:
-        (localStorage.getItem("checkoutDate") &&
-          moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
-        moment(new Date(), "yyyy-mm-dd"),
+        localStorage.getItem("checkoutDate") ||
+        moment(new Date()).format("MM/DD/YYYY"),
       room: localStorage.getItem("room") || 0,
       people: localStorage.getItem("people") || 0,
-      selectedFeatures: []
+      selectedFeatures:
+        (localStorage.getItem("features") &&
+          localStorage.getItem("features").split(",")) ||
+        []
     },
     locations: [], //geolocations based on address
     centerGeoLoc: [43.6532, -79.3832],
@@ -90,7 +91,7 @@ class SearchResults extends Component {
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
 
-    localStorage.setItem("checkinDate", date);
+    localStorage.setItem("checkinDate", date.format("MM/DD/YYYY"));
   };
 
   //Update Check Out state
@@ -99,7 +100,7 @@ class SearchResults extends Component {
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
 
-    localStorage.setItem("checkoutDate", date);
+    localStorage.setItem("checkoutDate", date.format("MM/DD/YYYY"));
   };
 
   componentDidMount() {
@@ -107,11 +108,17 @@ class SearchResults extends Component {
 
     //If there's no Check-In or Check-Out data, set the same default value as state
     if (!localStorage.getItem("checkinDate")) {
-      localStorage.setItem("checkinDate", moment(new Date(), "yyyy-mm-dd"));
+      localStorage.setItem(
+        "checkinDate",
+        moment(new Date()).format("MM/DD/YYYY")
+      );
     }
 
     if (!localStorage.getItem("checkoutDate")) {
-      localStorage.setItem("checkoutDate", moment(new Date(), "yyyy-mm-dd"));
+      localStorage.setItem(
+        "checkoutDate",
+        moment(new Date()).format("MM/DD/YYYY")
+      );
     }
 
     //If the user submitted search from homepage or booking page, load data on page load
@@ -127,13 +134,14 @@ class SearchResults extends Component {
   //Loads feature list
   loadFeatures = () => {
     let tempFeatureList = [];
+    const selectedFeatures = this.state.searchParams.selectedFeatures;
 
     miscAPI.getFeatureList().then(res => {
       res.data.forEach(feature => {
         tempFeatureList.push({
           name: feature.name,
           label: feature.id,
-          status: false
+          status: selectedFeatures.indexOf(feature.id.toString()) !== -1
         });
       });
 
@@ -258,12 +266,14 @@ class SearchResults extends Component {
       FEATURE_LIST: tempArray,
       hashFeatures: tmpHash
     });
+
+    localStorage.setItem("features", features);
   };
 
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="SRbg">
             <div className="SRheader">Your Search Result</div>
@@ -322,7 +332,8 @@ class SearchResults extends Component {
                         name={workspace.name}
                         src={
                           workspace.WorkspacePics &&
-                          workspace.WorkspacePics[0].image_path
+                          workspace.WorkspacePics.length > 0 &&
+                          (workspace.WorkspacePics[0].image_path || "")
                         }
                         rental_price={workspace.rental_price}
                         fulladdress={workspace.WorkspaceLocation.full_address}

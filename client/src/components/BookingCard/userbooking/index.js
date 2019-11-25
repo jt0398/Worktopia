@@ -20,7 +20,7 @@ function UserBooking({
 }) {
   return (
     <Card className="card border-info">
-      <div className={rowStyle} style={{"margin-left":"50px"}}>
+      <div className={rowStyle} style={{ "margin-left": "50px" }}>
         <div className={idStyle}>
           <Card.Body className="cardBody">
             <Card.Header className="cardHeader">ID</Card.Header>
@@ -32,13 +32,7 @@ function UserBooking({
 
         <div className={imgStyle}>
           <Card.Body className="cardBody">
-            {/* <Card.Header className="cardHeader">Image</Card.Header> */}
-            {/* <br /> */}
-            <Card.Img
-              className="cardImg"
-              src={image_path}
-              //style={{ height: "17vh", width: "20vh" }}
-            />
+            <Card.Img className="cardImg" src={image_path} />
           </Card.Body>
         </div>
 
@@ -47,13 +41,14 @@ function UserBooking({
         <div className={desStyle}>
           <Card.Body className="cardBody">
             <Card.Header className="cardHeader">Info</Card.Header>
-            {/* <Card.Header className="cardHeader">{name}</Card.Header> */}
             <br></br>
             <Card.Text>
-              <strong>Descriptions: </strong>{description}
+              <strong>Descriptions: </strong>
+              {description}
               <br />
               <br />
-              <strong>Dimensions: </strong>{dimension} <br></br>
+              <strong>Dimensions: </strong>
+              {dimension} <br></br>
               <br></br>
               <strong>Address:</strong> <br></br>
               {addr1}
@@ -64,25 +59,8 @@ function UserBooking({
           </Card.Body>
         </div>
 
-        {/* Workspace Description */}
-        <div className={chkinoutStyle}>
-          <Card.Body className="cardBody">
-            {/* <Card.Header className="cardHeader">Location</Card.Header> */}
-            <br></br>
-            <Card.Text>
-              {/* Address: <br></br> */}
-              {/* {addr1} */}
-              <br />
-              <br />
-              {/* City: <br></br>
-              {city} <br /> */}
-            </Card.Text>
-          </Card.Body>
-        </div>
-
         {/* CheckIn Date */}
         <div className={chkinoutStyle}>
-          {/* <div className={bodyStyle}> */}
           <Card.Body className="cardBody">
             <Card.Header className="cardHeader">In</Card.Header>
             <br></br>
