@@ -9,7 +9,7 @@ import Nav from "../components/Nav";
 function NoMatch() {
   return (
     <>
-      <Nav></Nav>
+      <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
       <div className="noMatchBg">
         <Container fluid>
           <Row className="text-center">

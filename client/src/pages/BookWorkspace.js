@@ -209,7 +209,7 @@ class BookWorkspace extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="bkgWsBg">
             <div className="bkgWSheader">Booking Review</div>

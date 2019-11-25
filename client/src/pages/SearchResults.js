@@ -273,7 +273,7 @@ class SearchResults extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="SRbg">
             <div className="SRheader">Your Search Result</div>
