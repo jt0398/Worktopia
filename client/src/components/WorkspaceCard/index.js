@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
+import { withRouter } from "react-router-dom";
 
 function WorkspaceCard({
   cardStyle,
@@ -23,7 +24,7 @@ function WorkspaceCard({
     <Card className={cardStyle}>
       <div className={rowStyle}>
         <div className={imgStyle}>
-          <Card.Img className={imgClass} variant={variant} src={src} />
+          <Card.Img className={imgClass} variant={variant} src={src || " "} />
         </div>
         <div className={bodyStyle}>
           <Card.Body>
@@ -73,15 +74,16 @@ function WorkspaceCard({
         </div>
         {imgStyle && (
           <div className="col-md-2">
-            <span className="align-middle">
-              Price: ${rental_price} <br />
+            <div className="align-middle pt-md-3 pl-3 pl-md-0">
+              Price: CAD ${rental_price} <br />
+              <br />
               <Link
                 to={`/booking/workspace/${workspaceID}`}
-                class="btn btn-primary"
+                className="btn btn-primary ml-3 ml-md-0 mb-3"
               >
                 Book
               </Link>
-            </span>
+            </div>
           </div>
         )}
       </div>

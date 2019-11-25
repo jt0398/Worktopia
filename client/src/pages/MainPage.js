@@ -161,7 +161,7 @@ class MainPage extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <Element name="test" className="element">
             <div>
