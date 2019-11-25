@@ -23,6 +23,12 @@ router
   .post(isAuthenticated, bookingController.create);
 
 // Matches with "/api/booking/workspace
-router.route("/workspace").post(isAuthenticated, bookingController.create);
+router
+  .route("/workspace")
+  .post(isAuthenticated, bookingController.create);
+
+router
+  .route("/checkavailability")
+  .post(isAuthenticated, bookingController.checkAvailability);
 
 module.exports = router;

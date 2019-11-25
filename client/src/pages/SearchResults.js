@@ -322,7 +322,8 @@ class SearchResults extends Component {
                         name={workspace.name}
                         src={
                           workspace.WorkspacePics &&
-                          workspace.WorkspacePics[0].image_path
+                          workspace.WorkspacePics.length > 0 &&
+                          (workspace.WorkspacePics[0].image_path || "")
                         }
                         rental_price={workspace.rental_price}
                         fulladdress={workspace.WorkspaceLocation.full_address}
