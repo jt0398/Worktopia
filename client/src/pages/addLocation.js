@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import API from "../utils/API";
+import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -170,14 +171,8 @@ class AddLocation extends Component {
 
   handleCancel = event => {
     event.preventDefault();
-    this.setState({
-      addr1: "",
-      addr2: "",
-      city: "",
-      province: "",
-      postal_code: "",
-      country: "Canada"
-    });
+    let path = "/owner";
+    this.props.history.push(path);
   };
   //sets modal
   handleShow = () => {
@@ -375,4 +370,4 @@ class AddLocation extends Component {
   }
 }
 
-export default AddLocation;
+export default withRouter(AddLocation);
