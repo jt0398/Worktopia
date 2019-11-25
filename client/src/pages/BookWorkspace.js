@@ -12,6 +12,7 @@ import PriceCard from "../components/PriceCard";
 import Footer from "../components/Footer";
 import "./css/BkgWorkSpace.css";
 import Nav from "../components/Nav";
+import { withRouter } from "react-router-dom";
 
 class BookWorkspace extends Component {
   state = {
@@ -19,13 +20,11 @@ class BookWorkspace extends Component {
     searchParams: {
       location: localStorage.getItem("location") || "",
       checkinDate:
-        (localStorage.getItem("checkinDate") &&
-          moment(localStorage.getItem("checkinDate"), "yyyy-mm-dd")) ||
-        moment(new Date(), "yyyy-mm-dd"),
+        localStorage.getItem("checkinDate") ||
+        moment(new Date()).format("MM/DD/YYYY"),
       checkoutDate:
-        (localStorage.getItem("checkoutDate") &&
-          moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
-        moment(new Date(), "yyyy-mm-dd"),
+        localStorage.getItem("checkoutDate") ||
+        moment(new Date()).format("MM/DD/YYYY"),
       room: localStorage.getItem("room") || 0,
       people: localStorage.getItem("people") || 0
     },
@@ -71,7 +70,7 @@ class BookWorkspace extends Component {
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
 
-    localStorage.setItem("checkinDate", date);
+    localStorage.setItem("checkinDate", date.format("MM/DD/YYYY"));
   };
 
   //Update Check Out state
@@ -80,17 +79,23 @@ class BookWorkspace extends Component {
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
 
-    localStorage.setItem("checkoutDate", date);
+    localStorage.setItem("checkoutDate", date.format("MM/DD/YYYY"));
   };
 
   componentDidMount() {
     //If there's no Check-In or Check-Out data, set the same default value as state
     if (!localStorage.getItem("checkinDate")) {
-      localStorage.setItem("checkinDate", moment(new Date(), "yyyy-mm-dd"));
+      localStorage.setItem(
+        "checkinDate",
+        moment(new Date()).format("MM/DD/YYYY")
+      );
     }
 
     if (!localStorage.getItem("checkoutDate")) {
-      localStorage.setItem("checkoutDate", moment(new Date(), "yyyy-mm-dd"));
+      localStorage.setItem(
+        "checkoutDate",
+        moment(new Date()).format("MM/DD/YYYY")
+      );
     }
 
     this.loadWorkspaces();
@@ -170,7 +175,7 @@ class BookWorkspace extends Component {
 
     this.setState({ validated: true });
 
-    window.location.href = "/searchresults";
+    this.props.history.push("/searchresults");
   };
 
   render() {
@@ -241,4 +246,4 @@ class BookWorkspace extends Component {
   }
 }
 
-export default BookWorkspace;
+export default withRouter(BookWorkspace);
