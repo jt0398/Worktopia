@@ -194,7 +194,8 @@ class Search extends Component {
               </Form.Control.Feedback>
             </Form.Group>
           </Form.Row>
-          <Button type="submit" className="btn btn-info">
+
+          <Button type="submit" className="btn btn-info" id="searchBtn">
             Search
           </Button>
         </Form>

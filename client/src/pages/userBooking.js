@@ -44,8 +44,8 @@ class userBooking extends Component {
         <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           {/* Header */}
-          <div className="pbg">
-            <h5 className="yourBooking text-center">Your Booking</h5>
+          <div className="mybkgbg">
+            <div className="yourBooking">My Bookings</div>
           </div>
 
           {/* Div Row to Display Output */}

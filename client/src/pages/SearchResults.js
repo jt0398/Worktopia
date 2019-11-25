@@ -276,7 +276,7 @@ class SearchResults extends Component {
         <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="SRbg">
-            <div className="SRheader">Your Search Result</div>
+            <div className="SRheader">My Search Results</div>
             <div className="SRPadding">
               <Row>
                 <Col>

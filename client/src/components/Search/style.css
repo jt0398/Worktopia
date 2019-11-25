@@ -20,3 +20,8 @@
   line-height: 1.5 !important;
   color: #495057 !important;
 }
+
+#searchBtn {
+   box-shadow: 2px 2px 5px 5px rgb(95, 99, 99);
+}
+

@@ -9,10 +9,6 @@ html {
 }
 
 .SRbg {
-  /* background-image: url("/images/pic9.png");
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: cover; */
   box-shadow: 10px 10px 10px 18px grey;
 }
 
@@ -40,7 +36,7 @@ html {
   box-shadow: 3px 3px rgb(146, 150, 143);
   background-color: rgb(255, 251, 253);
   padding: 20px;
-  /* text-align: initial cneter; */
+ 
 }
 
 .mapborder {
