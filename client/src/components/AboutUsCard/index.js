@@ -10,13 +10,6 @@ function AboutUs({ upperText, image_path, lowerText }) {
       <div className>
         <div className>
           <Card.Body>
-            {/* <Card.Title>Image</Card.Title>
-            <br />
-            <Card.Img
-              src={image_path}
-              style={{ height: "17vh", width: "20vh" }}
-            /> */}
-
             <h1>{upperText}</h1>
             <img
               src={image_path}

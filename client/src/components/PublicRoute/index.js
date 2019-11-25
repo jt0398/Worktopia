@@ -1,12 +1,11 @@
 import React from "react";
 import {
   Route,
-  Redirect,
   withRouter // ** important so that history is availabe
 } from "react-router-dom";
 import API from "../../utils/API";
 
-class PrivateRoute extends React.Component {
+class PublicRoute extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +21,8 @@ class PrivateRoute extends React.Component {
 
   checkIsLogged = () => {
     API.isUserLoggedIn().then(response => {
+      console.log(response);
+
       this.setState({
         isLoggedIn: response.data.is_logged,
         isOwner: response.data.is_owner,
@@ -32,7 +33,6 @@ class PrivateRoute extends React.Component {
 
   render() {
     const { component: Component, ...rest } = this.props;
-    const currentLocation = this.props.location.pathname;
 
     if (!this.state.loaded) {
       return null;
@@ -42,18 +42,11 @@ class PrivateRoute extends React.Component {
       <Route
         {...rest}
         render={props => {
-          return this.state.isLoggedIn === true ? (
+          return (
             <Component
               {...props}
               isLoggedIn={this.state.isLoggedIn}
               isOwner={this.state.isOwner}
-            />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: currentLocation }
-              }}
             />
           );
         }}
@@ -62,4 +55,4 @@ class PrivateRoute extends React.Component {
   }
 }
 
-export default withRouter(PrivateRoute);
+export default withRouter(PublicRoute);

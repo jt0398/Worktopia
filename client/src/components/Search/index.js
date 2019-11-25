@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { SingleDatePicker } from "react-dates";
 import "./style.css";
 import PlacesAutocomplete from "react-places-autocomplete";
+import moment from "moment";
 
 class Search extends Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class Search extends Component {
                     <Form.Control.Feedback type="invalid">
                       Please provide location.
                     </Form.Control.Feedback>
-                    <div className="autocomplete-dropdown-container">
+                    <div className="autocomplete-dropdown-container pl-2">
                       {loading && <div>Loading...</div>}
                       {suggestions.map(suggestion => {
                         const className = suggestion.active
@@ -113,7 +114,7 @@ class Search extends Component {
                 </strong>
               </Form.Label>
               <SingleDatePicker
-                date={this.props.checkinDate} // momentPropTypes.momentObj or null
+                date={moment(this.props.checkinDate)} // momentPropTypes.momentObj or null
                 onDateChange={this.props.onCheckInChange}
                 focused={this.state.focusedCheckIn} // PropTypes.bool
                 onFocusChange={({ focused }) =>
@@ -134,7 +135,7 @@ class Search extends Component {
                 </strong>
               </Form.Label>
               <SingleDatePicker
-                date={this.props.checkoutDate} // momentPropTypes.momentObj or null
+                date={moment(this.props.checkoutDate)} // momentPropTypes.momentObj or null
                 onDateChange={this.props.onCheckOutChange}
                 focused={this.state.focusedCheckOut} // PropTypes.bool
                 onFocusChange={({ focused }) =>
@@ -147,6 +148,9 @@ class Search extends Component {
               <Form.Control.Feedback type="invalid">
                 Please select Check-Out date.
               </Form.Control.Feedback>
+              <div name="checkOutInvalid" className="invalid-feedback">
+                {this.props.errorMsg}
+              </div>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>

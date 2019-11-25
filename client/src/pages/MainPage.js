@@ -12,22 +12,22 @@ import moment from "moment";
 import { Slide } from "react-reveal";
 import { Element } from "react-scroll";
 import Nav from "../components/Nav";
+import { withRouter } from "react-router-dom";
 
 class MainPage extends Component {
   state = {
     searchParams: {
       location: localStorage.getItem("location") || "",
       checkinDate:
-        (localStorage.getItem("checkinDate") &&
-          moment(localStorage.getItem("checkinDate"), "yyyy-mm-dd")) ||
-        moment(new Date(), "yyyy-mm-dd"),
+        localStorage.getItem("checkinDate") ||
+        moment(new Date()).format("MM/DD/YYYY"),
       checkoutDate:
-        (localStorage.getItem("checkoutDate") &&
-          moment(localStorage.getItem("checkoutDate"), "yyyy-mm-dd")) ||
-        moment(new Date(), "yyyy-mm-dd"),
+        localStorage.getItem("checkoutDate") ||
+        moment(new Date()).format("MM/DD/YYYY"),
       room: localStorage.getItem("room") || 0,
       people: localStorage.getItem("people") || 0
-    }
+    },
+    invalidDateMsg: ""
   };
 
   // Handles updating component state when the user types into the input field
@@ -68,7 +68,7 @@ class MainPage extends Component {
       searchParams: { ...this.state.searchParams, checkinDate: date }
     });
 
-    localStorage.setItem("checkinDate", date);
+    localStorage.setItem("checkinDate", date.format("MM/DD/YYYY"));
   };
 
   //Update Check Out state
@@ -77,17 +77,23 @@ class MainPage extends Component {
       searchParams: { ...this.state.searchParams, checkoutDate: date }
     });
 
-    localStorage.setItem("checkoutDate", date);
+    localStorage.setItem("checkoutDate", date.format("MM/DD/YYYY"));
   };
 
   componentDidMount() {
     //If there's no Check-In or Check-Out data, set the same default value as state
     if (!localStorage.getItem("checkinDate")) {
-      localStorage.setItem("checkinDate", moment(new Date(), "yyyy-mm-dd"));
+      localStorage.setItem(
+        "checkinDate",
+        moment(new Date()).format("MM/DD/YYYY")
+      );
     }
 
     if (!localStorage.getItem("checkoutDate")) {
-      localStorage.setItem("checkoutDate", moment(new Date(), "yyyy-mm-dd"));
+      localStorage.setItem(
+        "checkoutDate",
+        moment(new Date()).format("MM/DD/YYYY")
+      );
     }
   }
 
@@ -101,6 +107,11 @@ class MainPage extends Component {
     const locationField = document.getElementsByName("location")[0];
     const peopleField = document.getElementsByName("people")[0];
     const roomField = document.getElementsByName("room")[0];
+    const checkinField = document.getElementsByName("checkinDate")[0];
+    const checkoutField = document.getElementsByName("checkoutDate")[0];
+    const checkOutInvalid = document.getElementsByName("checkOutInvalid")[0];
+
+    checkOutInvalid.innerHTML = "";
 
     if (locationField.value.trim() === "") {
       locationField.setCustomValidity("Invalid field.");
@@ -120,18 +131,37 @@ class MainPage extends Component {
       roomField.setCustomValidity("");
     }
 
+    const dateDiff = moment(checkinField.value).diff(
+      moment(checkoutField.value),
+      "days"
+    );
+
+    if (dateDiff > 0) {
+      /*   this.setState = {
+        invalidDateMsg: "Please choose a Check-Out Date that is a future date."
+      }; */
+      checkoutField.setCustomValidity("Invalid field.");
+    } else {
+      /*   this.setState = {
+        invalidDateMsg: ""
+      }; */
+
+      checkoutField.setCustomValidity("");
+    }
+
     if (form.checkValidity() === false) {
       form.classList.add("was-validated");
       return;
     }
     this.setState({ validated: true });
-    window.location.href = "/searchresults";
+
+    this.props.history.push("/searchresults");
   };
 
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <Element name="test" className="element">
             <div>
@@ -162,6 +192,7 @@ class MainPage extends Component {
                     onCheckOutChange={this.handleCheckOutChange}
                     onLocationChange={this.handleLocationChange}
                     onSelectLocation={this.handleLocationSelect}
+                    errorMsg={this.state.invalidDateMsg}
                   />
                 </div>
               </div>
@@ -299,4 +330,4 @@ class MainPage extends Component {
   }
 }
 
-export default MainPage;
+export default withRouter(MainPage);

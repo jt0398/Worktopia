@@ -193,7 +193,7 @@ class AddLocation extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container fluid>
           <div className="locationBg">
             <div className="locheader">Add Location</div>
@@ -211,12 +211,10 @@ class AddLocation extends Component {
               validated={this.state.validated}
               onSubmit={this.handleSubmit}
             >
-              {/* <div className="formAddress"> */}
               <Form.Group className="formAddress">
                 <Col md={12}>
-                  {/* <div className="formLabel"> */}
                   <Form.Label className="formLabel">Address</Form.Label>
-                  {/* </div> */}
+
                   <Form.Control
                     required
                     type="text"
@@ -229,11 +227,11 @@ class AddLocation extends Component {
                     Please enter an address
                   </Form.Control.Feedback>
                 </Col>
+
                 <br></br>
                 <Col md={12}>
-                  {/* <div className="formLabel"> */}
                   <Form.Label className="formLabel">Address 2</Form.Label>
-                  {/* </div> */}
+
                   <Form.Control
                     type="text"
                     placeholder="Enter address"
@@ -244,9 +242,8 @@ class AddLocation extends Component {
                 </Col>
                 <br></br>
                 <Col md={6}>
-                  {/* <div className="formLabel"> */}
                   <Form.Label className="formLabel">City</Form.Label>
-                  {/* </div> */}
+
                   <Form.Control
                     required
                     type="text"
@@ -261,9 +258,8 @@ class AddLocation extends Component {
                 </Col>
                 <br></br>
                 <Col md={4}>
-                  {/* <div className="formLabel"> */}
                   <Form.Label className="formLabel">Province</Form.Label>
-                  {/* </div> */}
+
                   <Form.Control
                     as="select"
                     required
@@ -273,10 +269,7 @@ class AddLocation extends Component {
                   >
                     <option>Choose Province</option>
                     {provinceList.map((province, index) => (
-                      <option
-                        key={province[1]}
-                        value={province[1]}
-                      >
+                      <option key={province[1]} value={province[1]}>
                         {province[0]}
                       </option>
                     ))}
@@ -284,69 +277,65 @@ class AddLocation extends Component {
                   <Form.Control.Feedback type="invalid">
                     Please provide a valid province.
                   </Form.Control.Feedback>
+                  <br></br>
+                  <Row>
+                    <Col md={8}>
+                      <Form.Label className="formLabel">Postal Code</Form.Label>
 
+                      <Form.Control
+                        required
+                        type="text"
+                        placeholder="Enter postal code"
+                        value={this.state.postal_code}
+                        onChange={this.handleInputChange}
+                        name="postal_code"
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Please provide a valid postal code
+                      </Form.Control.Feedback>
+                    </Col>
+                  </Row>
                   <br></br>
-                  <Col md={6}>
-                    {/* <div className="formLabel"> */}
-                    <Form.Label className="formLabel">Postal Code</Form.Label>
-                    {/* </div> */}
-                    <Form.Control
-                      required
-                      type="text"
-                      placeholder="Enter postal code"
-                      value={this.state.postal_code}
-                      onChange={this.handleInputChange}
-                      name="postal_code"
-                    />
-                    <Form.Control.Feedback type="invalid">
-                    Please provide a valid postal code
-                    </Form.Control.Feedback>
-                  </Col>
-                  <br></br>
-                  <Col md={6}>
-                    {/* <div className="formLabel"> */}
-                    <Form.Label className="formLabel">Country</Form.Label>
-                    {/* </div> */}
-                    <Form.Control
-                      type="text"
-                      placeholder={this.state.country}
-                      value={this.state.country}
-                      disabled="disabled"
-                      onChange={this.handleInputChange}
-                      name="country"
-                    />
-                  </Col>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Label className="formLabel">Country</Form.Label>
+
+                      <Form.Control
+                        type="text"
+                        placeholder={this.state.country}
+                        value={this.state.country}
+                        onChange={this.handleInputChange}
+                        name="country"
+                      />
+                    </Col>
+                  </Row>
                 </Col>
                 <br></br>
               </Form.Group>
-              <Col md={6}>
-                {/* <div id="locationBtn1"> */}
-                <Button
-                  id="locationBtn"
-                  variant="primary"
-                  type="submit"
-                  className="btn btn-dark"
-                >
-                  Save
-                </Button>
-                {/* </div> */}
-                &nbsp;&nbsp;&nbsp;
-                <Button
-                  id="locationBtn"
-                  variant="secondary"
-                  type="button"
-                  className="btn btn-dark"
-                  onClick={this.handleCancel}
-                >
-                  Cancel
-                </Button>
-                {/* </div> */}
-              </Col>
-              {/* <div className="locationFooter"> */}
-              <Footer className="locationFooter" />
-              {/* </div> */}
-              {/* </div> */}
+              <Row>
+                <Col md={6}>
+                  <Button
+                    id="locationBtn"
+                    variant="primary"
+                    type="submit"
+                    className="btn btn-info"
+                  >
+                    Save
+                  </Button>
+                  &nbsp;&nbsp;&nbsp;
+                  <Button
+                    id="locationBtn"
+                    variant="secondary"
+                    type="button"
+                    className="btn btn-info"
+                    onClick={this.handleCancel}
+                  >
+                    Cancel
+                  </Button>
+                </Col>
+              </Row>
             </Form>
+            <br></br>
             <Modal
               show={this.state.modalStatus}
               onHide={this.handleClose}
@@ -363,6 +352,9 @@ class AddLocation extends Component {
                 <Button onClick={this.handleClose}>OK</Button>
               </Modal.Footer>
             </Modal>
+          </div>
+          <div className="locationFooter">
+            <Footer />
           </div>
         </Container>
       </>

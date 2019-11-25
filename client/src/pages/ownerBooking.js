@@ -38,7 +38,7 @@ class OwnerBooking extends Component {
   render() {
     return (
       <>
-        <Nav></Nav>
+        <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
         <Container>
           {/* Div Row to Display Output */}
           <Row>

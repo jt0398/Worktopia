@@ -26,6 +26,7 @@ router.route("/checksession").get(function(req, res) {
   console.log("---------Login checksession " + req.user);
 
   if (req.user) {
+    console.log("---------Login checksession = Yes");
     res.json({
       is_logged: true,
       is_owner: req.user.UserRoleId === 1
