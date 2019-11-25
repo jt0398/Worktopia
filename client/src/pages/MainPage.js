@@ -26,7 +26,8 @@ class MainPage extends Component {
         moment(new Date()).format("MM/DD/YYYY"),
       room: localStorage.getItem("room") || 0,
       people: localStorage.getItem("people") || 0
-    }
+    },
+    invalidDateMsg: ""
   };
 
   // Handles updating component state when the user types into the input field
@@ -106,6 +107,11 @@ class MainPage extends Component {
     const locationField = document.getElementsByName("location")[0];
     const peopleField = document.getElementsByName("people")[0];
     const roomField = document.getElementsByName("room")[0];
+    const checkinField = document.getElementsByName("checkinDate")[0];
+    const checkoutField = document.getElementsByName("checkoutDate")[0];
+    const checkOutInvalid = document.getElementsByName("checkOutInvalid")[0];
+
+    checkOutInvalid.innerHTML = "";
 
     if (locationField.value.trim() === "") {
       locationField.setCustomValidity("Invalid field.");
@@ -123,6 +129,24 @@ class MainPage extends Component {
       roomField.setCustomValidity("Invalid field.");
     } else {
       roomField.setCustomValidity("");
+    }
+
+    const dateDiff = moment(checkinField.value).diff(
+      moment(checkoutField.value),
+      "days"
+    );
+
+    if (dateDiff > 0) {
+      /*   this.setState = {
+        invalidDateMsg: "Please choose a Check-Out Date that is a future date."
+      }; */
+      checkoutField.setCustomValidity("Invalid field.");
+    } else {
+      /*   this.setState = {
+        invalidDateMsg: ""
+      }; */
+
+      checkoutField.setCustomValidity("");
     }
 
     if (form.checkValidity() === false) {
@@ -168,6 +192,7 @@ class MainPage extends Component {
                     onCheckOutChange={this.handleCheckOutChange}
                     onLocationChange={this.handleLocationChange}
                     onSelectLocation={this.handleLocationSelect}
+                    errorMsg={this.state.invalidDateMsg}
                   />
                 </div>
               </div>

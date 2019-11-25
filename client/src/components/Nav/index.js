@@ -44,7 +44,7 @@ export class Header extends Component {
           navItems: noLOGIN,
           userLoggedIn: false
         });
-        this.props.history.push("/");
+        this.props.history.push("/login");
       })
       .catch(err => {
         console.error(err);

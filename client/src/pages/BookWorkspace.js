@@ -30,7 +30,8 @@ class BookWorkspace extends Component {
     },
     locations: [], //geolocations based on address
     centerGeoLoc: [43.6532, -79.3832],
-    allowBooking: false
+    allowBooking: false,
+    invalidDateMsg: ""
   };
 
   // Handles updating component state when the user types into the input field
@@ -177,6 +178,11 @@ class BookWorkspace extends Component {
     const locationField = document.getElementsByName("location")[0];
     const peopleField = document.getElementsByName("people")[0];
     const roomField = document.getElementsByName("room")[0];
+    const checkinField = document.getElementsByName("checkinDate")[0];
+    const checkoutField = document.getElementsByName("checkoutDate")[0];
+    const checkOutInvalid = document.getElementsByName("checkOutInvalid")[0];
+
+    checkOutInvalid.innerHTML = "";
 
     if (locationField.value.trim() === "") {
       locationField.setCustomValidity("Invalid field.");
@@ -194,6 +200,24 @@ class BookWorkspace extends Component {
       roomField.setCustomValidity("Invalid field.");
     } else {
       roomField.setCustomValidity("");
+    }
+
+    const dateDiff = moment(checkinField.value).diff(
+      moment(checkoutField.value),
+      "days"
+    );
+
+    if (dateDiff > 0) {
+      /*  this.setState = {
+        invalidDateMsg: "Please choose a Check-Out Date that is a future date."
+      }; */
+      checkoutField.setCustomValidity("Invalid field.");
+    } else {
+      /*   this.setState = {
+        invalidDateMsg: ""
+      }; */
+
+      checkoutField.setCustomValidity("");
     }
 
     if (form.checkValidity() === false) {
@@ -226,6 +250,7 @@ class BookWorkspace extends Component {
                     onCheckOutChange={this.handleCheckOutChange}
                     onLocationChange={this.handleLocationChange}
                     onSelectLocation={this.handleLocationSelect}
+                    errorMsg={this.state.invalidDateMsg}
                   />
                 </Col>
               </Row>
