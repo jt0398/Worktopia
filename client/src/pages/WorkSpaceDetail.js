@@ -226,7 +226,7 @@ class WorkSpaceDetail extends Component {
       tempFeatureList.push({
         name: feature.name,
         label: feature.id,
-        status: false
+        status: true
       });
     });
 
@@ -452,7 +452,7 @@ class WorkSpaceDetail extends Component {
                         <Form.Label>Work Space rates</Form.Label>
                       </div>
                       <Form.Control
-                        type="text"
+                        type="number"
                         placeholder="Enter the daily rate for the workspace.."
                         value={this.state.workSpaceDailyRate}
                         onChange={this.handleInputChange}
