@@ -26,7 +26,7 @@ function App() {
         {/* Used to select which routes to take */}
         <Switch>
           {/* To render a component depending on the URL exact path hit in the browser*/}
-          <Route exact path="/" component={MainPage} />
+          <PublicRoute exact path="/" component={MainPage} />
           <PublicRoute exact path="/login" component={Login} />
 
           {/*Add workspace*/}
