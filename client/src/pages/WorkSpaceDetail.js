@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import API from "../utils/API";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -302,6 +303,7 @@ class WorkSpaceDetail extends Component {
     this.setState({
       modalStatus: false
     });
+    this.props.history.push("/owner");
   };
 
   render() {
@@ -513,4 +515,4 @@ class WorkSpaceDetail extends Component {
   }
 }
 
-export default WorkSpaceDetail;
+export default withRouter(WorkSpaceDetail);
