@@ -41,10 +41,6 @@ class Search extends Component {
     focusedCheckOut: null
   };
 
-  componentDidMount() {
-    console.log(this.props.checkinDate);
-  }
-
   render() {
     return (
       <div className="my-5">

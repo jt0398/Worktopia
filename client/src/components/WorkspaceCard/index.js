@@ -73,7 +73,7 @@ function WorkspaceCard({
         </div>
         {imgStyle && (
           <div className="col-md-2">
-            <span className="align-middle pt-md-5 pl-3 pl-md-0">
+            <div className="align-middle pt-md-3 pl-3 pl-md-0">
               Price: CAD ${rental_price} <br />
               <br />
               <Link
@@ -82,7 +82,7 @@ function WorkspaceCard({
               >
                 Book
               </Link>
-            </span>
+            </div>
           </div>
         )}
       </div>

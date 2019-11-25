@@ -16,6 +16,7 @@ const noLOGIN = [
 
 const userLOGIN = [
   ["HOME", "/"],
+  ["Search", "/searchresults"],
   ["MY BOOKINGS", "/booking/user"]
 ];
 
