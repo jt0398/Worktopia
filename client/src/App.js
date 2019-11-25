@@ -27,7 +27,7 @@ function App() {
         <Switch>
           {/* To render a component depending on the URL exact path hit in the browser*/}
           <Route exact path="/" component={MainPage} />
-          <Route exact path="/login" component={Login} />
+          <PublicRoute exact path="/login" component={Login} />
 
           {/*Add workspace*/}
           <PrivateRoute

@@ -57,6 +57,45 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  checkAvailability: function(req, res) {
+    const checkindate = moment(req.body.checkinDate)
+      .subtract(1, "days")
+      .format("YYYY-MM-DD");
+    const checkoutdate = moment(req.body.checkoutDate).format("YYYY-MM-DD");
+    const workspaceId = req.body.WorkspaceId;
+
+    db.Booking.findAll({
+      where: {
+        WorkSpaceId: { [Op.eq]: workspaceId },
+        [Op.or]: [
+          {
+            start_date: {
+              [Op.and]: [
+                { start_date: { [Op.gte]: checkindate } },
+                { start_date: { [Op.lte]: checkoutdate } }
+              ]
+            }
+          },
+          {
+            end_date: {
+              [Op.and]: [
+                { end_date: { [Op.gte]: checkindate } },
+                { end_date: { [Op.lte]: checkoutdate } }
+              ]
+            }
+          }
+        ]
+      }
+    }).then(dbWorkspace => {
+      console.log(dbWorkspaces);
+
+      if (dbWorkspaces.length !== 0) {
+        res.status(422).json(new Error("Dates are booked"));
+      } else {
+        res.sendStatus(200);
+      }
+    });
+  },
   create: function(req, res) {
     const checkindate = moment(req.body.checkinDate)
       .subtract(1, "days")
@@ -68,8 +107,22 @@ module.exports = {
       where: {
         WorkSpaceId: { [Op.eq]: workspaceId },
         [Op.or]: [
-          { start_date: { [Op.between]: [checkindate, checkoutdate] } },
-          { end_date: { [Op.between]: [checkindate, checkoutdate] } }
+          {
+            start_date: {
+              [Op.and]: [
+                { start_date: { [Op.gte]: checkindate } },
+                { start_date: { [Op.lte]: checkoutdate } }
+              ]
+            }
+          },
+          {
+            end_date: {
+              [Op.and]: [
+                { end_date: { [Op.gte]: checkindate } },
+                { end_date: { [Op.lte]: checkoutdate } }
+              ]
+            }
+          }
         ]
       }
     }).then(dbWorkspace => {
@@ -80,7 +133,7 @@ module.exports = {
           .then(dbModel => res.json(dbModel))
           .catch(err => res.status(422).json(err));
       } else {
-        done(new Error("Dates are booked"));
+        res.status(422).json(new Error("Dates are booked"));
       }
     });
   }

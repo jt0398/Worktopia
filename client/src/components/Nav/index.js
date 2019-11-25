@@ -16,7 +16,7 @@ const noLOGIN = [
 
 const userLOGIN = [
   ["HOME", "/"],
-  ["Search", "/searchresults"],
+  ["SEARCH", "/searchresults"],
   ["MY BOOKINGS", "/booking/user"]
 ];
 
@@ -45,7 +45,7 @@ export class Header extends Component {
           userLoggedIn: false
         });
 
-        this.props.history.push("/");
+        window.location.href = "/";
       })
       .catch(err => {
         console.error(err);
