@@ -35,7 +35,7 @@ class AddLocation extends Component {
     addr1: "",
     addr2: "",
     city: "",
-    province: "",
+    province: "ON",
     postal_code: "",
     country: "Canada",
     userId: null,
@@ -68,7 +68,7 @@ class AddLocation extends Component {
         addr1: "",
         addr2: "",
         city: "",
-        province: "",
+        province: "ON",
         postal_code: "",
         country: "Canada",
         userId: null
@@ -157,7 +157,7 @@ class AddLocation extends Component {
               addr1: "",
               addr2: "",
               city: "",
-              province: "",
+              province: "ON",
               postal_code: "",
               country: "Canada"
             });
@@ -182,7 +182,8 @@ class AddLocation extends Component {
   };
   //handles modal close
   handleClose = () => {
-    this.setState({ modalStatus: false });
+    let path = "/owner";
+    this.props.history.push(path);
   };
   //handles link
   handleDisplay = () => {
@@ -263,59 +264,58 @@ class AddLocation extends Component {
                   {/* <div className="formLabel"> */}
                   <Form.Label className="formLabel">Province</Form.Label>
                   {/* </div> */}
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      variant="dark"
-                      className="dropdown-basic"
-                      id="dropdownBasic"
-                      name="province"
-                    >
-                      {this.state.province || "Choose Province"}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      {provinceList.map((province, index) => (
-                        <Dropdown.Item
-                          key={province[1]}
-                          eventKey={province[1]}
-                          onSelect={this.handleProvinceSelection}
-                          name="province"
-                        >
-                          {province[0]}
-                        </Dropdown.Item>
-                      ))}
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </Col>
-                <br></br>
-                <Col md={4}>
-                  {/* <div className="formLabel"> */}
-                  <Form.Label className="formLabel">Postal Code</Form.Label>
-                  {/* </div> */}
                   <Form.Control
+                    as="select"
                     required
-                    type="text"
-                    placeholder="Enter postal code"
-                    value={this.state.postal_code}
                     onChange={this.handleInputChange}
-                    name="postal_code"
-                  />
+                    value={this.state.province}
+                    name="province"
+                  >
+                    <option>Choose Province</option>
+                    {provinceList.map((province, index) => (
+                      <option
+                        key={province[1]}
+                        value={province[1]}
+                      >
+                        {province[0]}
+                      </option>
+                    ))}
+                  </Form.Control>
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid postal code
+                    Please provide a valid province.
                   </Form.Control.Feedback>
-                </Col>
-                <br></br>
-                <Col md={6}>
-                  {/* <div className="formLabel"> */}
-                  <Form.Label className="formLabel">Country</Form.Label>
-                  {/* </div> */}
-                  <Form.Control
-                    type="text"
-                    placeholder={this.state.country}
-                    value={this.state.country}
-                    disabled="disabled"
-                    onChange={this.handleInputChange}
-                    name="country"
-                  />
+
+                  <br></br>
+                  <Col md={6}>
+                    {/* <div className="formLabel"> */}
+                    <Form.Label className="formLabel">Postal Code</Form.Label>
+                    {/* </div> */}
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder="Enter postal code"
+                      value={this.state.postal_code}
+                      onChange={this.handleInputChange}
+                      name="postal_code"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                    Please provide a valid postal code
+                    </Form.Control.Feedback>
+                  </Col>
+                  <br></br>
+                  <Col md={6}>
+                    {/* <div className="formLabel"> */}
+                    <Form.Label className="formLabel">Country</Form.Label>
+                    {/* </div> */}
+                    <Form.Control
+                      type="text"
+                      placeholder={this.state.country}
+                      value={this.state.country}
+                      disabled="disabled"
+                      onChange={this.handleInputChange}
+                      name="country"
+                    />
+                  </Col>
                 </Col>
                 <br></br>
               </Form.Group>
