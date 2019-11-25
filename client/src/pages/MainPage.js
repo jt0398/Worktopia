@@ -137,14 +137,14 @@ class MainPage extends Component {
     );
 
     if (dateDiff > 0) {
-      this.setState = {
+      /*   this.setState = {
         invalidDateMsg: "Please choose a Check-Out Date that is a future date."
-      };
+      }; */
       checkoutField.setCustomValidity("Invalid field.");
     } else {
-      this.setState = {
+      /*   this.setState = {
         invalidDateMsg: ""
-      };
+      }; */
 
       checkoutField.setCustomValidity("");
     }
