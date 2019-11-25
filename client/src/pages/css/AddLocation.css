@@ -9,10 +9,6 @@ html {
 }
 
 .locationBg {
-  /* background-image: url("/images/pic7.png");
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: cover; */
   box-shadow: 10px 10px 10px 18px grey;
 }
 
@@ -37,16 +33,15 @@ html {
   text-shadow: 1px 1px yellowgreen;
 }
 
-#locationBtn {
-  box-shadow: 5px 5px rgb(159, 165, 165);
+select.form-control {
+  border: 2px solid black;
 }
 
-#dropdownBasic {
-  box-shadow: 5px 5px rgb(159, 165, 165);
+#locationBtn {
+  box-shadow: 2px 2px 5px 5px rgb(95, 99, 99);
+  margin-left: 50px;
 }
 
 .locationFooter {
-  border: transparent;
-  box-shadow: 2px 2px 5px 5px rgb(52, 53, 43);
-  margin-top: 120px;
+  padding-top: 20px;
 }
