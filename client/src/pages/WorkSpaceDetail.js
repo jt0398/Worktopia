@@ -44,6 +44,8 @@ const NUMBER_OF_PEOPLE = [
 ];
 const OWNER_ID = localStorage.getItem("UserId");
 
+const DEFAULT_IMAGE = "https://worktopiaimages.s3.ca-central-1.amazonaws.com/worktopiadefault.jpg";
+
 class WorkSpaceDetail extends Component {
   state = {
     workSpaceId: null,
@@ -125,6 +127,10 @@ class WorkSpaceDetail extends Component {
           })
           .catch(err => console.error(err));
       } else {
+        if(!workSpaceDetailObject.imageFileName){
+          workSpaceDetailObject.imageFileName = DEFAULT_IMAGE;
+        }
+        console.log(workSpaceDetailObject);
         API.createWorkSpaceObject(workSpaceDetailObject)
           .then(res => {
             this.handleShow();
