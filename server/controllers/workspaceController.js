@@ -39,7 +39,6 @@ async function updateWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
     );
   });
   return Sequelize.Promise.all(workSpaceFeaturePromises);
-  // return workSpaceFeaturePromises;
 }
 
 async function createWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
@@ -55,7 +54,6 @@ async function createWorkSpaceFeatures(workSpaceId, featureArray, transaction) {
     );
   });
   return Sequelize.Promise.all(workSpaceFeaturePromises);
-  // return workSpaceFeaturePromises;
 }
 
 async function updateWorkSpacePic(workSpacePic, transaction) {
@@ -64,7 +62,6 @@ async function updateWorkSpacePic(workSpacePic, transaction) {
     {
       where: {
         image_path: workSpacePic.image_path,
-        // image_path: null,
         WorkspaceId: workSpacePic.workSpaceId
       }
     },
@@ -119,7 +116,6 @@ async function updateWorkSpaceDetail(workSpaceDetailObject) {
   };
   var workSpacePic = {
     image_path: workSpaceDetailObject.imageFileName,
-    // image_path: null,
     WorkspaceId: workSpaceDetailObject.workSpaceId
   };
   let transaction;
@@ -190,15 +186,9 @@ async function createWorkSpaceDetail(workSpaceDetailObject) {
       workSpaceDetailObject.FEATURE_LIST,
       transaction
     );
-    // var createWorkSpaceFeaturesTable = await updateWorkSpaceFeatures(
-    //   workSpaceId,
-    //   workSpaceDetailObject.FEATURE_LIST,
-    //   transaction
-    // );
 
     var workSpacePic = {
       image_path: workSpaceDetailObject.imageFileName,
-      // image_path: null,
       WorkspaceId: workSpaceId
     };
 
@@ -207,11 +197,6 @@ async function createWorkSpaceDetail(workSpaceDetailObject) {
         workSpacePic,
         transaction
       );
-
-      // var createWorkSpacePicTable = await updateWorkSpacePic(
-      //   workSpacePic,
-      //   transaction
-      // );
     }
     var createCalendarDates = await createCalendarAvailability(
       workSpaceId,
@@ -280,10 +265,12 @@ module.exports = {
   },
   findBySearch: function(req, res) {
     const location = req.body.location.split(",").join("");
-    const checkindate = moment(req.body.checkinDate)
+    const checkindate = moment(new Date(req.body.checkinDate))
       .subtract(1, "days")
       .format("YYYY-MM-DD");
-    const checkoutdate = moment(req.body.checkoutDate).format("YYYY-MM-DD");
+    const checkoutdate = moment(new Date(req.body.checkoutDate)).format(
+      "YYYY-MM-DD"
+    );
     const people = parseInt(req.body.people);
     const room = parseInt(req.body.room);
     const occupancy = Math.floor(people / room);
@@ -294,7 +281,7 @@ module.exports = {
       featureWhere =
         "(SELECT WorkspaceId " +
         " FROM WorkspaceFeatures " +
-        " WHERE FeatureId IN (" +
+        " WHERE Status = 1 AND FeatureId IN (" +
         req.body.selectedFeatures.join(",") +
         "))";
     }
@@ -309,16 +296,16 @@ module.exports = {
               [Op.notIn]: Sequelize.literal(
                 "(SELECT DISTINCT WorkspaceId " +
                   " FROM Bookings " +
-                  " WHERE start_date BETWEEN '" +
+                  " WHERE (start_date >= '" +
                   checkindate +
-                  "' AND '" +
+                  "' AND start_date <= '" +
                   checkoutdate +
-                  "' " +
-                  " OR end_date BETWEEN '" +
+                  " 24:00:00') " +
+                  " OR (end_date >= '" +
                   checkindate +
-                  "' AND '" +
+                  "' AND end_date <= '" +
                   checkoutdate +
-                  "')"
+                  " 24:00:00'))"
               )
             }
           },
@@ -372,7 +359,12 @@ module.exports = {
           }
         },
         {
-          model: db.Feature
+          model: db.Feature,
+          required: true,
+          through: {
+            required: true,
+            where: { status: true }
+          }
         }
       ]
     })

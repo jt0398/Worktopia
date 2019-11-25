@@ -7,8 +7,8 @@ import Search from "../components/Search";
 import Map from "../components/Map";
 import moment from "moment";
 import workspaceAPI from "../utils/workspaceAPI";
+import bookingAPI from "../utils/BookingAPI";
 import PriceCard from "../components/PriceCard";
-// import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import Footer from "../components/Footer";
 import "./css/BkgWorkSpace.css";
 import Nav from "../components/Nav";
@@ -29,7 +29,8 @@ class BookWorkspace extends Component {
       people: localStorage.getItem("people") || 0
     },
     locations: [], //geolocations based on address
-    centerGeoLoc: [43.6532, -79.3832]
+    centerGeoLoc: [43.6532, -79.3832],
+    allowBooking: false
   };
 
   // Handles updating component state when the user types into the input field
@@ -99,6 +100,8 @@ class BookWorkspace extends Component {
     }
 
     this.loadWorkspaces();
+
+    this.checkAvailability();
   }
 
   loadWorkspaces = () => {
@@ -115,6 +118,31 @@ class BookWorkspace extends Component {
       })
       .catch(err => console.log(err));
   };
+
+  checkAvailability() {
+    //Create booking in the database
+    const booking = {
+      start_date: moment(localStorage.getItem("checkinDate")).format(
+        "MM/DD/YYYY"
+      ),
+      end_date: moment(localStorage.getItem("checkoutDate")).format(
+        "MM/DD/YYYY"
+      ),
+      room: localStorage.getItem("room"),
+      people: localStorage.getItem("people"),
+      WorkspaceId: this.props.match.params.id
+    };
+
+    bookingAPI
+      .checkAvailability(booking)
+      .then(response => {
+        this.setState({ allowBooking: true });
+      })
+      .catch(err => {
+        this.setState({ allowBooking: false });
+        console.error(err);
+      });
+  }
 
   //Get geolocation from API
   loadLocations = address => {
@@ -224,7 +252,10 @@ class BookWorkspace extends Component {
                 </Col>
                 <Col md="4">
                   <div className="pricebreakdown">
-                    <PriceCard {...this.state.workspaces[0]} />
+                    <PriceCard
+                      {...this.state.workspaces[0]}
+                      allowBooking={this.state.allowBooking}
+                    />
                   </div>
                   {/*Map*/}
                   {this.state.locations.length > 0 && (

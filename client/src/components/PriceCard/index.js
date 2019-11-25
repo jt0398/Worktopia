@@ -7,6 +7,8 @@ import API from "../../utils/API";
 import bookingAPI from "../../utils/BookingAPI";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import moment from "moment";
+import { withRouter } from "react-router-dom";
 
 class PriceCard extends Component {
   state = {
@@ -36,32 +38,34 @@ class PriceCard extends Component {
     token.amount = this.getAmountInCents();
     token.description = this.props.name + " booking";
 
-    API.makePayment(token)
+    //Create booking in the database
+    const booking = {
+      start_date: moment(localStorage.getItem("checkinDate")).format(
+        "MM/DD/YYYY"
+      ),
+      end_date: moment(localStorage.getItem("checkoutDate")).format(
+        "MM/DD/YYYY"
+      ),
+      rental_price: (
+        parseFloat(this.props.rental_price) *
+        parseInt(localStorage.getItem("room")) *
+        1.1
+      ).toFixed(2),
+      UserId: parseInt(localStorage.getItem("UserId")),
+      WorkspaceId: parseInt(this.props.id)
+    };
+
+    bookingAPI
+      .bookWorkspace(booking)
       .then(response => {
         console.log(
-          "Stripe response = " + response.status + " " + response.statusText
+          "Booking response = " + response.status + " " + response.statusText
         );
 
-        //Create booking in the database
-        const booking = {
-          start_date: localStorage.getItem("checkinDate"),
-          end_date: localStorage.getItem("checkoutDate"),
-          rental_price: (
-            parseFloat(this.props.rental_price) *
-            parseInt(localStorage.getItem("room")) *
-            1.1
-          ).toFixed(2),
-          UserId: localStorage.getItem("UserId"),
-          WorkspaceId: this.props.id
-        };
-
-        bookingAPI.bookWorkspace(booking).then(respsonse => {
-          //Remove search params
-          localStorage.removeItem("location");
-          localStorage.removeItem("checkinDate");
-          localStorage.removeItem("checkoutDate");
-          localStorage.removeItem("room");
-          localStorage.removeItem("people");
+        API.makePayment(token).then(response => {
+          console.log(
+            "Stripe response = " + response.status + " " + response.statusText
+          );
 
           this.handleShow();
         });
@@ -83,7 +87,7 @@ class PriceCard extends Component {
     });
 
     //Send user to the My Booking page
-    window.location.href = "/user/booking";
+    this.props.history.push("/booking/user");
   };
 
   render() {
@@ -107,23 +111,31 @@ class PriceCard extends Component {
               <Col>Total</Col>
               <Col className="text-right">
                 ${(this.getAmountDisplay() * 1.1).toFixed(2)}
+                <br />
               </Col>
             </Row>
             <Row>
               <Col className="mt-2">
                 {/*Stripe Form */}
-                <StripeCheckout
-                  name="Worktopia.com"
-                  description={this.props.name}
-                  amount={this.getAmountInCents()} //cents
-                  currency="CAD"
-                  billingAddress
-                  locale="auto"
-                  stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}
-                  token={this.onToken}
-                  zipCode
-                  panelLabel="Pay: " // prepended to the amount in the bottom pay button
-                />
+                {this.props.allowBooking ? (
+                  <StripeCheckout
+                    name="Worktopia.com"
+                    description={this.props.name}
+                    amount={this.getAmountInCents()} //cents
+                    currency="CAD"
+                    billingAddress
+                    locale="auto"
+                    stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY}
+                    token={this.onToken}
+                    zipCode
+                    panelLabel="Pay: " // prepended to the amount in the bottom pay button
+                  />
+                ) : (
+                  <div className="pt-2 text-danger">
+                    Workspace not available on selected dates. Please choose
+                    different Check-In/Check-Out dates
+                  </div>
+                )}
               </Col>
             </Row>
           </Card.Body>
@@ -149,4 +161,4 @@ class PriceCard extends Component {
   }
 }
 
-export default PriceCard;
+export default withRouter(PriceCard);

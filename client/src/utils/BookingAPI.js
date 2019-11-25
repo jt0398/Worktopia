@@ -14,6 +14,10 @@ export default {
   },
 
   bookWorkspace: function(booking) {
-    return axios.post(`/api/booking/workspace`, booking);
+    return axios.post("/api/booking/workspace", booking);
+  },
+
+  checkAvailability: function(booking) {
+    return axios.post("/api/booking/checkavailability", booking);
   }
 };
