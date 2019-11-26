@@ -20,8 +20,31 @@ import { RemainingChar } from "../components/Form";
 import "./css/WorkSpaceDetail.css";
 var moment = require("moment");
 
-const NUMBER_OF_PEOPLE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+const NUMBER_OF_PEOPLE = [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20
+];
 const OWNER_ID = localStorage.getItem("UserId");
+
+const DEFAULT_IMAGE = "https://worktopiaimages.s3.ca-central-1.amazonaws.com/worktopiadefault.jpg";
 
 class WorkSpaceDetail extends Component {
   state = {
@@ -30,7 +53,7 @@ class WorkSpaceDetail extends Component {
     workspaceDescription: "",
     workSpaceLocation: "",
     workSpaceLocationName: "",
-    workSpaceOccupancy: 0,
+    workSpaceOccupancy: 1,
     workSpaceDimensions: "",
     workSpaceDailyRate: "",
     selectedFile: null,
@@ -39,8 +62,8 @@ class WorkSpaceDetail extends Component {
     uploading: false,
     imageFileName: "",
     activateWorkSpace: false,
-    startDate: null,
-    endDate: null,
+    startDate: moment(),
+    endDate: moment(),
     focusedInput: null,
     LOCATION_LIST: [],
     FEATURE_LIST: [],
@@ -104,6 +127,10 @@ class WorkSpaceDetail extends Component {
           })
           .catch(err => console.error(err));
       } else {
+        if(!workSpaceDetailObject.imageFileName){
+          workSpaceDetailObject.imageFileName = DEFAULT_IMAGE;
+        }
+        console.log(workSpaceDetailObject);
         API.createWorkSpaceObject(workSpaceDetailObject)
           .then(res => {
             this.handleShow();
@@ -189,6 +216,10 @@ class WorkSpaceDetail extends Component {
             ]
           });
         });
+        this.setState({
+          workSpaceLocationName: res.data[0].full_address,
+          workSpaceLocation: res.data[0].id
+        });
       })
       .catch(err => console.error(err));
   };
@@ -201,7 +232,7 @@ class WorkSpaceDetail extends Component {
       tempFeatureList.push({
         name: feature.name,
         label: feature.id,
-        status: false
+        status: true
       });
     });
 
@@ -427,7 +458,7 @@ class WorkSpaceDetail extends Component {
                         <Form.Label>Work Space rates</Form.Label>
                       </div>
                       <Form.Control
-                        type="text"
+                        type="number"
                         placeholder="Enter the daily rate for the workspace.."
                         value={this.state.workSpaceDailyRate}
                         onChange={this.handleInputChange}
