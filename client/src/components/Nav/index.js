@@ -53,8 +53,6 @@ export class Header extends Component {
       });
   };
   componentDidMount() {
-    console.log(this.state.userLoggedIn + " " + this.state.isOwner);
-
     //Owner
     if (this.state.userLoggedIn && this.state.isOwner) {
       this.setState({

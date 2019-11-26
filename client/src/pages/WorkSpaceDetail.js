@@ -307,7 +307,7 @@ class WorkSpaceDetail extends Component {
       this.loadWorkSpaceDetails();
     } else {
       this.loadFeaturesForWorkSpace();
-      this.loadLocationsByOwner(OWNER_ID);
+      this.loadLocationsByOwner(localStorage.getItem("UserId"));
     }
   };
 
