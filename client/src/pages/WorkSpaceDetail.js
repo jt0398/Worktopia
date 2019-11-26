@@ -63,7 +63,7 @@ class WorkSpaceDetail extends Component {
     imageFileName: "",
     activateWorkSpace: false,
     startDate: moment(),
-    endDate: moment(),
+    endDate: moment().add(1, "days"),
     focusedInput: null,
     LOCATION_LIST: [],
     FEATURE_LIST: [],
