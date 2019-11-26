@@ -39,17 +39,18 @@ html {
 }
 
 .borderForAddress {
-  border: 2px solid rgb(228, 159, 115);
-  box-shadow: 2px 2px rgb(228, 159, 115);
+  border: 2px solid black;
+  box-shadow: 2px 2px grey;
   background-color:white;
 }
+
 .cardDeck {
-  box-shadow: 2px 2px 2px 2px rgb(228, 159, 115);
+  box-shadow: 2px 2px 2px 2px darkgrey
 }
+
 .detailNedit {
   padding: 15px;
   font-size: larger;
   font-weight: bold;
   background-color: white;
-  
 }
