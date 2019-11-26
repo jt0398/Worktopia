@@ -74,7 +74,10 @@ class OwnerLocations extends Component {
                     <CardDeck>
                       {this.state.workspaceInfo.map(element => (
                         <Col md={4} className="p-3" key={element.id}>
-                          <Link to={`/workspacedetail/${element.id}`} style={{textDecoration:"none", color:"black" }}>
+                          <Link
+                            to={`/workspacedetail/${element.id}`}
+                            style={{ textDecoration: "none", color: "black" }}
+                          >
                             <div class="cardDeck h-100">
                               <WorkspaceCard
                                 key={element.id}
@@ -82,7 +85,7 @@ class OwnerLocations extends Component {
                                 description={element.description}
                                 dimension={element.dimension}
                                 rental_price={element.rental_price}
-                                src={element.WorkspacePics[0].image_path}
+                                src={element.WorkspacePics[0].image_path || ""}
                                 imgClass="card-img-top"
                                 variant="top"
                                 cardStyle="my-3 h-100"
