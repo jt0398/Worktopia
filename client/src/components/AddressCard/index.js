@@ -25,11 +25,10 @@ export function AddressNavItem({ id, address, loadCards }) {
         title="View Details"
       >
         {/* {address} */}
-        <FontAwesomeIcon icon={faBinoculars}></FontAwesomeIcon>
+        <FontAwesomeIcon icon={faBinoculars}></FontAwesomeIcon>{" "}
         &nbsp;&nbsp;&nbsp;
+        <EditIcon id={id} />
       </Link>
-      <EditIcon id={id} />
-      {/* <EditIcon id={id} /> */}
     </>
   );
 }

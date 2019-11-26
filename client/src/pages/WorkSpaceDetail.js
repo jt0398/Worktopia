@@ -44,7 +44,8 @@ const NUMBER_OF_PEOPLE = [
 ];
 const OWNER_ID = localStorage.getItem("UserId");
 
-const DEFAULT_IMAGE = "https://worktopiaimages.s3.ca-central-1.amazonaws.com/worktopiadefault.jpg";
+const DEFAULT_IMAGE =
+  "https://worktopiaimages.s3.ca-central-1.amazonaws.com/worktopiadefault.jpg";
 
 class WorkSpaceDetail extends Component {
   state = {
@@ -63,7 +64,7 @@ class WorkSpaceDetail extends Component {
     imageFileName: "",
     activateWorkSpace: false,
     startDate: moment(),
-    endDate: moment(),
+    endDate: moment().add(1, "days"),
     focusedInput: null,
     LOCATION_LIST: [],
     FEATURE_LIST: [],
@@ -127,7 +128,7 @@ class WorkSpaceDetail extends Component {
           })
           .catch(err => console.error(err));
       } else {
-        if(!workSpaceDetailObject.imageFileName){
+        if (!workSpaceDetailObject.imageFileName) {
           workSpaceDetailObject.imageFileName = DEFAULT_IMAGE;
         }
         console.log(workSpaceDetailObject);
@@ -216,10 +217,13 @@ class WorkSpaceDetail extends Component {
             ]
           });
         });
-        this.setState({
-          workSpaceLocationName: res.data[0].full_address,
-          workSpaceLocation: res.data[0].id
-        });
+        //Default the Owner location only while creating. If URL has Id, it means its an update request. In that case dont default
+        if (!this.props.match.params.id) {
+          this.setState({
+            workSpaceLocationName: res.data[0].full_address,
+            workSpaceLocation: res.data[0].id
+          });
+        }
       })
       .catch(err => console.error(err));
   };
