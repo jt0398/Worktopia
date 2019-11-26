@@ -110,8 +110,8 @@ class UserRegistration extends Component {
 
     return (
       <Container>
-        <Row>
-          <Col className="text-center">
+        <Row style={{ marginTop: "50px" }}>
+          <Col className="signupFrom text-center">
             <h3 style={{ color: "darkorange" }}>SIGNUP FORM</h3>
           </Col>
         </Row>
@@ -125,7 +125,7 @@ class UserRegistration extends Component {
             style={{
               boxShadow: "0px 0px 15px #b3b3b3",
               padding: "25px",
-              border: "1px solid black"
+              border: "3px solid black"
             }}
           >
             <Form
