@@ -284,6 +284,8 @@ class WorkSpaceDetail extends Component {
         this.loadFeaturesForWorkSpace(fetchedWorkSpaceDetail.Features);
         let ownerId = fetchedWorkSpaceDetail.WorkspaceLocation.UserId;
         this.loadLocationsByOwner(ownerId);
+        let locationId = fetchedWorkSpaceDetail.WorkspaceLocationId;
+        localStorage.setItem("LocationId", locationId);
       })
       .catch(err => console.error(err));
   };
@@ -296,7 +298,7 @@ class WorkSpaceDetail extends Component {
       var tempBookingList = [];
       res.data.forEach(booking => {
         var currentDate = moment(booking.start_date);
-        var stopDate = moment(booking.end_date).add(1, "days");
+        var stopDate = moment(booking.end_date);
         while (currentDate <= stopDate) {
           tempBookingList.push(moment(currentDate).format("MM/DD/YYYY"));
           currentDate = moment(currentDate).add(1, "days");
@@ -338,7 +340,7 @@ class WorkSpaceDetail extends Component {
     this.setState({
       modalStatus: false
     });
-    this.props.history.push("/owner");
+    this.props.history.push(`/owner/${localStorage.getItem("LocationId")}`);
   };
 
   render() {
