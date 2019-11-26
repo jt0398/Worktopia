@@ -1,0 +1,10 @@
+.logoImg {
+box-shadow: 2px 2px white;
+/* border: 2px orange; */
+border-radius: 1px 50px 3px 30px;
+  background: rgb(201, 174, 76);
+  /* background-color: black; */
+  padding: 8px;
+  width: 150px;
+  height: 75px;
+}

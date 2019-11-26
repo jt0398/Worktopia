@@ -7,35 +7,31 @@ html {
 * {
   box-sizing: border-box;
 }
-
-.pbg {
-  /* The image used */
-  background-image: url("/images/pic4.png");
-  margin-bottom: 20px;
-  /* Full height */
-  height: 200px;
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: cover;
-  box-shadow: 3px 2px 10px 12px #212525;
+.mybkgbg{
+  box-shadow:10px 10px 10px 18px grey;
 }
-
 .yourBooking {
-  padding: 70px;
+  background-color: rgb(51, 75, 128);
+  padding: 10px;
+  text-align: right;
+  font-size: 25px;
+  font-weight: bolder;
+  color: white;
+  border: 10px;
+  box-shadow: 2px 3px goldenrod;
+  /* padding: 70px;
   font-size: 40px;
   color: white;
-  text-shadow: 3px 3px black;
+  text-shadow: 3px 3px black; */
 }
 
-.userBookingTextCenter {
+ .userBookingTextCenter {
   text-align: center;
-  /* padding: 30px; */
-   /* margin-left: 30px;  */
-   margin-bottom: 20px;
+  padding: 30px; 
+   margin-left: 30px;  
+  margin-bottom: 20px;
 
-}
+}  
 
 .cardBody {
     text-align: center;

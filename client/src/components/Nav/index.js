@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import "./nav.css";
+
 import API from "../../utils/API";
 
 const Styles = {
@@ -79,9 +81,17 @@ export class Header extends Component {
     return (
       <>
         <Navbar bg="dark" expand="lg" collapseOnSelect sticky="top">
-          <Navbar.Brand className="text-warning" href="/">
-            Worktopia
+          <Navbar.Brand className="text-warning" href="/"> 
+          Worktopia
           </Navbar.Brand>
+          {/* <div className="logoImg">
+            <img
+              src="images/logo2.png"
+              class="rounded-pill"
+              width={200}
+              height={60}
+            ></img>
+          </div> */}
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav mr-auto">
             <Nav
