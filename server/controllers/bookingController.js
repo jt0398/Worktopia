@@ -86,12 +86,12 @@ module.exports = {
                   start_date +
                   "' AND start_date <= '" +
                   end_date +
-                  " 24:00:00') " +
+                  " 23:59:59') " +
                   " OR (end_date >= '" +
                   start_date +
-                  " 24:00:00' AND end_date <= '" +
+                  "' AND end_date <= '" +
                   end_date +
-                  "')))"
+                  " 23:59:59')))"
               )
             }
           }

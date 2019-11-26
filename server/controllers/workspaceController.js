@@ -300,12 +300,12 @@ module.exports = {
                   checkindate +
                   "' AND start_date <= '" +
                   checkoutdate +
-                  " 24:00:00') " +
+                  " 23:59:59') " +
                   " OR (end_date >= '" +
                   checkindate +
                   "' AND end_date <= '" +
                   checkoutdate +
-                  " 24:00:00'))"
+                  " 23:59:59'))"
               )
             }
           },
