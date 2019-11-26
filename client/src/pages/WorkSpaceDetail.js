@@ -296,7 +296,7 @@ class WorkSpaceDetail extends Component {
       var tempBookingList = [];
       res.data.forEach(booking => {
         var currentDate = moment(booking.start_date);
-        var stopDate = moment(booking.end_date).add(1, "days");
+        var stopDate = moment(booking.end_date);
         while (currentDate <= stopDate) {
           tempBookingList.push(moment(currentDate).format("MM/DD/YYYY"));
           currentDate = moment(currentDate).add(1, "days");
