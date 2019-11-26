@@ -108,18 +108,20 @@ class Login extends Component {
             id="loginDiv"
             style={loginDivStyle}
           >
-            <h3
-              style={{
-                lineHeight: "auto",
-                color: "#7fff00",
-                borderBottomLength: "50px",
-                borderBottom: "1px solid #222",
-                textAlign: "center",
-                paddingTop: "20px"
-              }}
-            >
-              LOGIN
-            </h3>
+            <div className="loginModal">
+              <h3
+                style={{
+                  lineHeight: "auto",
+                  // color: "#7fff00",
+                  borderBottomLength: "50px",
+                  borderBottom: "1px solid #222",
+                  textAlign: "center",
+                  paddingTop: "20px"
+                }}
+              >
+                LOGIN
+              </h3>
+            </div>
             <Card.Body style={{ paddingTop: "40px" }}>
               <Row>
                 <Col md={12} sm={12}>
@@ -141,6 +143,7 @@ class Login extends Component {
                       placeholder="Enter your password"
                     />
                     <br></br>
+
                     <div className="text-center">
                       <Button
                         className="btn btn-info "
@@ -157,10 +160,12 @@ class Login extends Component {
               <Row>
                 <Col className="text-center" md={12} sm={12}>
                   <br></br>
-                  <h5>
+
+                  <h5 className="msgOnLogin">
                     Not Registered Yet ...?<br></br>
                     <br></br>
                   </h5>
+
                   <Link to="/signup">
                     <Col className="text-center text ">
                       <button id="signup">SIGN UP</button>
