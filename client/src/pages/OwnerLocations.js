@@ -85,7 +85,7 @@ class OwnerLocations extends Component {
                                 description={element.description}
                                 dimension={element.dimension}
                                 rental_price={element.rental_price}
-                                src={element.WorkspacePics[0].image_path}
+                                src={element.WorkspacePics[0].image_path || ""}
                                 imgClass="card-img-top"
                                 variant="top"
                                 cardStyle="my-3 h-100"
