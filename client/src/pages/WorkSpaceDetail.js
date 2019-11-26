@@ -538,6 +538,7 @@ class WorkSpaceDetail extends Component {
                   <Button onClick={this.handleClose}>OK</Button>
                 </Modal.Footer>
               </Modal>
+             
             </div>
           </div>
 

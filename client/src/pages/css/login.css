@@ -12,11 +12,20 @@
   object-fit: cover;
 }
 
+.loginModal{
+  color: rgb(227, 152, 40);
+  text-shadow: 2px 2px white;
+}
+
 #uname,
 #passwd {
   border: none;
   border-bottom: 1px solid #222;
   background-color: transparent;
+}
+.msgOnLogin {
+  color: rgb(227, 152, 40);
+  
 }
 #buttonSubmit {
   height: 40px;
@@ -24,6 +33,11 @@
   border: none;
   background-color: gray;
   color: #ffffff;
+}
+
+#buttonSubmit:hover {
+  background-color: rgb(227, 152, 40);
+  transition-duration: 0.4s;
 }
 
 #signup {
@@ -35,6 +49,6 @@
 }
 
 #signup:hover {
-  background-color: chartreuse;
+  background-color: rgb(227, 152, 40);
   transition-duration: 0.4s;
 }
