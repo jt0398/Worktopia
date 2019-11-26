@@ -148,6 +148,9 @@ class Search extends Component {
               <Form.Control.Feedback type="invalid">
                 Please select Check-Out date.
               </Form.Control.Feedback>
+              <div name="checkOutInvalid" className="invalid-feedback">
+                {this.props.errorMsg}
+              </div>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>

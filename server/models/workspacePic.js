@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         // Create a unique index on image_path
         {
           unique: true,
-          fields: ["image_path"]
+          fields: ["image_path", "WorkspaceId"]
         }
       ]
     }
