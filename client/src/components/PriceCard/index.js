@@ -110,7 +110,7 @@ class PriceCard extends Component {
             <Row>
               <Col>Total</Col>
               <Col className="text-right">
-                ${(this.getAmountDisplay() * 1.1).toFixed(2)}
+                CAD ${(this.getAmountDisplay() * 1.1).toFixed(2)}
                 <br />
               </Col>
             </Row>
