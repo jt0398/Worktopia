@@ -68,14 +68,17 @@ function WorkspaceCard({
                 </>
               )}
               <br></br>
-              <strong>{!imgStyle && `CAD $${rental_price}`}</strong>
+              <strong>
+                {!imgStyle &&
+                  `CAD $${parseFloat(rental_price).toFixed(2)} per day`}
+              </strong>
             </Card.Text>
           </Card.Body>
         </div>
         {imgStyle && (
           <div className="col-md-2">
             <div className="align-middle pt-md-3 pl-3 pl-md-0">
-              Price: CAD ${rental_price} <br />
+              Price: CAD ${parseFloat(rental_price).toFixed(2)} per day <br />
               <br />
               <Link
                 to={`/booking/workspace/${workspaceID}`}

@@ -101,6 +101,12 @@ class PriceCard extends Component {
             <Row>
               <Col>Price:</Col>
               <Col className="text-right">
+                ${parseFloat(this.props.rental_price).toFixed(2)} per day
+              </Col>
+            </Row>
+            <Row>
+              <Col>Subtotal:</Col>
+              <Col className="text-right">
                 ${this.getAmountDisplay().toFixed(2)}
               </Col>
             </Row>
