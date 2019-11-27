@@ -113,20 +113,22 @@ class Search extends Component {
                   <i className="fas fa-calendar-alt"></i> Check-In Date
                 </strong>
               </Form.Label>
-              <SingleDatePicker
-                date={moment(this.props.checkinDate)} // momentPropTypes.momentObj or null
-                onDateChange={this.props.onCheckInChange}
-                focused={this.state.focusedCheckIn} // PropTypes.bool
-                onFocusChange={({ focused }) =>
-                  this.setState({ focusedCheckIn: focused })
-                }
-                id="checkinDate"
-                block // PropTypes.bool
-                required // PropTypes.bool
-              />
-              <Form.Control.Feedback type="invalid">
-                Please select Check-In date.
-              </Form.Control.Feedback>
+              <div className="borderCheckinOut rounded">
+                <SingleDatePicker
+                  date={moment(this.props.checkinDate)} // momentPropTypes.momentObj or null
+                  onDateChange={this.props.onCheckInChange}
+                  focused={this.state.focusedCheckIn} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    this.setState({ focusedCheckIn: focused })
+                  }
+                  id="checkinDate"
+                  block // PropTypes.bool
+                  required // PropTypes.bool
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please select Check-In date.
+                </Form.Control.Feedback>
+              </div>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label>
@@ -134,20 +136,23 @@ class Search extends Component {
                   <i className="far fa-calendar-alt"></i> Check-Out Date
                 </strong>
               </Form.Label>
-              <SingleDatePicker
-                date={moment(this.props.checkoutDate)} // momentPropTypes.momentObj or null
-                onDateChange={this.props.onCheckOutChange}
-                focused={this.state.focusedCheckOut} // PropTypes.bool
-                onFocusChange={({ focused }) =>
-                  this.setState({ focusedCheckOut: focused })
-                }
-                id="checkoutDate"
-                block // PropTypes.bool
-                required // PropTypes.bool
-              />
-              <Form.Control.Feedback type="invalid">
-                Please select Check-Out date.
-              </Form.Control.Feedback>
+              <div className="borderCheckinOut rounded">
+                <SingleDatePicker
+                  date={moment(this.props.checkoutDate)} // momentPropTypes.momentObj or null
+                  onDateChange={this.props.onCheckOutChange}
+                  focused={this.state.focusedCheckOut} // PropTypes.bool
+                  onFocusChange={({ focused }) =>
+                    this.setState({ focusedCheckOut: focused })
+                  }
+                  id="checkoutDate"
+                  block // PropTypes.bool
+                  required // PropTypes.bool
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  Please select Check-Out date.
+                </Form.Control.Feedback>
+              </div>
               <div name="checkOutInvalid" className="invalid-feedback">
                 {this.props.errorMsg}
               </div>

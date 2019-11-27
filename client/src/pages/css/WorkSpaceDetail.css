@@ -9,10 +9,6 @@ html {
 }
 
 .bg { 
-  /* background-image: url("/images/pic11.png");
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: cover; */
   box-shadow: 10px 10px 10px 18px grey;
  }
 
@@ -57,7 +53,7 @@ background-color: rgb(51, 75, 128);
 
 .footerBorder{
     border: transparent;
-    box-shadow: 2px 2px 5px 5px rgb(198, 227, 225);
+   
     margin-top: 30px;
 } 
 
