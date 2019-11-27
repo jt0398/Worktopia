@@ -64,7 +64,7 @@ function UserBooking({
           <Card.Body className="cardBody">
             <Card.Header className="cardHeader">In</Card.Header>
             <br></br>
-            <Card.Text>{moment(start_date).format("DD/MM/YYYY")}</Card.Text>
+            <Card.Text>{moment(start_date).format("MM/DD/YYYY")}</Card.Text>
           </Card.Body>
         </div>
 
@@ -74,7 +74,7 @@ function UserBooking({
           <Card.Body className="cardBody">
             <Card.Header className="cardHeader">Out</Card.Header>
             <br></br>
-            <Card.Text>{moment(end_date).format("DD/MM/YYYY")}</Card.Text>
+            <Card.Text>{moment(end_date).format("MM/DD/YYYY")}</Card.Text>
           </Card.Body>
         </div>
 
