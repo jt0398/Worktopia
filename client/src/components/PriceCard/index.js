@@ -16,11 +16,13 @@ class PriceCard extends Component {
   };
 
   getRentDays() {
-    return Math.abs(
-      moment(localStorage.getItem("checkinDate")).diff(
-        moment(localStorage.getItem("checkoutDate")),
-        "days"
-      )
+    return (
+      Math.abs(
+        moment(localStorage.getItem("checkinDate")).diff(
+          moment(localStorage.getItem("checkoutDate")),
+          "days"
+        )
+      ) + 1
     );
   }
 
