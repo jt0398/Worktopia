@@ -16,7 +16,8 @@ function UserBooking({
   city,
   start_date,
   end_date,
-  rental_price
+  rental_price,
+  totalPaidPrice
 }) {
   return (
     <Card className="card border-info">
@@ -83,7 +84,7 @@ function UserBooking({
             <Card.Header className="cardHeader bg-warning">CAD</Card.Header>
             <br></br>
             <Card.Text>
-              <strong>{rental_price} </strong>
+              <strong>{totalPaidPrice.toFixed(2)} </strong>
               <br />
             </Card.Text>
           </Card.Body>
