@@ -110,8 +110,8 @@ class UserRegistration extends Component {
 
     return (
       <Container>
-        <Row style={{ marginTop: "50px" }}>
-          <Col className="signupFrom text-center">
+        <Row style={{ marginTop: "15px" }}>
+          <Col className="signupFrom text-center ">
             <h3 style={{ color: "darkorange" }}>SIGNUP FORM</h3>
           </Col>
         </Row>
@@ -134,17 +134,9 @@ class UserRegistration extends Component {
               onSubmit={this.handleOnSubmit}
             >
               <Form.Row>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={12} sm={12}>
                   <Form.Label>
-                    <span style={{ color: "red" }}>
-                      <sup>* &nbsp;</sup>Required Fields
-                    </span>
-                  </Form.Label>
-                  <br></br>
-                  <Form.Label>
-                    <strong>
-                      Username &nbsp;<sup style={{ color: "red" }}>*</sup>
-                    </strong>
+                    <strong>Username</strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -160,11 +152,9 @@ class UserRegistration extends Component {
                 </Form.Group>
               </Form.Row>
               <Form.Row>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} sm={12}>
                   <Form.Label>
-                    <strong>
-                      Email &nbsp;<sup style={{ color: "red" }}>*</sup>
-                    </strong>
+                    <strong>Email &nbsp;</strong>
                   </Form.Label>
                   <Form.Control
                     type="email"
@@ -178,11 +168,9 @@ class UserRegistration extends Component {
                     How can we send you confirmations and recipts?
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} sm={12}>
                   <Form.Label>
-                    <strong>
-                      Password &nbsp;<sup style={{ color: "red" }}>*</sup>
-                    </strong>
+                    <strong>Password &nbsp;</strong>
                   </Form.Label>
                   <Form.Control
                     type="password"
@@ -200,9 +188,7 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>
-                      Address &nbsp;<sup style={{ color: "red" }}>*</sup>
-                    </strong>
+                    <strong>Address &nbsp;</strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -218,11 +204,9 @@ class UserRegistration extends Component {
                 </Form.Group>
               </Form.Row>
               <Form.Row>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} sm={12}>
                   <Form.Label>
-                    <strong>
-                      City&nbsp;<sup style={{ color: "red" }}>*</sup>
-                    </strong>
+                    <strong>City&nbsp;</strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -236,7 +220,7 @@ class UserRegistration extends Component {
                     Please provide a valid city.
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} sm={12}>
                   <Form.Label>
                     <strong>Province</strong>
                   </Form.Label>
@@ -263,11 +247,9 @@ class UserRegistration extends Component {
                 </Form.Group>
               </Form.Row>
               <Form.Row>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} sm={12}>
                   <Form.Label>
-                    <strong>
-                      Postal Code&nbsp;<sup style={{ color: "red" }}>*</sup>
-                    </strong>
+                    <strong>Postal Code&nbsp;</strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -282,11 +264,9 @@ class UserRegistration extends Component {
                     sulk!
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group as={Col}>
+                <Form.Group as={Col} md={6} sm={12}>
                   <Form.Label>
-                    <strong>
-                      Phone No&nbsp;<sup style={{ color: "red" }}>*</sup>
-                    </strong>
+                    <strong>Phone No&nbsp;</strong>
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -304,9 +284,7 @@ class UserRegistration extends Component {
               <Form.Row>
                 <Form.Group as={Col}>
                   <Form.Label>
-                    <strong>
-                      User Role&nbsp;<sup style={{ color: "red" }}>*</sup>
-                    </strong>
+                    <strong>User Role&nbsp;</strong>
                   </Form.Label>
                   <Form.Control
                     as="select"
