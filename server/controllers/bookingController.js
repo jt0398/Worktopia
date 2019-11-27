@@ -59,15 +59,15 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   checkAvailability: function(req, res) {
-    const start_date = moment(req.body.start_date)
-      .subtract(1, "days")
-      .format("YYYY-MM-DD");
+    const start_date = moment(req.body.start_date).format("YYYY-MM-DD");
     const end_date = moment(req.body.end_date).format("YYYY-MM-DD");
     const workspaceId = parseInt(req.body.WorkspaceId);
     const people = parseInt(req.body.people);
     const room = parseInt(req.body.room);
-
     const occupancy = Math.floor(people / room);
+
+    const dateDiff =
+      Math.abs(moment(start_date).diff(moment(end_date), "days")) + 1;
 
     db.Workspace.findOne({
       where: {
@@ -94,19 +94,29 @@ module.exports = {
                   " 23:59:59')))"
               )
             }
-          }
-        ]
-      },
-      include: [
-        {
-          model: db.WorkspaceAvailability,
-          where: {
-            date: {
-              [Op.between]: [start_date, end_date]
+          },
+          {
+            id: {
+              [Op.in]: Sequelize.literal(
+                "(SELECT WorkspaceId " +
+                  " FROM ( " +
+                  "  SELECT COUNT(*) AS countdays, WorkspaceId " +
+                  "  FROM WorkspaceAvailabilities " +
+                  "  WHERE date BETWEEN '" +
+                  start_date +
+                  "' AND '" +
+                  end_date +
+                  " 23:59:59' " +
+                  "  GROUP BY WorkspaceId " +
+                  ") AS T " +
+                  "WHERE countdays = " +
+                  dateDiff +
+                  ")"
+              )
             }
           }
-        }
-      ]
+        ]
+      }
     }).then(dbWorkspace => {
       if (dbWorkspace) {
         res.sendStatus(200);

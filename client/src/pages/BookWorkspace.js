@@ -73,6 +73,8 @@ class BookWorkspace extends Component {
     });
 
     localStorage.setItem("checkinDate", date.format("MM/DD/YYYY"));
+
+    this.checkAvailability();
   };
 
   //Update Check Out state
@@ -82,6 +84,8 @@ class BookWorkspace extends Component {
     });
 
     localStorage.setItem("checkoutDate", date.format("MM/DD/YYYY"));
+
+    this.checkAvailability();
   };
 
   componentDidMount() {
@@ -122,6 +126,7 @@ class BookWorkspace extends Component {
 
   checkAvailability() {
     //Create booking in the database
+    //I use localStorage because state change is async
     const booking = {
       start_date: moment(localStorage.getItem("checkinDate")).format(
         "MM/DD/YYYY"
@@ -177,7 +182,7 @@ class BookWorkspace extends Component {
 
     const locationField = document.getElementsByName("location")[0];
     const peopleField = document.getElementsByName("people")[0];
-    const roomField = document.getElementsByName("room")[0];
+    //const roomField = document.getElementsByName("room")[0];
     const checkinField = document.getElementsByName("checkinDate")[0];
     const checkoutField = document.getElementsByName("checkoutDate")[0];
     const checkOutInvalid = document.getElementsByName("checkOutInvalid")[0];
@@ -196,11 +201,11 @@ class BookWorkspace extends Component {
       peopleField.setCustomValidity("");
     }
 
-    if (roomField.value.includes("Choose")) {
+    /*   if (roomField.value.includes("Choose")) {
       roomField.setCustomValidity("Invalid field.");
     } else {
       roomField.setCustomValidity("");
-    }
+    } */
 
     const dateDiff = moment(checkinField.value).diff(
       moment(checkoutField.value),
