@@ -6,6 +6,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Ownerbooking from "../components/BookingCard/ownerbooking";
 import Nav from "../components/Nav";
+import "./css/ownerBkgPage.css";
+import Footer from "../components/Footer";
 
 class OwnerBooking extends Component {
   // Declaring state of the class.
@@ -39,43 +41,49 @@ class OwnerBooking extends Component {
     return (
       <>
         <Nav isLoggedIn={this.props.isLoggedIn} isOwner={this.props.isOwner} />
-        <Container>
-          {/* Div Row to Display Output */}
-          <Row>
-            <Col md="12" sm="12">
-              {/* Check if there are any workspaces that are found registered and if so than map through the workspace to get each of the data */}
-              {this.state.workspaces.length > 0 &&
-                this.state.workspaces.map(workspace => {
-                  return (
-                    // Display each workspaces registered in OwnerBooking Component by passing required props
-                    <Ownerbooking
-                      rowStyle="row no-gutters"
-                      imgStyle="col-md-1"
-                      bodyStyle="col-md-2"
-                      {...workspace.User}
-                      {...workspace.Workspace}
-                      {...workspace.Workspace.WorkspacePics[0]}
-                      {...workspace}
-                      totalPaidPrice={workspace.rental_price}
-                    />
-                  );
-                })}
+        <Container fluid>
+          {/* Header */}
+          <div className="mybkgbg">
+            <div className="yourBooking text-center">All Bookings</div>
+            {/* Div Row to Display Output */}
+            <Row>
+              <Col md="12" sm="12">
+                {/* Check if there are any workspaces that are found registered and if so than map through the workspace to get each of the data */}
+                {this.state.workspaces.length > 0 &&
+                  this.state.workspaces.map(workspace => {
+                    return (
+                      // Display each workspaces registered in OwnerBooking Component by passing required props
+                      <Ownerbooking
+                        rowStyle="row no-gutters"
+                        imgStyle="col-md-1"
+                        bodyStyle="col-md-2"
+                        {...workspace.User}
+                        {...workspace.Workspace}
+                        {...workspace.Workspace.WorkspacePics[0]}
+                        {...workspace}
+                        totalPaidPrice={workspace.rental_price}
+                      />
+                    );
+                  })}
 
-              {/* If there are no results found for the registered bookings then display proper Output */}
-              {this.state.workspaces.length === 0 && (
-                <div style={{ height: "50vh" }}>
-                  <Row
-                    className="text-center"
-                    style={{ "margin-top": "200px" }}
-                  >
-                    <Col>
-                      <h3 style={{ color: "red" }}>No bookings available.</h3>
-                    </Col>
-                  </Row>
-                </div>
-              )}
-            </Col>
-          </Row>
+                {/* If there are no results found for the registered bookings then display proper Output */}
+                {this.state.workspaces.length === 0 && (
+                  <div style={{ height: "50vh" }}>
+                    <Row
+                      className="text-center"
+                      style={{ "margin-top": "200px" }}
+                    >
+                      <Col>
+                        <h3 style={{ color: "red" }}>No bookings available.</h3>
+                      </Col>
+                    </Row>
+                  </div>
+                )}
+              </Col>
+            </Row>
+            {/* Footer */}
+          </div>
+          <Footer />
         </Container>
       </>
     );
