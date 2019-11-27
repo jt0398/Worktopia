@@ -73,6 +73,8 @@ class BookWorkspace extends Component {
     });
 
     localStorage.setItem("checkinDate", date.format("MM/DD/YYYY"));
+
+    this.checkAvailability();
   };
 
   //Update Check Out state
@@ -82,6 +84,8 @@ class BookWorkspace extends Component {
     });
 
     localStorage.setItem("checkoutDate", date.format("MM/DD/YYYY"));
+
+    this.checkAvailability();
   };
 
   componentDidMount() {
@@ -122,6 +126,7 @@ class BookWorkspace extends Component {
 
   checkAvailability() {
     //Create booking in the database
+    //I use localStorage because state change is async
     const booking = {
       start_date: moment(localStorage.getItem("checkinDate")).format(
         "MM/DD/YYYY"
