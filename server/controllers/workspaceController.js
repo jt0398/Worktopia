@@ -265,15 +265,18 @@ module.exports = {
   },
   findBySearch: function(req, res) {
     const location = req.body.location.split(",").join("");
-    const checkindate = moment(new Date(req.body.checkinDate))
-      .subtract(1, "days")
-      .format("YYYY-MM-DD");
+    const checkindate = moment(new Date(req.body.checkinDate)).format(
+      "YYYY-MM-DD"
+    );
     const checkoutdate = moment(new Date(req.body.checkoutDate)).format(
       "YYYY-MM-DD"
     );
     const people = parseInt(req.body.people);
     const room = parseInt(req.body.room);
     const occupancy = Math.floor(people / room);
+
+    const dateDiff =
+      Math.abs(moment(checkindate).diff(moment(checkoutdate), "days")) + 1;
 
     let featureWhere = "(SELECT DISTINCT WorkspaceId FROM WorkspaceFeatures)";
 
@@ -306,6 +309,26 @@ module.exports = {
                   "' AND end_date <= '" +
                   checkoutdate +
                   " 23:59:59'))"
+              )
+            }
+          },
+          {
+            id: {
+              [Op.in]: Sequelize.literal(
+                "(SELECT WorkspaceId " +
+                  " FROM ( " +
+                  "  SELECT COUNT(*) AS countdays, WorkspaceId " +
+                  "  FROM WorkspaceAvailabilities " +
+                  "  WHERE date BETWEEN '" +
+                  checkindate +
+                  "' AND '" +
+                  checkoutdate +
+                  " 23:59:59' " +
+                  "  GROUP BY WorkspaceId " +
+                  ") AS T " +
+                  "WHERE countdays = " +
+                  dateDiff +
+                  ")"
               )
             }
           },
@@ -350,14 +373,6 @@ module.exports = {
           }
         },
         { model: db.WorkspacePic, limit: 1 },
-        {
-          model: db.WorkspaceAvailability,
-          where: {
-            date: {
-              [Op.between]: [checkindate, checkoutdate]
-            }
-          }
-        },
         {
           model: db.Feature,
           required: true,
