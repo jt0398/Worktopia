@@ -15,22 +15,23 @@ class PriceCard extends Component {
     modalStatus: false
   };
 
+  getRentDays() {
+    return Math.abs(
+      moment(localStorage.getItem("checkinDate")).diff(
+        moment(localStorage.getItem("checkoutDate")),
+        "days"
+      )
+    );
+  }
+
   //Return price in cents as numeric. Stripe requirement.
   getAmountInCents() {
-    return parseInt(
-      this.props.rental_price *
-        1.1 *
-        100 *
-        parseInt(localStorage.getItem("room"))
-    );
+    return parseInt(this.props.rental_price * 1.1 * 100 * this.getRentDays());
   }
 
   //Return price with decimal
   getAmountDisplay() {
-    return (
-      parseFloat(this.props.rental_price) *
-      parseInt(localStorage.getItem("room"))
-    );
+    return parseFloat(this.props.rental_price) * this.getRentDays();
   }
 
   //Data submitted to Stripe API
@@ -48,7 +49,7 @@ class PriceCard extends Component {
       ),
       rental_price: (
         parseFloat(this.props.rental_price) *
-        parseInt(localStorage.getItem("room")) *
+        this.getRentDays() *
         1.1
       ).toFixed(2),
       UserId: parseInt(localStorage.getItem("UserId")),

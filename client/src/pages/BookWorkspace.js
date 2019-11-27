@@ -73,6 +73,8 @@ class BookWorkspace extends Component {
     });
 
     localStorage.setItem("checkinDate", date.format("MM/DD/YYYY"));
+
+    this.checkAvailability();
   };
 
   //Update Check Out state
@@ -82,6 +84,8 @@ class BookWorkspace extends Component {
     });
 
     localStorage.setItem("checkoutDate", date.format("MM/DD/YYYY"));
+
+    this.checkAvailability();
   };
 
   componentDidMount() {
