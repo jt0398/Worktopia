@@ -8,3 +8,7 @@ border-radius: 1px 50px 3px 30px;
   width: 150px;
   height: 75px;
 }
+
+.navbar-toggler-icon {
+  color:white;
+}
