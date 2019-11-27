@@ -44,6 +44,10 @@ function UserBooking({
             <Card.Header className="cardHeader">Info</Card.Header>
             <br></br>
             <Card.Text>
+              <strong>Name: </strong>
+              {name}
+              <br />
+              <br />
               <strong>Descriptions: </strong>
               {description}
               <br />
