@@ -69,6 +69,7 @@ class userBooking extends Component {
                           {...workspace.Workspace}
                           {...workspace.Workspace.WorkspaceLocation}
                           {...workspace.Workspace.WorkspacePics[0]}
+                          totalPaidPrice={workspace.rental_price}
                         />
                       </div>
                     );
@@ -95,7 +96,7 @@ class userBooking extends Component {
 
             {/* Footer */}
           </div>
-            <Footer />
+          <Footer />
         </Container>
       </>
     );

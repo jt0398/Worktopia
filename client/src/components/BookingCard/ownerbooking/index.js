@@ -16,7 +16,8 @@ function Ownerbooking({
   email,
   phone_no,
   end_date,
-  rental_price
+  rental_price,
+  totalPaidPrice
 }) {
   return (
     <Card className="my-3">
@@ -93,7 +94,7 @@ function Ownerbooking({
             <Card.Title>Price</Card.Title>
 
             <Card.Text>
-              ${rental_price} <br />
+              ${totalPaidPrice.toFixed(2)} <br />
             </Card.Text>
           </Card.Body>
         </div>

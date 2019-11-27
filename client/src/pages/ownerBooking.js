@@ -56,6 +56,7 @@ class OwnerBooking extends Component {
                       {...workspace.Workspace}
                       {...workspace.Workspace.WorkspacePics[0]}
                       {...workspace}
+                      totalPaidPrice={workspace.rental_price}
                     />
                   );
                 })}
