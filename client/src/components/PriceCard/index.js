@@ -101,7 +101,7 @@ class PriceCard extends Component {
             <Row>
               <Col>Price:</Col>
               <Col className="text-right">
-                ${this.getAmountDisplay().toFixed(2)} per day
+                ${this.getAmountDisplay().toFixed(2)}
               </Col>
             </Row>
             <Row>
