@@ -10,7 +10,9 @@ import Nav from "../components/Nav";
 class OwnerBooking extends Component {
   // Declaring state of the class.
   state = {
-    workspaces: []
+    workspaces: [],
+    someData: false,
+    noData: false
   };
 
   // Funtion ComponentDidMount.
@@ -22,9 +24,19 @@ class OwnerBooking extends Component {
   loadWorkspaces = () => {
     Bookingapi.getUserDetails(localStorage.getItem("UserId")).then(res => {
       // Set the state of worspace to the response recieved.
-      this.setState({
-        workspaces: res.data
-      });
+      if (res.data.length === 0) {
+        this.setState({
+          workspaces: res.data,
+          someData: false,
+          noData: true
+        });
+      } else if (res.data.length > 0) {
+        this.setState({
+          workspaces: res.data,
+          noData: false,
+          someData: true
+        });
+      }
     });
   };
 
@@ -44,7 +56,7 @@ class OwnerBooking extends Component {
           <Row>
             <Col md="12" sm="12">
               {/* Check if there are any workspaces that are found registered and if so than map through the workspace to get each of the data */}
-              {this.state.workspaces.length > 0 &&
+              {this.state.someData === true &&
                 this.state.workspaces.map(workspace => {
                   return (
                     // Display each workspaces registered in OwnerBooking Component by passing required props
@@ -62,7 +74,7 @@ class OwnerBooking extends Component {
                 })}
 
               {/* If there are no results found for the registered bookings then display proper Output */}
-              {this.state.workspaces.length === 0 && (
+              {this.state.noData === true && (
                 <div style={{ height: "50vh" }}>
                   <Row
                     className="text-center"
