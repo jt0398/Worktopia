@@ -16,7 +16,8 @@ function Ownerbooking({
   email,
   phone_no,
   end_date,
-  rental_price
+  rental_price,
+  totalPaidPrice
 }) {
   return (
     <Card className="my-3">
@@ -74,7 +75,7 @@ function Ownerbooking({
         <div className={bodyStyle}>
           <Card.Body>
             <Card.Title>Check In Date</Card.Title>
-            <Card.Text>{moment(start_date).format("DD/MM/YYYY")}</Card.Text>
+            <Card.Text>{moment(start_date).format("MM/DD/YYYY")}</Card.Text>
           </Card.Body>
         </div>
 
@@ -84,7 +85,7 @@ function Ownerbooking({
           <Card.Body>
             <Card.Title>Check Out Date</Card.Title>
 
-            <Card.Text>{moment(end_date).format("DD/MM/YYYY")}</Card.Text>
+            <Card.Text>{moment(end_date).format("MM/DD/YYYY")}</Card.Text>
           </Card.Body>
         </div>
 
@@ -93,7 +94,7 @@ function Ownerbooking({
             <Card.Title>Price</Card.Title>
 
             <Card.Text>
-              ${rental_price} <br />
+              ${totalPaidPrice.toFixed(2)} <br />
             </Card.Text>
           </Card.Body>
         </div>
