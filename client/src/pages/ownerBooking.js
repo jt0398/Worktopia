@@ -44,7 +44,7 @@ class OwnerBooking extends Component {
         <Container fluid>
           {/* Header */}
           <div className="mybkgbg">
-            <div className="yourBooking text-center">All Bookings</div>
+            <div className="yourBooking">All Bookings</div>
             {/* Div Row to Display Output */}
             <Row>
               <Col md="12" sm="12">
@@ -59,7 +59,9 @@ class OwnerBooking extends Component {
                         bodyStyle="col-md-2"
                         {...workspace.User}
                         {...workspace.Workspace}
-                        {...workspace.Workspace.WorkspacePics[0]}
+                        {...((workspace.Workspace &&
+                          workspace.Workspace.WorkspacePics[0]) ||
+                          "")}
                         {...workspace}
                         totalPaidPrice={workspace.rental_price}
                       />
