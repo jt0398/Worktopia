@@ -217,11 +217,17 @@ class WorkSpaceDetail extends Component {
             ]
           });
         });
+        let defaultLocation = res.data.find(
+          x => x.id === parseInt(localStorage.getItem("LocationId"))
+        );
+        if (!defaultLocation) {
+          defaultLocation = res.data[0];
+        }
         //Default the Owner location only while creating. If URL has Id, it means its an update request. In that case dont default
         if (!this.props.match.params.id) {
           this.setState({
-            workSpaceLocationName: res.data[0].full_address,
-            workSpaceLocation: res.data[0].id
+            workSpaceLocationName: defaultLocation.full_address,
+            workSpaceLocation: defaultLocation.id
           });
         }
       })
@@ -340,7 +346,11 @@ class WorkSpaceDetail extends Component {
     this.setState({
       modalStatus: false
     });
-    this.props.history.push(`/owner/${localStorage.getItem("LocationId")}`);
+    if (localStorage.getItem("LocationId")) {
+      this.props.history.push(`/owner/${localStorage.getItem("LocationId")}`);
+    } else {
+      this.props.history.push("/owner");
+    }
   };
 
   render() {
@@ -540,7 +550,7 @@ class WorkSpaceDetail extends Component {
                   <Button onClick={this.handleClose}>OK</Button>
                 </Modal.Footer>
               </Modal>
-             
+
             </div>
           </div>
 

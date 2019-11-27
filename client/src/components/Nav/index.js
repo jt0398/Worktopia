@@ -41,6 +41,7 @@ export class Header extends Component {
     API.logout()
       .then(response => {
         localStorage.removeItem("UserId");
+        localStorage.removeItem("LocationId");
 
         this.setState({
           navItems: noLOGIN,
@@ -81,8 +82,8 @@ export class Header extends Component {
     return (
       <>
         <Navbar bg="dark" expand="lg" collapseOnSelect sticky="top">
-          <Navbar.Brand className="text-warning" href="/"> 
-          Worktopia
+          <Navbar.Brand className="text-warning" href="/">
+            Worktopia
           </Navbar.Brand>
           {/* <div className="logoImg">
             <img
