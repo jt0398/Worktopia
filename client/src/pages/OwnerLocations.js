@@ -37,6 +37,7 @@ class OwnerLocations extends Component {
   };
 
   loadWorkspaces = id => {
+    localStorage.setItem("LocationId", id);
     API.getWorkspaceByLocation(id)
       .then(res => {
         this.setState({ workspaceInfo: res.data });
@@ -78,7 +79,7 @@ class OwnerLocations extends Component {
                             to={`/workspacedetail/${element.id}`}
                             style={{ textDecoration: "none", color: "black" }}
                           >
-                            <div class="cardDeck h-100">
+                            <div className="cardDeck h-100">
                               <WorkspaceCard
                                 key={element.id}
                                 name={element.name}
