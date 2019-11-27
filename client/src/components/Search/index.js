@@ -179,7 +179,7 @@ class Search extends Component {
                 Please select number of people.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col}>
+            <Form.Group as={Col} style={{ display: "none" }}>
               <Form.Label>
                 <strong>
                   <i className="fas fa-search-plus"></i> Rooms

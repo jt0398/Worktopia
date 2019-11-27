@@ -177,7 +177,7 @@ class BookWorkspace extends Component {
 
     const locationField = document.getElementsByName("location")[0];
     const peopleField = document.getElementsByName("people")[0];
-    const roomField = document.getElementsByName("room")[0];
+    //const roomField = document.getElementsByName("room")[0];
     const checkinField = document.getElementsByName("checkinDate")[0];
     const checkoutField = document.getElementsByName("checkoutDate")[0];
     const checkOutInvalid = document.getElementsByName("checkOutInvalid")[0];
@@ -196,11 +196,11 @@ class BookWorkspace extends Component {
       peopleField.setCustomValidity("");
     }
 
-    if (roomField.value.includes("Choose")) {
+    /*   if (roomField.value.includes("Choose")) {
       roomField.setCustomValidity("Invalid field.");
     } else {
       roomField.setCustomValidity("");
-    }
+    } */
 
     const dateDiff = moment(checkinField.value).diff(
       moment(checkoutField.value),
