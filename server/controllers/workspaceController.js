@@ -284,9 +284,9 @@ module.exports = {
       featureWhere =
         "(SELECT WorkspaceId " +
         " FROM WorkspaceFeatures " +
-        " WHERE Status = 1 AND FeatureId = " +
-        req.body.selectedFeatures.join(" AND FeatureId = ") +
-        ")";
+        " WHERE Status = 1 AND FeatureId IN (" +
+        req.body.selectedFeatures.join(",") +
+        "))";
     }
 
     db.Workspace.findAll({
