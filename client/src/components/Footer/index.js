@@ -6,29 +6,12 @@ function Footer() {
       <div style={{ backgroundColor: "black" }}>
         <div class="row ">
           <div class="col-md-4 text-center text-md-left ">
-            <div class="py-0">
+            <div class="py-0 pl-2">
               <h3 class="my-4 text-white">
-                About
                 <span class="mx-2 font-italic text-warning ">Worktopia</span>
               </h3>
 
-              <p class="footer-links font-weight-bold">
-                <a class="text-white" href="#">
-                  Home
-                </a>
-                |
-                <a class="text-white" href="#">
-                  Blog
-                </a>
-                |
-                <a class="text-white" href="#">
-                  About
-                </a>
-                |
-                <a class="text-white" href="#">
-                  Contact
-                </a>
-              </p>
+              <p class="footer-links font-weight-bold"></p>
               <p class="text-light py-4 mb-4">
                 &copy;2019 Worktopia Pvt.Ltd .<br></br> All Rights Reserved{" "}
               </p>

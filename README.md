@@ -48,7 +48,7 @@ Read more about [WorkTopia](https://docs.google.com/presentation/d/1OFudiB5juLJJ
 
 [Project Proposal](WorkTopia_Project_Proposal.md)
 
-See a [demo](https://youtu.be/_7nJGRfqWGw)
+See a [demo](https://youtu.be/Zt35HXKYzzI)
 
 
 ## Tech Stack

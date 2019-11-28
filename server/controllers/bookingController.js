@@ -31,6 +31,7 @@ module.exports = {
       include: [
         {
           model: db.Workspace,
+          required: true,
           include: [
             {
               model: db.WorkspaceLocation,
