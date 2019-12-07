@@ -223,7 +223,7 @@ module.exports = {
         { model: db.WorkspaceLocation, include: [db.User] },
         { model: db.WorkspacePic, limit: 1 }
       ],
-      limit: 6
+      limit: 3
     })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

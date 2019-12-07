@@ -28,7 +28,7 @@ class Login extends Component {
 
   componentDidMount() {
     var elementDiv = document.getElementById("loginDiv");
-    var animation = elementDiv.animate(
+    elementDiv.animate(
       {
         opacity: [0.2, 0.4, 0.6, 0.8, 1],
         transform: [

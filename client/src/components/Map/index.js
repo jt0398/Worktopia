@@ -38,7 +38,7 @@ class MapView extends Component {
 
   render() {
     return (
-      <div className="my-5">
+      <div className="my-5 d-none d-sm-block">
         <Map
           className="map"
           center={this.props.centerGeoLoc}

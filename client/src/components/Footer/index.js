@@ -50,16 +50,13 @@ function Footer() {
               We offer flexible, convinient and a spacious place for working.
             </p>
             <div class="py-2">
-              <a href="#">
+              <a href="/">
                 <i class="fab fa-facebook fa-2x text-primary mx-3"></i>
               </a>
-              <a href="#">
-                <i class="fab fa-google-plus fa-2x text-danger mx-3"></i>
-              </a>
-              <a href="#">
+              <a href="/">
                 <i class="fab fa-twitter fa-2x text-info mx-3"></i>
               </a>
-              <a href="#">
+              <a href="/">
                 <i class="fab fa-youtube fa-2x text-danger mx-3"></i>
               </a>
             </div>

@@ -76,8 +76,9 @@ function WorkspaceCard({
         </div>
         {imgStyle && (
           <div className="col-md-2">
-            <div className="align-middle pt-md-3 pl-3 pl-md-0">
-              Daily Rental: CAD ${parseFloat(rental_price).toFixed(2)}
+            <div className="align-middle pt-md-3 px-3 pl-md-0">
+              Daily Rental: <br />
+              CAD ${parseFloat(rental_price).toFixed(2)}
               <br />
               <br />
               <Link

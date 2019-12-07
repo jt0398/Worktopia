@@ -110,7 +110,6 @@ export class Header extends Component {
                     href={items[1]}
                     className="mr-3 pt-2"
                     style={{ color: "white" }}
-                    key={index}
                   >
                     <Link
                       activeclass="active"

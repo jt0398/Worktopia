@@ -10,6 +10,7 @@ import {
   CardTitle,
   Button
 } from "reactstrap";
+import "./style.css";
 
 import API from "../../utils/workspaceAPI";
 
@@ -52,9 +53,11 @@ class OfferCard extends Component {
                     <CardTitle>
                       <strong>{workspace.name}</strong>
                     </CardTitle>
-                    <CardText>{workspace.description}</CardText>
+                    <CardText className="d-inline-block text-truncate offerDesc">
+                      {workspace.description}
+                    </CardText>
                     <Button onClick={() => this.handleOnClick(workspace.id)}>
-                      Learn More...
+                      Learn More
                     </Button>
                   </CardBody>
                 </Card>
