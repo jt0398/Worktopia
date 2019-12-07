@@ -246,7 +246,7 @@ class BookWorkspace extends Component {
               <Row>
                 <Col>
                   {/*Search Box*/}
-                  <div className="accordion" id="searchBox">
+                  <div className="accordion mt-1" id="searchBox">
                     <button
                       className="btn btn-link"
                       type="button"
@@ -256,7 +256,7 @@ class BookWorkspace extends Component {
                       aria-controls="searchSpaces"
                     >
                       <h5 className="mb-0">
-                        <i class="fas fa-search"></i> Search
+                        <i className="fas fa-search"></i> Search
                       </h5>
                     </button>
 
@@ -296,6 +296,7 @@ class BookWorkspace extends Component {
                           workspace.WorkspacePics &&
                           workspace.WorkspacePics[0].image_path
                         }
+                        features={workspace.Features}
                         fulladdress={workspace.WorkspaceLocation.full_address}
                         occuppants={workspace.no_occupants}
                       />
@@ -303,6 +304,15 @@ class BookWorkspace extends Component {
                   })}
                 </Col>
                 <Col md="4">
+                  <div className="my-3">
+                    <strong>
+                      Check-In: {this.state.searchParams.checkinDate}
+                    </strong>
+                    <br />
+                    <strong>
+                      Check-Out: {this.state.searchParams.checkoutDate}
+                    </strong>
+                  </div>
                   <div className="pricebreakdown">
                     <PriceCard
                       {...this.state.workspaces[0]}

@@ -53,9 +53,7 @@ class OfferCard extends Component {
                     <CardTitle>
                       <strong>{workspace.name}</strong>
                     </CardTitle>
-                    <CardText className="d-inline-block text-truncate offerDesc">
-                      {workspace.description}
-                    </CardText>
+                    <CardText>{workspace.description}</CardText>
                     <Button onClick={() => this.handleOnClick(workspace.id)}>
                       Learn More
                     </Button>
