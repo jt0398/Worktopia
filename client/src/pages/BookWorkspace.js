@@ -246,17 +246,39 @@ class BookWorkspace extends Component {
               <Row>
                 <Col>
                   {/*Search Box*/}
-                  <Search
-                    {...this.state.searchParams}
-                    validated={this.state.validated}
-                    onChange={this.handleSearchInputChange}
-                    onSubmit={this.handleFormSearch}
-                    onCheckInChange={this.handleCheckInChange}
-                    onCheckOutChange={this.handleCheckOutChange}
-                    onLocationChange={this.handleLocationChange}
-                    onSelectLocation={this.handleLocationSelect}
-                    errorMsg={this.state.invalidDateMsg}
-                  />
+                  <div className="accordion" id="searchBox">
+                    <button
+                      className="btn btn-link"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#searchSpaces"
+                      aria-expanded="true"
+                      aria-controls="searchSpaces"
+                    >
+                      <h5 className="mb-0">
+                        <i class="fas fa-search"></i> Search
+                      </h5>
+                    </button>
+
+                    <div
+                      id="searchSpaces"
+                      className="ml-2 collapse"
+                      aria-labelledby="searchSpaces"
+                      data-parent="#searchBox"
+                    >
+                      <Search
+                        {...this.state.searchParams}
+                        validated={this.state.validated}
+                        onChange={this.handleSearchInputChange}
+                        onSubmit={this.handleFormSearch}
+                        onCheckInChange={this.handleCheckInChange}
+                        onCheckOutChange={this.handleCheckOutChange}
+                        onLocationChange={this.handleLocationChange}
+                        onSelectLocation={this.handleLocationSelect}
+                        errorMsg={this.state.invalidDateMsg}
+                      />
+                    </div>
+                  </div>
                 </Col>
               </Row>
               <Row>
@@ -292,6 +314,7 @@ class BookWorkspace extends Component {
                     <Map
                       locations={this.state.locations}
                       centerGeoLoc={this.state.centerGeoLoc}
+                      zoom={15}
                     />
                   )}
                 </Col>

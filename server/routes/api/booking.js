@@ -19,13 +19,11 @@ router
 // Matches with "/api/booking/workspace/:id"
 router
   .route("/workspace/:id")
-  .get(isAuthenticated, bookingController.findAllByWorkSpaceId)
+  .get(isAuthenticated, bookingController.findByWorkSpaceId)
   .post(isAuthenticated, bookingController.create);
 
 // Matches with "/api/booking/workspace
-router
-  .route("/workspace")
-  .post(isAuthenticated, bookingController.create);
+router.route("/workspace").post(isAuthenticated, bookingController.create);
 
 router
   .route("/checkavailability")

@@ -19,7 +19,7 @@ class MapView extends Component {
   }
 
   state = {
-    zoom: 9
+    zoom: this.props.zoom || 9
   };
 
   componentDidMount() {

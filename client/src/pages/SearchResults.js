@@ -303,7 +303,7 @@ class SearchResults extends Component {
             <div className="SRheader">My Search Results</div>
             <div className="SRPadding">
               <Row>
-                <Col>
+                <Col className="my-4">
                   {/*Search Box*/}
                   <Search
                     {...this.state.searchParams}
