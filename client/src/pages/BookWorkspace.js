@@ -246,39 +246,17 @@ class BookWorkspace extends Component {
               <Row>
                 <Col>
                   {/*Search Box*/}
-                  <div className="accordion mt-1" id="searchBox">
-                    <button
-                      className="btn btn-link"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#searchSpaces"
-                      aria-expanded="true"
-                      aria-controls="searchSpaces"
-                    >
-                      <h5 className="mb-0">
-                        <i className="fas fa-search"></i> Search
-                      </h5>
-                    </button>
-
-                    <div
-                      id="searchSpaces"
-                      className="ml-2 collapse"
-                      aria-labelledby="searchSpaces"
-                      data-parent="#searchBox"
-                    >
-                      <Search
-                        {...this.state.searchParams}
-                        validated={this.state.validated}
-                        onChange={this.handleSearchInputChange}
-                        onSubmit={this.handleFormSearch}
-                        onCheckInChange={this.handleCheckInChange}
-                        onCheckOutChange={this.handleCheckOutChange}
-                        onLocationChange={this.handleLocationChange}
-                        onSelectLocation={this.handleLocationSelect}
-                        errorMsg={this.state.invalidDateMsg}
-                      />
-                    </div>
-                  </div>
+                  <Search
+                    {...this.state.searchParams}
+                    validated={this.state.validated}
+                    onChange={this.handleSearchInputChange}
+                    onSubmit={this.handleFormSearch}
+                    onCheckInChange={this.handleCheckInChange}
+                    onCheckOutChange={this.handleCheckOutChange}
+                    onLocationChange={this.handleLocationChange}
+                    onSelectLocation={this.handleLocationSelect}
+                    errorMsg={this.state.invalidDateMsg}
+                  />
                 </Col>
               </Row>
               <Row>
@@ -296,7 +274,6 @@ class BookWorkspace extends Component {
                           workspace.WorkspacePics &&
                           workspace.WorkspacePics[0].image_path
                         }
-                        features={workspace.Features}
                         fulladdress={workspace.WorkspaceLocation.full_address}
                         occuppants={workspace.no_occupants}
                       />
@@ -304,15 +281,6 @@ class BookWorkspace extends Component {
                   })}
                 </Col>
                 <Col md="4">
-                  <div className="my-3">
-                    <strong>
-                      Check-In: {this.state.searchParams.checkinDate}
-                    </strong>
-                    <br />
-                    <strong>
-                      Check-Out: {this.state.searchParams.checkoutDate}
-                    </strong>
-                  </div>
                   <div className="pricebreakdown">
                     <PriceCard
                       {...this.state.workspaces[0]}
@@ -324,7 +292,6 @@ class BookWorkspace extends Component {
                     <Map
                       locations={this.state.locations}
                       centerGeoLoc={this.state.centerGeoLoc}
-                      zoom={15}
                     />
                   )}
                 </Col>

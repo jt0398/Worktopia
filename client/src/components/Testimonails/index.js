@@ -39,7 +39,7 @@ function Testimonials() {
                 <i className="icon-info-blocks material-icons">
                   <img src="/images/testimonial2.jpeg" alt="Testimonial_1" />
                 </i>
-                <h3>Ankit C.</h3>
+                <h3>Ankit Curchorcar</h3>
                 <StarRatingComponent
                   name="rate1"
                   editing={false}
