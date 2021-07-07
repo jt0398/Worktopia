@@ -12,7 +12,9 @@ import Nav from "../components/Nav";
 class userBooking extends Component {
   // Declaring state of the class.
   state = {
-    workspaces: []
+    workspaces: [],
+    someData: false,
+    noData: false
   };
 
   // Funtion ComponentDidMount.
@@ -25,9 +27,19 @@ class userBooking extends Component {
     // localStorage.setItem("UserId", 2);
     Bookingapi.getUserData(localStorage.getItem("UserId")).then(res => {
       // Set the state of worspace to the response recieved.
-      this.setState({
-        workspaces: res.data
-      });
+      if (res.data.length === 0) {
+        this.setState({
+          workspaces: res.data,
+          someData: false,
+          noData: true
+        });
+      } else if (res.data.length > 0) {
+        this.setState({
+          workspaces: res.data,
+          noData: false,
+          someData: true
+        });
+      }
     });
   };
 
@@ -45,7 +57,7 @@ class userBooking extends Component {
         <Container fluid>
           {/* Header */}
           <div className="mybkgbg">
-            <div className="yourBooking">My Bookings</div>
+            <div className="yourBooking text-center">My Bookings</div>
 
             {/* Div Row to Display Output */}
 
@@ -53,7 +65,7 @@ class userBooking extends Component {
               <Col md="12" sm="12">
                 {/* Check whether there is any workspace for the user and if there use map function to get each workspaces */}
 
-                {this.state.workspaces.length > 0 &&
+                {this.state.someData === true &&
                   this.state.workspaces.map(workspace => {
                     return (
                       // Display each workspaces in the UserBooking Component by passing required props
@@ -75,7 +87,7 @@ class userBooking extends Component {
                     );
                   })}
                 {/* If there are no results found for the workspaces then display proper Output */}
-                {this.state.workspaces.length === 0 && (
+                {this.state.noData === true && (
                   <div style={{ height: "50vh" }}>
                     <Row
                       className="text-center"
