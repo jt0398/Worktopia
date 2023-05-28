@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001/",
+  "engines" : { 
+    "npm" : ">=8.0.0 <9.0.0",
+    "node" : ">=15.0.0 <=16.0.0"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
